@@ -144,7 +144,7 @@ export function PlanPurchase({ product: p, pricing, shots, dates, soldOut, ratin
 
         {soldOut && <p role="status" className="mt-5 rounded-2xl bg-tint-amber px-4 py-3 text-sm font-medium">This plan is sold out for the week. Check back Sunday for new slots.</p>}
 
-        <div className="fixed inset-x-0 bottom-0 z-30 flex gap-3 border-t border-line bg-surface px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:static md:z-auto md:mt-5 md:border-0 md:bg-transparent md:p-0">
+        <div className="fixed inset-x-0 bottom-[calc(53px+env(safe-area-inset-bottom))] z-20 flex gap-3 border-t border-line bg-surface px-4 py-3 md:static md:z-auto md:mt-5 md:border-0 md:bg-transparent md:p-0">
           <div className="flex items-center rounded-full border border-input-line bg-surface">
             <button type="button" aria-label="Fewer weeks" onClick={() => setWeeks((w) => Math.max(1, w - 1))} className="tap flex items-center justify-center"><Minus size={16} aria-hidden /></button>
             <span className="min-w-12 text-center text-sm font-bold" aria-live="polite">{weeks}<span className="hidden md:inline"> wk</span></span>
