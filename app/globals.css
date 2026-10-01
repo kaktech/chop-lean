@@ -1,26 +1,121 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-cream: #f7f6f1;
+  --color-surface: #ffffff;
+  --color-ink: #15201a;
+  --color-muted: #5b6560;
+  --color-body: #3a4540;
+  --color-line: #e6e4dc;
+  --color-input-line: #d6d3c8;
+  --color-green: #3d6b1f;
+  --color-green-dark: #24421a;
+  --color-green-tint: #f1f8ec;
+  --color-yellow: #f6b81a;
+  --color-red: #d93a2b;
+  --color-price-red: #b4281c;
+  --color-mint: #dcefd2;
+  --color-pink: #f9dcdc;
+  --color-lavender: #dde0f6;
+  --color-butter: #fcebc9;
+  --color-dark-card: #1f2d25;
+
+  --font-display: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-dm-serif), Georgia, serif;
+
+  --radius-card: 24px;
+  --radius-input: 12px;
+  --shadow-soft: 0 10px 30px rgba(21, 32, 26, 0.08);
+  --shadow-chip: 0 18px 44px rgba(21, 32, 26, 0.22);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-green);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  button, [role="button"], a, input, select, textarea {
+    min-height: 0;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .container-x {
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 16px;
+  }
+  @media (min-width: 768px) {
+    .container-x { padding-inline: 32px; }
+  }
+  .label-sm {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .watermark {
+    font-family: var(--font-serif);
+    color: var(--color-ink);
+    opacity: 0.05;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .tap { min-height: 44px; min-width: 44px; }
 }
+
+/* Keyframes and animation classes from design-source/animations.css */
+@keyframes clUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes clIn{from{opacity:0}to{opacity:1}}
+@keyframes clFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes clSpin{to{transform:rotate(360deg)}}
+@keyframes clMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes clToast{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes clDrawer{from{transform:translateX(100%)}to{transform:none}}
+@keyframes clSheet{from{transform:translateY(100%)}to{transform:none}}
+@keyframes clPop{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
+@keyframes clReveal{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@keyframes clWipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.cl-up{animation:clUp .9s cubic-bezier(.2,.7,.2,1) both}
+.cl-d1{animation-delay:.08s}.cl-d2{animation-delay:.18s}.cl-d3{animation-delay:.3s}.cl-d4{animation-delay:.44s}.cl-d5{animation-delay:.6s}
+.cl-float{animation:clFloat 5s ease-in-out infinite}
+.cl-float2{animation:clFloat 6.5s ease-in-out infinite;animation-delay:-2s}
+.cl-spin{animation:clSpin 18s linear infinite}
+.cl-marquee{animation:clMarquee 38s linear infinite}
+.cl-marquee:hover{animation-play-state:paused}
+.cl-wipe{animation:clWipe 1.2s cubic-bezier(.7,0,.2,1) .1s both}
+.cl-toast{animation:clToast .45s cubic-bezier(.2,.9,.3,1.2) both}
+.cl-drawer{animation:clDrawer .5s cubic-bezier(.2,.8,.2,1) both}
+.cl-sheet{animation:clSheet .5s cubic-bezier(.2,.8,.2,1) both}
+.cl-fade{animation:clIn .3s ease both}
+.cl-pop{animation:clPop .5s ease both}
+.cl-lift{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
+.cl-lift:hover{transform:translateY(-6px);box-shadow:0 26px 44px rgba(21,32,26,.13)}
+.cl-zoom{overflow:hidden}
+.cl-zoom img{transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.cl-zoom:hover img{transform:scale(1.07)}
+.cl-btn{transition:transform .2s,box-shadow .2s,background-color .2s}
+.cl-btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(21,32,26,.18)}
+.cl-btn:active{transform:translateY(0) scale(.98)}
+.cl-reveal{animation:clReveal .9s cubic-bezier(.2,.7,.2,1) both}
+@supports (animation-timeline: view()){.cl-reveal{animation:clReveal linear both;animation-timeline:view();animation-range:entry 0% cover 28%}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
