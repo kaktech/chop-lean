@@ -103,6 +103,8 @@ Admin product photos and bank-transfer receipts use [Vercel Blob](https://vercel
 3. Run `pnpm db:migrate && pnpm db:seed` once against the production database (locally with the production `DATABASE_URL`).
 4. Add the production URLs to Google (step 3) and the Paystack webhook (step 5).
 
+The live test deployment is at <https://chop-lean.vercel.app> (Vercel project `chop-lean`, repo `kaktech/chop-lean`). To switch features on, add these in Vercel → Project → Settings → Environment Variables (Production), then redeploy: `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET`, `MAILGUN_API_KEY`, `MAILGUN_DOMAIN`, `MAILGUN_FROM`, `MAILGUN_REGION`, `PAYSTACK_SECRET_KEY`, `NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY`, `BLOB_READ_WRITE_TOKEN`, `NEXT_PUBLIC_WHATSAPP_NUMBER`. `NEXT_PUBLIC_*` values are baked in at build time, so changing them needs a new deployment.
+
 ## How it works (things worth knowing)
 
 - **Money** is stored in kobo. Totals, discounts, delivery and the pay-on-delivery fee are always recomputed on the server (`lib/pricing.ts`, `lib/orders.ts`); the browser's numbers are display-only.
@@ -120,7 +122,13 @@ The storefront uses a dark, photographic "kitchen" theme (tokens in `app/globals
 
 Pages: Home, Full menu (`/menu`), Collections (`/collections`, `/collections/[slug]`: breakfast, lunch, dinner, swallow-and-soups, high-protein, low-carb, office-lunch, drinks), Shop, Plan and meal pages, Quiz, Cart, Checkout, Our kitchen (`/about`), Meet the dietitian (`/dietitian`), Delivery (`/delivery`), FAQs (`/faq`), Contact (`/contact`), Gift cards (`/gift-cards`), Results (`/results`), Terms, Privacy, Account and Admin.
 
-Content to review before launch: the Terms and Privacy pages are drafts (including a 24-hour problem-reporting window), the Dietitian page has a placeholder for the real dietitian's name and credentials, and the contact/WhatsApp number (`wa.me/2340000000000`) is a placeholder. Collection rules are shown on each collection page (for example high-protein means 30g+ protein).
+Also: Track an order (`/track`, order number + email), Saved dishes (`/favourites`, hearts are stored in the browser), and an unsubscribe page for the weekly menu email.
+
+Each plan page is its own page: its own gallery (the plan's cover plus dishes from its menu), tagline and copy (`lib/plan-content.ts`), a plan-specific weekly menu (`lib/plan-menu.ts` re-picks dishes by the plan's tags, size and meals per day), and a comparison table. The header's Menu and Meal Plans items open dropdown panels listing every collection and plan.
+
+**Weekly menu email.** Subscribing in the footer saves the address and immediately emails the current weekly menu (with an unsubscribe link). In Admin → Weekly menu, "Send menu to subscribers" emails it to everyone (up to 500 per click). Both need Mailgun configured.
+
+Content to review before launch: the Terms and Privacy pages are drafts (including a 24-hour problem-reporting window), the Dietitian page has a placeholder for the real dietitian's name and credentials, and the WhatsApp number comes from `NEXT_PUBLIC_WHATSAPP_NUMBER` (the links fall back to the contact page until you set it). Dish calories on plan pages are at standard portion; the page says the kitchen sizes portions to your daily target, so confirm that matches how you cook. Collection rules are shown on each collection page (for example high-protein means 30g+ protein).
 
 ## Deviations from the original design (on purpose)
 
