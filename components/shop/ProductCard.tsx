@@ -1,12 +1,13 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { Heart, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import type { Product } from "@/lib/queries";
 import { formatNaira } from "@/lib/money";
 import { badgeStyle, planMeta, productHref } from "@/lib/product-ui";
 import { useAddToCart } from "@/lib/use-add-to-cart";
 import { Reveal } from "@/components/ui/Reveal";
+import { FavButton } from "./FavButton";
 import { imgSrc } from "@/lib/img";
 
 type Rating = { count: number; avg: number } | undefined;
@@ -19,7 +20,7 @@ export function PlanCard({ p, rating, showHeart = false, sizes }: { p: Product; 
         className="cl-lift cl-zoom relative flex h-full flex-col gap-3 rounded-[22px] border border-line bg-surface p-3.5 text-fg no-underline md:p-[18px]"
       >
         {p.badge && <span className={`absolute left-4 top-4 z-10 rounded-md px-2.5 py-1 text-[11px] font-bold tracking-wide md:left-[26px] md:top-[26px] ${badgeStyle(p.badge)}`}>{p.badge}</span>}
-        {showHeart && <span className="absolute right-4 top-4 z-10 flex size-8 items-center justify-center rounded-full bg-surface shadow-soft md:right-[26px] md:top-[26px]"><Heart size={15} aria-hidden /></span>}
+        {showHeart && <FavButton id={p.id} name={p.name} className="absolute right-3 top-3 z-10 md:right-[22px] md:top-[22px]" />}
         <div className="cl-zoom relative h-[170px] overflow-hidden rounded-2xl md:h-[220px]">
           <Image src={imgSrc(p.image)} alt={p.name} fill sizes={sizes ?? "(min-width:1024px) 25vw, 50vw"} className="object-cover" />
         </div>
@@ -63,6 +64,7 @@ export function MealCard({ p, layout = "row" }: { p: Product; layout?: "row" | "
         className={`cl-lift cl-zoom relative grid h-full gap-4 rounded-[22px] border border-line bg-surface p-[18px] text-fg no-underline ${stack ? "" : "grid-cols-2 items-center"}`}
       >
         {p.badge && <span className="absolute left-[30px] top-[30px] z-10 rounded-md bg-red px-2 py-1 text-[11px] font-bold text-white">{p.badge}</span>}
+        <FavButton id={p.id} name={p.name} className="absolute right-[22px] top-[22px] z-10" />
         <div className={`cl-zoom relative overflow-hidden rounded-[14px] ${stack ? "h-[200px]" : "h-[150px] md:h-[180px]"}`}>
           <Image src={imgSrc(p.image)} alt={p.name} fill sizes="(min-width:1024px) 20vw, 45vw" className="object-cover" />
         </div>

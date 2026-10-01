@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import { Clock, Mail, MapPin, MessageCircle } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
 import { ContactForm } from "@/components/forms/ContactForm";
+import { whatsappUrl } from "@/lib/site";
 
 export const metadata: Metadata = { title: "Contact us", description: "Message Chop Lean about an order, delivery or plan. We reply within one working day." };
 
 export default function ContactPage() {
   const rows = [
-    { icon: MessageCircle, t: "WhatsApp", d: "Fastest for order questions", href: "https://wa.me/2340000000000", label: "Chat on WhatsApp" },
+    { icon: MessageCircle, t: "WhatsApp", d: "Fastest for order questions", href: whatsappUrl(), label: "Chat on WhatsApp" },
     { icon: MapPin, t: "Kitchen and pickup", d: "Yaba, Lagos. Pickup from 11am on delivery days." },
     { icon: Clock, t: "Reply time", d: "Within one working day. Orders close 6pm the day before delivery." },
     { icon: Mail, t: "Email", d: "Use the form and we'll reply to your inbox." },

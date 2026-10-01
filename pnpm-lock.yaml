@@ -50,6 +50,9 @@ importers:
       next-auth:
         specifier: 5.0.0-beta.32
         version: 5.0.0-beta.32(next@15.5.26(@babel/core@7.29.7(supports-color@7.2.0))(@playwright/test@1.63.0)(@types/node@20.19.43)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
+      prettier:
+        specifier: ^3.9.9
+        version: 3.9.9
       react:
         specifier: 19.1.0
         version: 19.1.0

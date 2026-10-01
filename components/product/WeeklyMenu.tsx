@@ -7,10 +7,10 @@ import { usePlan } from "./PlanContext";
 import { Reveal } from "@/components/ui/Reveal";
 import { imgSrc } from "@/lib/img";
 
-const SLOT_LABEL: Record<string, string> = { breakfast: "Breakfast", lunch: "Lunch", dinner: "Dinner" };
+const SLOT_LABEL: Record<string, string> = { breakfast: "Breakfast", lunch: "Lunch", dinner: "Dinner", snack: "Snack" };
 const fmtWeek = (iso: string) => new Date(iso + "T12:00:00Z").toLocaleDateString("en-NG", { day: "numeric", month: "long", timeZone: "UTC" });
 
-export function WeeklyMenu({ menu }: { menu: WeeklyMenuData }) {
+export function WeeklyMenu({ menu, planName }: { menu: WeeklyMenuData; planName?: string }) {
   const { swaps, setSwap } = usePlan();
   const [day, setDay] = useState(menu.days[0].day);
   const [swapFor, setSwapFor] = useState<{ key: string; slot: string; current: MenuMeal } | null>(null);
@@ -43,10 +43,10 @@ export function WeeklyMenu({ menu }: { menu: WeeklyMenuData }) {
       <div className="container-x relative">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <h2 className="text-[26px] md:text-[34px]">This Week&apos;s Menu</h2>
+            <h2 className="text-[26px] md:text-[34px]">{planName ? `${planName}: this week's menu` : "This Week's Menu"}</h2>
             <p className="mt-1.5 text-sm text-muted">Week of {fmtWeek(menu.weekOf)} · tap any dish to swap it for another with similar calories</p>
           </div>
-          <span className="rounded-full bg-tint-green px-3 py-1.5 text-xs font-bold text-leaf-soft">Avg {avg.toLocaleString("en-NG")} kcal / day</span>
+          <span className="rounded-full bg-tint-green px-3 py-1.5 text-xs font-bold text-leaf-soft">Dishes avg {avg.toLocaleString("en-NG")} kcal / day</span>
         </div>
 
         {/* mobile day tabs */}
@@ -57,6 +57,7 @@ export function WeeklyMenu({ menu }: { menu: WeeklyMenuData }) {
           ))}
         </div>
 
+        <p className="mt-3 text-xs text-muted">Dish calories are shown at the standard portion. The kitchen sizes portions and sides so your day reaches your plan&apos;s calorie target.</p>
         <div className="mt-6 grid gap-3 md:grid-cols-5 md:gap-3.5">
           {menu.days.map((d) => (
             <Reveal key={d.day} className={`rounded-[22px] md:bg-surface-2 md:p-3.5 ${day === d.day ? "" : "hidden md:block"}`}>
@@ -76,7 +77,7 @@ export function WeeklyMenu({ menu }: { menu: WeeklyMenuData }) {
                         <div className="text-sm font-bold leading-snug">{m.name}</div>
                         <div className="text-xs text-muted">{m.kcal} kcal</div>
                       </div>
-                      <button type="button" onClick={() => setSwapFor({ key, slot: orig.slot ?? orig.menuSlot, current: swapped ? orig : orig })}
+                      <button type="button" onClick={() => setSwapFor({ key, slot: orig.slot ?? orig.menuSlot, current: orig })}
                         aria-label={`Swap ${m.name}`} className="tap rounded-full bg-tint-green px-3 text-xs font-bold text-leaf-soft md:mt-1 md:w-full md:bg-transparent md:text-left md:font-medium md:underline">Swap</button>
                     </li>
                   );

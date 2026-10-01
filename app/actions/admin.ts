@@ -1,5 +1,5 @@
 "use server";
-import { and, eq } from "drizzle-orm";
+import { and, eq, isNull } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { put } from "@vercel/blob";
 import { z } from "zod";
@@ -8,6 +8,7 @@ import * as s from "@/db/schema";
 import { requireAdmin } from "@/lib/admin";
 import { markOrderPaid } from "@/lib/payments";
 import { notifyStatusChange } from "@/lib/notify";
+import { loadMenuEmailData, sendMenuTo } from "@/lib/menu-email";
 
 type R = { ok: boolean; message: string };
 const STATUSES = ["pending_payment", "cooking", "out_for_delivery", "delivered", "cancelled"] as const;
@@ -153,3 +154,15 @@ export async function saveWeeklyMenu(input: unknown): Promise<R> {
   return { ok: true, message: "Weekly menu saved." };
 }
 
+
+/** Emails the current weekly menu to every active subscriber (up to 500 per click). */
+export async function sendMenuToSubscribers(): Promise<R> {
+  await requireAdmin();
+  const subs = await db.select().from(s.newsletterSubscribers).where(isNull(s.newsletterSubscribers.unsubscribedAt)).limit(500);
+  if (!subs.length) return { ok: false, message: "No subscribers yet." };
+  const data = await loadMenuEmailData();
+  if (!data) return { ok: false, message: "Build this week's menu first." };
+  let sent = 0;
+  for (const sub of subs) if (await sendMenuTo(sub.email, sub.token, false, data)) sent++;
+  return sent > 0 ? { ok: true, message: `Menu sent to ${sent} of ${subs.length} subscribers.` } : { ok: false, message: "No emails went out. Check your Mailgun settings." };
+}

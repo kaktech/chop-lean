@@ -209,6 +209,8 @@ export const storeSettings = pgTable("store_settings", {
 export const newsletterSubscribers = pgTable("newsletter_subscribers", {
   id: serial("id").primaryKey(),
   email: text("email").notNull().unique(),
+  token: text("token").notNull().default(sql`gen_random_uuid()::text`), // unsubscribe link
+  unsubscribedAt: timestamp("unsubscribed_at", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
 

@@ -18,11 +18,13 @@ type Props = {
   dates: { iso: string; label: string }[];
   soldOut: boolean;
   rating: { count: number; avg: number };
+  tagline: string;
+  accent: string;
+  intro: string;
 };
 
-const GOAL_LABEL: Record<string, string> = { lose: "Weight-loss plan", keep: "Maintenance plan", gain: "Muscle plan" };
 
-export function PlanPurchase({ product: p, pricing, shots, dates, soldOut, rating }: Props) {
+export function PlanPurchase({ product: p, pricing, shots, dates, soldOut, rating, tagline, accent, intro }: Props) {
   const addToCart = useAddToCart();
   const { swaps } = usePlan();
   const calorieOptions = pricing.calorieOptions.map((c) => c.kcal);
@@ -61,7 +63,7 @@ export function PlanPurchase({ product: p, pricing, shots, dates, soldOut, ratin
     <section className="container-x grid gap-8 pb-28 pt-5 md:grid-cols-2 md:gap-12 md:pb-20 md:pt-8">
       {/* Gallery */}
       <div>
-        <div className="relative overflow-hidden rounded-[28px] bg-green md:p-8">
+        <div className="relative overflow-hidden rounded-[28px] md:p-8" style={{ background: accent }}>
           <div aria-hidden className="watermark absolute left-6 top-4 hidden text-[160px] !text-white !opacity-10 md:block">{kcal}</div>
           {p.badge && <span className={`absolute right-4 top-4 z-10 rounded-md px-3 py-1.5 text-[11px] font-bold md:right-8 md:top-8 ${p.badge.startsWith("-") ? "bg-red text-white" : badgeStyle(p.badge)}`}>{p.badge.startsWith("-") ? `SAVE ${p.badge.slice(1)}` : p.badge}</span>}
           <div className="relative aspect-[4/4.2] overflow-hidden md:rounded-[24px] md:border-[10px] md:border-white md:shadow-chip">
@@ -97,9 +99,9 @@ export function PlanPurchase({ product: p, pricing, shots, dates, soldOut, ratin
       <div>
         <div className="flex items-center gap-2.5 text-[13px] font-medium">
           <span className="hidden h-[3px] w-6 rounded-sm bg-yellow md:block" />
-          <span className="text-red md:text-fg">{GOAL_LABEL[p.goal ?? "lose"]} <span className="text-red">· Weekly subscription</span></span>
+          <span className="text-fg">{tagline} <span className="text-yellow">· Weekly subscription</span></span>
         </div>
-        <h1 className="mt-2 text-[34px] uppercase leading-none tracking-[-0.04em] md:mt-3 md:text-[56px]">{p.name}</h1>
+        <h1 className="display-xl mt-2 text-[34px] md:mt-3 md:text-[54px]">{p.name}</h1>
         <div className="mt-3 flex items-center gap-2 text-sm text-muted">
           <span aria-hidden className="tracking-widest text-input-line">★★★★★</span>
           {rating.count > 0 ? <span>{rating.avg.toFixed(1)} ({rating.count}) · <a href="#reviews" className="text-leaf underline">Read reviews</a></span> : <span>No reviews yet · <a href="#reviews" className="text-leaf underline">Be the first</a></span>}
@@ -109,7 +111,7 @@ export function PlanPurchase({ product: p, pricing, shots, dates, soldOut, ratin
           {was && <span className="text-sm text-muted line-through">{formatNairaFull(was * weeks)}</span>}
           <span className="text-sm text-muted">{weeks > 1 ? `for ${weeks} weeks` : "per week"}</span>
         </div>
-        <p className="mt-4 hidden max-w-[560px] text-base leading-relaxed text-body md:block">{p.description} Built for steady loss without giving up swallow, stew or pepper.</p>
+        <p className="mt-4 max-w-[560px] text-base leading-relaxed text-body">{intro}</p>
 
         <dl className="mt-5 grid grid-cols-4 gap-2.5">
           {[[(kcal ?? 0).toLocaleString("en-NG"), "kcal / day"], [`${Math.round((p.proteinG ?? 0) * ratio)}g`, "protein"], [`${Math.round((p.carbsG ?? 0) * ratio)}g`, "carbs"], [`${Math.round((p.fatG ?? 0) * ratio)}g`, "fat"]].map(([v, l]) => (

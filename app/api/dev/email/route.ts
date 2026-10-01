@@ -7,6 +7,8 @@ import OrderConfirmation from "@/emails/OrderConfirmation";
 import PaymentConfirmed from "@/emails/PaymentConfirmed";
 import StatusUpdate from "@/emails/StatusUpdate";
 import LoginCode from "@/emails/LoginCode";
+import WeeklyMenu from "@/emails/WeeklyMenu";
+import { loadMenuEmailData } from "@/lib/menu-email";
 
 /** Development only: /api/dev/email?type=confirmation&order=<orderId> shows an email in the browser. */
 export async function GET(req: Request) {
@@ -14,6 +16,7 @@ export async function GET(req: Request) {
   const u = new URL(req.url);
   const type = u.searchParams.get("type") ?? "confirmation";
   const id = u.searchParams.get("order") ?? "";
+  if (type === "menu") { const menu = await loadMenuEmailData(); return menu ? html(await render(createElement(WeeklyMenu, { menu, welcome: true, unsubscribeUrl: "http://localhost:3000/unsubscribe?token=demo" }))) : new NextResponse("No menu", { status: 404 }); }
   if (type === "code") return html(await render(createElement(LoginCode, { code: "482913" })));
   const f = /^[0-9a-f-]{36}$/i.test(id) ? await getOrderFull(id) : null;
   if (!f) return new NextResponse("Pass ?order=<order uuid> (from the /order/<uuid> URL).", { status: 400 });

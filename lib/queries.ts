@@ -56,7 +56,7 @@ export async function getReviewStatsForProducts(ids: string[]) {
   return Object.fromEntries(rows.map((r) => [r.id, { count: r.count, avg: r.avg }]));
 }
 
-export type MenuMeal = { id: string; slug: string; name: string; kcal: number | null; image: string | null; slot: string | null; priceKobo: number };
+export type MenuMeal = { id: string; slug: string; name: string; kcal: number | null; proteinG: number | null; image: string | null; slot: string | null; priceKobo: number };
 export type WeeklyMenuData = {
   weekOf: string;
   days: { day: string; total: number; meals: (MenuMeal & { menuSlot: string })[] }[];
@@ -77,7 +77,7 @@ export async function getWeeklyMenu(): Promise<WeeklyMenuData | null> {
     .innerJoin(s.products, eq(s.products.id, s.weeklyMenuItems.mealId))
     .where(eq(s.weeklyMenuItems.menuId, menu.id));
   const order = ["breakfast", "lunch", "dinner"];
-  const pick = (m: Product): MenuMeal => ({ id: m.id, slug: m.slug, name: m.name, kcal: m.kcal, image: m.image, slot: m.slot, priceKobo: m.priceKobo });
+  const pick = (m: Product): MenuMeal => ({ id: m.id, slug: m.slug, name: m.name, kcal: m.kcal, proteinG: m.proteinG, image: m.image, slot: m.type === "drink" ? "drink" : m.slot, priceKobo: m.priceKobo });
   const days = DAYS.map((day) => {
     const meals = rows
       .filter((r) => r.day === day)
@@ -85,7 +85,7 @@ export async function getWeeklyMenu(): Promise<WeeklyMenuData | null> {
       .map((r) => ({ ...pick(r.m), menuSlot: r.menuSlot }));
     return { day, total: meals.reduce((n, m) => n + (m.kcal ?? 0), 0), meals };
   });
-  const alts = await db.select().from(s.products).where(and(eq(s.products.type, "meal"), eq(s.products.isLive, true)));
+  const alts = await db.select().from(s.products).where(and(inArray(s.products.type, ["meal", "drink"]), eq(s.products.isLive, true)));
   return { weekOf: menu.weekOf, days, alternatives: alts.map(pick) };
 }
 

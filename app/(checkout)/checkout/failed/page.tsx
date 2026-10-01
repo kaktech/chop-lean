@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CheckoutHeader } from "@/components/checkout/CheckoutShell";
 import { getOrderFull } from "@/lib/orders";
 import { formatNairaFull } from "@/lib/money";
+import { whatsappUrl } from "@/lib/site";
 
 export const metadata: Metadata = { title: "Payment didn't go through", robots: { index: false } };
 export const dynamic = "force-dynamic";
@@ -28,7 +29,7 @@ export default async function FailedPage({ searchParams }: { searchParams: Promi
             {f && <Link href={`/checkout/pay?o=${f.order.id}`} className="cl-btn rounded-full border-[1.5px] border-fg px-7 py-3 font-bold text-fg no-underline">Pay by bank transfer</Link>}
             {!f && <Link href="/checkout" className="cl-btn rounded-full bg-yellow px-7 py-3.5 font-bold text-canvas no-underline">Back to checkout</Link>}
           </div>
-          {f && <p className="mt-6 text-[13px] text-muted">Order {f.order.number} · {formatNairaFull(f.order.totalKobo)} · Need help? <a href="https://wa.me/2340000000000" className="font-bold text-leaf underline">Chat on WhatsApp</a></p>}
+          {f && <p className="mt-6 text-[13px] text-muted">Order {f.order.number} · {formatNairaFull(f.order.totalKobo)} · Need help? <a href={whatsappUrl()} className="font-bold text-leaf underline">Chat on WhatsApp</a></p>}
         </div>
       </div>
     </>

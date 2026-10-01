@@ -84,3 +84,11 @@ export const useUI = create<UIState>()((set) => ({
   setCartOpen: (cartOpen) => set({ cartOpen }),
   setMenuOpen: (menuOpen) => set({ menuOpen }),
 }));
+
+type FavState = { ids: string[]; toggle: (id: string) => void };
+export const useFavs = create<FavState>()(
+  persist(
+    (set) => ({ ids: [], toggle: (id) => set((s) => ({ ids: s.ids.includes(id) ? s.ids.filter((x) => x !== id) : [...s.ids, id] })) }),
+    { name: "chop-lean-favs" },
+  ),
+);

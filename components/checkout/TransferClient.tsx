@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { Upload } from "lucide-react";
 import { markTransferSent, uploadReceipt } from "@/app/actions/checkout";
 import { formatNaira, formatNairaFull } from "@/lib/money";
+import { whatsappUrl } from "@/lib/site";
 
 type Props = {
   orderId: string; number: string; totalKobo: number; heldUntil: string; awaiting: boolean; receiptUploaded: boolean;
@@ -97,7 +98,7 @@ export function TransferClient({ orderId, number, totalKobo, heldUntil, awaiting
         {!awaiting && (
           <button type="button" onClick={sent} disabled={pending} className="cl-btn mt-6 min-h-14 rounded-full bg-yellow px-8 font-bold text-canvas disabled:opacity-60">{pending ? "One moment…" : "I've sent the money"}</button>
         )}
-        {awaiting && <p className="mt-6 text-body">We&apos;ll email you the moment your payment is confirmed. Questions? <a className="font-bold text-leaf underline" href="https://wa.me/2340000000000">Chat on WhatsApp</a>.</p>}
+        {awaiting && <p className="mt-6 text-body">We&apos;ll email you the moment your payment is confirmed. Questions? <a className="font-bold text-leaf underline" href={whatsappUrl()}>Chat on WhatsApp</a>.</p>}
       </div>
 
       <aside className="relative h-fit overflow-hidden rounded-[26px] bg-green p-7 text-white" aria-label="Your order">
@@ -110,7 +111,7 @@ export function TransferClient({ orderId, number, totalKobo, heldUntil, awaiting
         </dl>
         <div className="mt-4 flex items-baseline justify-between border-t border-white/25 pt-4"><b className="font-display text-xl">Total</b><b className="font-display text-xl">{summary.fmt}</b></div>
         <p className="mt-5 text-[13px] text-mint">{summary.deliveryLine}</p>
-        <p className="mt-3 text-[13px]">Questions? <a href="https://wa.me/2340000000000" className="font-bold text-yellow underline">Chat on WhatsApp</a></p>
+        <p className="mt-3 text-[13px]">Questions? <a href={whatsappUrl()} className="font-bold text-yellow underline">Chat on WhatsApp</a></p>
       </aside>
     </div>
   );

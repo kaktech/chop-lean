@@ -5,6 +5,7 @@ import { ChevronRight, Menu, X } from "lucide-react";
 import { useUI } from "@/lib/store";
 import { CartBadge } from "./CartButton";
 import { Wordmark } from "./Logo";
+import { whatsappUrl } from "@/lib/site";
 
 const ITEMS = [
   { href: "/menu", t: "Full Menu", d: "Every dish, with calories and prices" },
@@ -16,7 +17,7 @@ const ITEMS = [
   { href: "/account#weight", t: "Weight Tracker", d: "Log your weekly weigh-in" },
 ];
 
-const MORE = [["Meet the dietitian", "/dietitian"], ["FAQs", "/faq"], ["Contact", "/contact"], ["Gift cards", "/gift-cards"]];
+const MORE = [["Track an order", "/track"], ["Saved dishes", "/favourites"], ["Meet the dietitian", "/dietitian"], ["FAQs", "/faq"], ["Contact", "/contact"], ["Gift cards", "/gift-cards"]];
 
 export function MenuButton() {
   const setMenuOpen = useUI((s) => s.setMenuOpen);
@@ -81,7 +82,7 @@ export function MenuDrawer() {
         </div>
         <div className="flex flex-col gap-1 pb-10 text-[15px]">
           <Link href="/account" onClick={close} className="flex min-h-11 items-center font-bold text-yellow underline">Sign in / My account</Link>
-          <a href="https://wa.me/2340000000000" className="flex min-h-11 items-center text-fg underline">Chat on WhatsApp</a>
+          <a href={whatsappUrl()} className="flex min-h-11 items-center text-fg underline">Chat on WhatsApp</a>
           <span className="text-muted">Nigeria (NGN ₦)</span>
         </div>
       </nav>

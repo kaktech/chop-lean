@@ -1,0 +1,2 @@
+ALTER TABLE "newsletter_subscribers" ADD COLUMN "token" text DEFAULT gen_random_uuid()::text NOT NULL;--> statement-breakpoint
+ALTER TABLE "newsletter_subscribers" ADD COLUMN "unsubscribed_at" timestamp with time zone;

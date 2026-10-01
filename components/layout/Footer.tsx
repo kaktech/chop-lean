@@ -3,11 +3,12 @@ import Link from "next/link";
 import { Clock, Mail, MapPin, MessageCircle } from "lucide-react";
 import { NewsletterForm } from "./NewsletterForm";
 import { Wordmark, LogoMark } from "./Logo";
+import { whatsappUrl } from "@/lib/site";
 
 const COLS = [
   { h: "Eat", links: [["Full menu", "/menu"], ["Meal plans", "/shop?tab=plans"], ["Single meals", "/shop?tab=meals"], ["Breakfast", "/collections/breakfast"], ["Lunch", "/collections/lunch"], ["Dinner", "/collections/dinner"], ["Drinks", "/collections/drinks"]] },
   { h: "Collections", links: [["Swallow and soups", "/collections/swallow-and-soups"], ["Low-carb", "/collections/low-carb"], ["High-protein", "/collections/high-protein"], ["Office lunch", "/collections/office-lunch"], ["Find my plan", "/quiz"], ["Gift cards", "/gift-cards"]] },
-  { h: "Help", links: [["Delivery zones", "/delivery"], ["FAQs", "/faq"], ["Contact us", "/contact"], ["Track an order", "/account#orders"], ["Pause or skip a week", "/account"]] },
+  { h: "Help", links: [["Delivery zones", "/delivery"], ["FAQs", "/faq"], ["Contact us", "/contact"], ["Track an order", "/track"], ["Pause or skip a week", "/account"]] },
   { h: "Company", links: [["Our kitchen", "/about"], ["Meet the dietitian", "/dietitian"], ["Results", "/results"], ["Terms", "/terms"], ["Privacy", "/privacy"]] },
 ];
 
@@ -37,7 +38,7 @@ export function Footer() {
             <ul className="flex flex-col gap-2 text-sm">
               <li className="flex items-center gap-2.5"><MapPin size={16} className="text-yellow" aria-hidden />Kitchen in Yaba, Lagos</li>
               <li className="flex items-center gap-2.5"><Clock size={16} className="text-yellow" aria-hidden />Deliveries Mon · Wed · Fri</li>
-              <li className="flex items-center gap-2.5"><MessageCircle size={16} className="text-yellow" aria-hidden /><a href="https://wa.me/2340000000000" className="text-body hover:text-yellow">WhatsApp us</a></li>
+              <li className="flex items-center gap-2.5"><MessageCircle size={16} className="text-yellow" aria-hidden /><a href={whatsappUrl()} className="text-body hover:text-yellow">WhatsApp us</a></li>
               <li className="flex items-center gap-2.5"><Mail size={16} className="text-yellow" aria-hidden /><Link href="/contact" className="text-body hover:text-yellow">Send a message</Link></li>
             </ul>
           </div>
