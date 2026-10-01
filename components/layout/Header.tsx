@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Scale, User } from "lucide-react";
+import { Scale } from "lucide-react";
 import { auth } from "@/auth";
 import { Logo, LogoMark, Wordmark } from "./Logo";
 import { CartButton } from "./CartButton";
@@ -50,9 +50,14 @@ export async function Header() {
               <FavLink />
               <Link href="/account#weight" aria-label="Weight tracker" className="flex size-11 items-center justify-center rounded-full border border-line text-fg hover:border-yellow"><Scale size={19} strokeWidth={1.8} aria-hidden /></Link>
               <CartButton />
-              <Link href={user ? "/account" : "/signin"} aria-label={user ? "My account" : "Sign in"} title={user ? "My account" : "Sign in"} className="flex size-11 items-center justify-center rounded-full bg-yellow font-display text-sm font-bold text-canvas no-underline">
-                {user ? initial : <User size={19} aria-hidden />}
-              </Link>
+              {user ? (
+                <Link href="/account" aria-label="My account" title="My account" className="flex size-11 items-center justify-center rounded-full bg-yellow font-display text-sm font-bold text-canvas no-underline">{initial}</Link>
+              ) : (
+                <>
+                  <Link href="/signin" className="cl-btn ml-1 flex min-h-11 items-center rounded-full border border-line px-4 text-sm font-bold text-fg no-underline hover:border-yellow">Sign in</Link>
+                  <Link href="/signin?mode=signup" className="cl-btn flex min-h-11 items-center rounded-full bg-yellow px-4 text-sm font-bold text-canvas no-underline">Sign up</Link>
+                </>
+              )}
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { auth } from "@/auth";
 import { asc, eq } from "drizzle-orm";
 import { ArrowRight, ChefHat, Flame, Scale, Snowflake, Truck } from "lucide-react";
 import { db } from "@/db";
@@ -51,6 +52,7 @@ const CATS = [
 ];
 
 export default async function HomePage() {
+  const session = await auth().catch(() => null);
   const [plans, tickerMeals, reviews, allMenu, counts] = await Promise.all([
     getPlans(4),
     getProductsBySlugs(TICKER.map((t) => t[1])),
@@ -135,6 +137,21 @@ export default async function HomePage() {
           ))}
         </div>
       </div>
+
+      {!session?.user && (
+        <section aria-label="Join Chop Lean" className="container-x pt-6 md:pt-8">
+          <div className="flex flex-col gap-4 rounded-[22px] border border-line bg-surface p-5 md:flex-row md:items-center md:justify-between md:px-8 md:py-6">
+            <div>
+              <b className="block font-display text-lg md:text-xl">Create a free account</b>
+              <span className="text-sm text-muted">Save your favourites, track your weight, reorder in one tap and get your plan sorted.</span>
+            </div>
+            <div className="grid grid-cols-2 gap-3 md:flex md:shrink-0">
+              <Link href="/signin" className="cl-btn flex min-h-12 items-center justify-center rounded-full border border-line px-6 font-bold text-fg no-underline">Sign in</Link>
+              <Link href="/signin?mode=signup" className="cl-btn flex min-h-12 items-center justify-center rounded-full bg-yellow px-6 font-bold text-canvas no-underline">Sign up</Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* WHY */}
       <section className="container-x grid items-center gap-12 py-16 md:grid-cols-2 md:gap-16 md:py-28">

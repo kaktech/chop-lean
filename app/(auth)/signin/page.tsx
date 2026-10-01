@@ -11,7 +11,7 @@ import { AuthPanel } from "@/components/auth/AuthPanel";
 export const metadata: Metadata = { title: "Sign in" };
 export const dynamic = "force-dynamic";
 
-export default async function SignInPage({ searchParams }: { searchParams: Promise<{ callbackUrl?: string; error?: string }> }) {
+export default async function SignInPage({ searchParams }: { searchParams: Promise<{ callbackUrl?: string; error?: string; mode?: string }> }) {
   const sp = await searchParams;
   const session = await auth().catch(() => null);
   const dest = sp.callbackUrl?.startsWith("/") && !sp.callbackUrl.startsWith("//") ? sp.callbackUrl : "/account";
@@ -34,12 +34,12 @@ export default async function SignInPage({ searchParams }: { searchParams: Promi
       <div className="flex items-center justify-center px-6 py-14 md:p-14">
         <div className="flex w-full max-w-[420px] flex-col gap-[22px]">
           <Link href="/" className="flex items-center gap-2.5 font-display text-2xl font-bold text-fg no-underline md:hidden"><LogoMark size={36} />Chop<span className="text-leaf">Lean</span></Link>
-          <h1 className="text-[36px] tracking-[-0.03em] md:text-[44px]">Welcome back</h1>
+          <h1 className="text-[36px] tracking-[-0.03em] md:text-[44px]">{sp.mode === "signup" ? "Create your account" : "Welcome back"}</h1>
           <p className="text-muted">{googleReady ? "Sign in with Google, or with your email and password." : "Sign in with your email and password, or create an account in a few seconds."}</p>
           {sp.error && <p role="alert" className="rounded-xl bg-tint-red px-4 py-3 text-sm text-price-red">We couldn&apos;t sign you in. Please try again.</p>}
           {googleReady && <><GoogleButton redirectTo={dest} className="!rounded-[14px] !border-input-line !py-[17px] text-base shadow-[0_6px_16px_rgba(21,32,26,0.06)]">Continue with Google</GoogleButton>
           <div className="flex items-center gap-3 text-[13px] text-muted"><span className="h-px flex-1 bg-line" />or<span className="h-px flex-1 bg-line" /></div></>}
-          <AuthPanel callbackUrl={dest} emailReady={emailReady()} />
+          <AuthPanel callbackUrl={dest} emailReady={emailReady()} initialMode={sp.mode === "signup" ? "signup" : "signin"} />
           <span className="text-[13px] leading-relaxed text-muted">By continuing you agree to our <Link href="/" className="text-leaf underline">Terms</Link> and <Link href="/" className="text-leaf underline">Privacy Policy</Link>. We only use your name and email (and your Google profile photo if you use Google).</span>
           <Link href="/checkout" className="text-sm font-bold text-leaf">Continue as guest →</Link>
         </div>

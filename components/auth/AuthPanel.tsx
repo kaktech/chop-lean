@@ -15,8 +15,8 @@ const submitWith = (action: (fd: FormData) => void, remember?: (fd: FormData) =>
 
 type Mode = "signin" | "signup" | "code" | "forgot";
 
-export function AuthPanel({ callbackUrl, emailReady = true }: { callbackUrl: string; emailReady?: boolean }) {
-  const [mode, setMode] = useState<Mode>("signin");
+export function AuthPanel({ callbackUrl, emailReady = true, initialMode = "signin" }: { callbackUrl: string; emailReady?: boolean; initialMode?: "signin" | "signup" }) {
+  const [mode, setMode] = useState<Mode>(initialMode);
   const tab = mode === "code" ? "code" : "password";
 
   return (

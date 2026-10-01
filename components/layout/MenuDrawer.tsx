@@ -81,7 +81,11 @@ export function MenuDrawer() {
           {MORE.map(([l, h]) => <Link key={l} href={h} onClick={close} className="flex min-h-11 items-center text-fg underline-offset-4 hover:underline">{l}</Link>)}
         </div>
         <div className="flex flex-col gap-1 pb-10 text-[15px]">
-          <Link href="/account" onClick={close} className="flex min-h-11 items-center font-bold text-yellow underline">Sign in / My account</Link>
+          <div className="mb-2 grid grid-cols-2 gap-3">
+            <Link href="/signin" onClick={close} className="cl-btn flex min-h-12 items-center justify-center rounded-full border border-line font-bold text-fg no-underline">Sign in</Link>
+            <Link href="/signin?mode=signup" onClick={close} className="cl-btn flex min-h-12 items-center justify-center rounded-full bg-yellow font-bold text-canvas no-underline">Sign up</Link>
+          </div>
+          <Link href="/account" onClick={close} className="flex min-h-11 items-center text-fg underline">My account</Link>
           <a href={whatsappUrl()} className="flex min-h-11 items-center text-fg underline">Chat on WhatsApp</a>
           <span className="text-muted">Nigeria (NGN ₦)</span>
         </div>
