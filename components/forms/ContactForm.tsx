@@ -24,7 +24,7 @@ export function ContactForm() {
   if (state?.ok) return <div role="status" className="rounded-[24px] border border-line bg-tint-green p-8 text-center"><p className="font-serif text-3xl">Message sent</p><p className="mt-2 text-body">{state.message}</p></div>;
   const e = state?.errors;
   return (
-    <form onSubmit={onSubmit} className="grid gap-4" noValidate>
+    <form method="post" onSubmit={onSubmit} className="grid gap-4" noValidate>
       <div className="hidden" aria-hidden><label>Website<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Your name" id="c-name" error={e?.name}><input id="c-name" name="name" autoComplete="name" required className={input} /></Field>
@@ -43,7 +43,7 @@ export function GiftCardForm() {
   if (state?.ok) return <div role="status" className="rounded-[24px] border border-line bg-tint-green p-8 text-center"><p className="font-serif text-3xl">Request received</p><p className="mt-2 text-body">{state.message}</p></div>;
   const e = state?.errors;
   return (
-    <form onSubmit={onSubmit} className="grid gap-4" noValidate>
+    <form method="post" onSubmit={onSubmit} className="grid gap-4" noValidate>
       <div className="hidden" aria-hidden><label>Website<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
       <Field label="Amount (₦)" id="g-amount" error={e?.amount}>
         <select id="g-amount" name="amount" defaultValue="50000" className={input}>{[10000, 25000, 50000, 100000, 200000].map((a) => <option key={a} value={a}>₦{a.toLocaleString("en-NG")}</option>)}</select>

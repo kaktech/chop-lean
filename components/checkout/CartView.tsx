@@ -101,7 +101,7 @@ export function CartView({ upsell }: { upsell: Upsell }) {
               {totals && totals.discountKobo > 0 && <div className="flex justify-between text-leaf"><dt>{promo}</dt><dd>- {formatNairaFull(totals.discountKobo)}</dd></div>}
               <div className="flex justify-between"><dt>Delivery</dt><dd>Choose zone at checkout</dd></div>
             </dl>
-            <form onSubmit={(e) => { e.preventDefault(); apply(); }} className="mt-5 flex gap-2">
+            <form method="post" onSubmit={(e) => { e.preventDefault(); apply(); }} className="mt-5 flex gap-2">
               <label htmlFor="cart-promo" className="sr-only">Promo code</label>
               <input id="cart-promo" value={code} onChange={(e) => setCode(e.target.value.toUpperCase())} placeholder="Promo code" className="min-h-11 min-w-0 flex-1 rounded-xl border border-input-line px-3.5 uppercase tracking-wide" />
               <button className="cl-btn tap rounded-xl bg-ink px-5 text-xs font-bold uppercase tracking-[0.1em] text-white">Apply</button>

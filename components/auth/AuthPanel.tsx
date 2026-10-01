@@ -43,7 +43,7 @@ function PasswordSignIn({ callbackUrl, onSignup, onForgot }: { callbackUrl: stri
   const [state, action, pending] = useActionState<OtpState | null, FormData>(signInWithPassword, null);
   const [show, setShow] = useState(false);
   return (
-    <form onSubmit={submitWith(action)} className="flex flex-col gap-3" noValidate>
+    <form method="post" onSubmit={submitWith(action)} className="flex flex-col gap-3" noValidate>
       <input type="hidden" name="callbackUrl" value={callbackUrl} />
       <label htmlFor="pw-email" className="text-[13px] font-bold">Email</label>
       <input id="pw-email" name="email" type="email" autoComplete="email" inputMode="email" required placeholder="you@email.com" defaultValue={state?.email} className={input} />
@@ -69,7 +69,7 @@ function CodeStep({ purpose, email, message, callbackUrl, onResend, resending, c
   useEffect(() => ref.current?.focus(), []);
   return (
     <div className="flex flex-col gap-3">
-      <form onSubmit={submitWith(action)} className="flex flex-col gap-3" noValidate>
+      <form method="post" onSubmit={submitWith(action)} className="flex flex-col gap-3" noValidate>
         <input type="hidden" name="email" value={email} />
         <input type="hidden" name="purpose" value={purpose} />
         <input type="hidden" name="callbackUrl" value={callbackUrl} />
@@ -107,7 +107,7 @@ function EmailCode({ callbackUrl }: { callbackUrl: string }) {
       onResend={() => { const fd = new FormData(); fd.set("email", email); startTransition(() => (action as (f: FormData) => void)(fd)); }} />;
   }
   return (
-    <form onSubmit={submitWith(action)} className="flex flex-col gap-3" noValidate>
+    <form method="post" onSubmit={submitWith(action)} className="flex flex-col gap-3" noValidate>
       <label htmlFor="otp-email" className="text-[13px] font-bold">Email</label>
       <input id="otp-email" name="email" type="email" autoComplete="email" inputMode="email" required placeholder="you@email.com" defaultValue={email} className={input} />
       <Err>{state?.error}</Err>
@@ -129,7 +129,7 @@ function Signup({ callbackUrl, onBack }: { callbackUrl: string; onBack: () => vo
       onResend={() => last.current && startTransition(() => action(last.current!))} />;
   }
   return (
-    <form onSubmit={submitWith(action, (fd) => { last.current = fd; })} className="flex flex-col gap-3" noValidate>
+    <form method="post" onSubmit={submitWith(action, (fd) => { last.current = fd; })} className="flex flex-col gap-3" noValidate>
       <label htmlFor="su-name" className="text-[13px] font-bold">Your name</label>
       <input id="su-name" name="name" autoComplete="name" required className={input} />
       <label htmlFor="su-email" className="text-[13px] font-bold">Email</label>
@@ -168,7 +168,7 @@ function Reset({ callbackUrl, onBack }: { callbackUrl: string; onBack: () => voi
     );
   }
   return (
-    <form onSubmit={submitWith(action)} className="flex flex-col gap-3" noValidate>
+    <form method="post" onSubmit={submitWith(action)} className="flex flex-col gap-3" noValidate>
       <p className="text-sm text-muted">Enter your email and we&apos;ll send a code to set a new password.</p>
       <label htmlFor="rs-email" className="text-[13px] font-bold">Email</label>
       <input id="rs-email" name="email" type="email" autoComplete="email" inputMode="email" required defaultValue={email} className={input} />

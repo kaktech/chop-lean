@@ -50,6 +50,13 @@ Generate `AUTH_SECRET` with `openssl rand -base64 32`.
 
 Sessions are stored in the database (`sessions` table) through the Drizzle adapter.
 
+### Sign-in options
+
+`/signin` offers three ways in, all creating the same kind of database session:
+1. **Google** (OAuth, steps above).
+2. **Email and password.** *Create account* asks for name, email and password, then emails a 6-digit code to verify the address before the account exists (this prevents someone registering your email with their password). *Forgot password* uses the same code to set a new one. Passwords are stored as salted scrypt hashes, 5 wrong tries lock an email for 15 minutes, and you can add or change a password under Account → Password.
+3. **Email code only** (below).
+
 ### Email sign-in (no password, no account set-up)
 
 `/signin` also offers "Email me a code": enter an email, receive a 6-digit code through Mailgun, type it in and you are signed in (an account is created silently the first time). Codes are hashed in the `login_codes` table, work once, expire after 10 minutes, allow 5 wrong attempts, and requests are rate-limited. A successful code creates the same database session Google sign-in does. Google and email sign-in link to the same account when the email matches.
@@ -107,7 +114,15 @@ Admin product photos and bank-transfer receipts use [Vercel Blob](https://vercel
 - **Cart:** guests use localStorage; signed-in carts are saved in the database and the guest cart is merged on sign-in.
 - **Reviews:** only real customer reviews are shown. The home page shows placeholder cards until some exist. A review gets a "Verified order" badge when the order number and email match an order containing that product.
 
-## Deviations from the design (on purpose)
+## Design
+
+The storefront uses a dark, photographic "kitchen" theme (tokens in `app/globals.css`, shared pieces in `components/ui/`). It replaces the light handoff design, per the later request. `DESIGN.md` and `screenshots/` describe the original light version and are kept for reference.
+
+Pages: Home, Full menu (`/menu`), Collections (`/collections`, `/collections/[slug]`: breakfast, lunch, dinner, swallow-and-soups, high-protein, low-carb, office-lunch, drinks), Shop, Plan and meal pages, Quiz, Cart, Checkout, Our kitchen (`/about`), Meet the dietitian (`/dietitian`), Delivery (`/delivery`), FAQs (`/faq`), Contact (`/contact`), Gift cards (`/gift-cards`), Results (`/results`), Terms, Privacy, Account and Admin.
+
+Content to review before launch: the Terms and Privacy pages are drafts (including a 24-hour problem-reporting window), the Dietitian page has a placeholder for the real dietitian's name and credentials, and the contact/WhatsApp number (`wa.me/2340000000000`) is a placeholder. Collection rules are shown on each collection page (for example high-protein means 30g+ protein).
+
+## Deviations from the original design (on purpose)
 
 - The Payment screen shows card number/expiry/CVV fields. We use Paystack's secure popup instead, so card data never touches this app.
 - The Success screen's "confirmation email preview" panel is a design annotation and is not rebuilt.

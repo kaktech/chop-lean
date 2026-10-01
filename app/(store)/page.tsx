@@ -73,13 +73,12 @@ export default async function HomePage() {
     <>
       {/* HERO */}
       <section className="relative isolate overflow-hidden">
-        <div className="relative min-h-[720px] md:min-h-[760px]">
+        <div className="relative md:min-h-[760px]">
           <Image src="/images/hero-wide.jpg" alt="A couple eating Chop Lean meals from containers at their dining table" fill priority sizes="100vw" className="-z-20 hidden object-cover [object-position:70%_center] md:block" />
-          <Image src="/images/hero-tall.jpg" alt="A smiling woman holding a Chop Lean jollof meal box" fill priority sizes="100vw" className="-z-20 object-cover [object-position:center_25%] md:hidden" />
-          <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-canvas via-canvas/75 to-canvas/10 max-md:bg-gradient-to-t max-md:from-canvas max-md:via-canvas/75 max-md:to-canvas/20" />
-          <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-canvas to-transparent" />
+          <div aria-hidden className="absolute inset-0 -z-10 hidden bg-gradient-to-r from-canvas via-canvas/75 to-canvas/10 md:block" />
+          <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 hidden h-40 bg-gradient-to-t from-canvas to-transparent md:block" />
 
-          <div className="container-x relative flex min-h-[720px] flex-col justify-end gap-8 pb-14 pt-24 md:min-h-[760px] md:justify-center md:pb-24">
+          <div className="container-x relative flex flex-col gap-8 pb-10 pt-10 md:min-h-[760px] md:justify-center md:pb-24 md:pt-24">
             <div className="max-w-[680px]">
               <div className="eyebrow cl-up cl-d1">Dietitian-planned · Lagos meal delivery</div>
               <h1 className="display-xl cl-up cl-d2 mt-4 text-[44px] md:text-[84px]">
@@ -100,6 +99,12 @@ export default async function HomePage() {
                 return <li key={l as string} className="flex items-center gap-2.5"><span className="flex size-9 items-center justify-center rounded-full border border-yellow/40 text-yellow"><I size={17} aria-hidden /></span>{l as string}</li>;
               })}
             </ul>
+
+            <div className="cl-up cl-d5 relative h-[440px] overflow-hidden rounded-[28px] border border-line shadow-chip md:hidden">
+              <Image src="/images/hero-tall.jpg" alt="A smiling woman holding a Chop Lean jollof meal box" fill priority sizes="100vw" className="object-cover [object-position:center_30%]" />
+              <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-canvas/70 via-transparent to-transparent" />
+              <div className="glass absolute bottom-4 left-4 flex items-center gap-3 rounded-2xl py-2.5 pl-2.5 pr-4"><Image src="/images/jollof.jpg" alt="" width={44} height={44} className="size-11 rounded-xl object-cover" /><span className="leading-snug"><b className="block text-sm text-fg">Jollof and chicken</b><span className="text-xs text-muted">450 kcal · 38g protein</span></span></div>
+            </div>
 
             <div className="cl-float glass absolute bottom-28 right-6 hidden items-center gap-3.5 rounded-[20px] py-3 pl-3 pr-[18px] lg:flex xl:right-[8%]">
               <Image src="/images/jollof.jpg" alt="" width={56} height={56} className="size-14 rounded-[14px] object-cover" />

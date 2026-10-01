@@ -98,7 +98,7 @@ export function CheckoutForm({ zones, dates, user }: { zones: Zone[]; dates: Dat
   const dateLabel = useMemo(() => dates.find((d) => d.iso === deliveryDate), [dates, deliveryDate]);
 
   return (
-    <form onSubmit={onSubmit} noValidate className="container-x grid gap-8 pb-32 pt-8 lg:grid-cols-[1fr_510px] lg:pb-16">
+    <form method="post" onSubmit={onSubmit} noValidate className="container-x grid gap-8 pb-32 pt-8 lg:grid-cols-[1fr_510px] lg:pb-16">
       <div className="min-w-0">
         {!user && (
           <>

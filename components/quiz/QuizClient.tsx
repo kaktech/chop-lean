@@ -106,7 +106,7 @@ export function QuizClient({ plans, signedIn }: { plans: PlanLite[]; signedIn: b
         </div>
       </aside>
 
-      <form onSubmit={(e) => { e.preventDefault(); submit(); }} className="cl-up cl-d3 flex flex-col gap-9 rounded-[30px] border border-line bg-surface p-6 md:p-12 lg:col-span-7">
+      <form method="post" onSubmit={(e) => { e.preventDefault(); submit(); }} className="cl-up cl-d3 flex flex-col gap-9 rounded-[30px] border border-line bg-surface p-6 md:p-12 lg:col-span-7">
         <fieldset>
           <legend className="mb-3.5 font-display text-2xl font-bold">What&apos;s your goal?</legend>
           <div className="grid gap-3 sm:grid-cols-3">

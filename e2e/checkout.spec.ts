@@ -6,7 +6,7 @@ test("guest buys a plan with pay on delivery", async ({ page }) => {
   const email = `e2e+${Date.now()}@example.com`;
 
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Lose Weight");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(/lose weight/i);
   await page.goto("/shop?tab=plans");
   await page.getByRole("link", { name: /Naija Lean 1400/ }).first().click();
   await expect(page).toHaveURL(/\/plans\/naija-lean-1400/);
