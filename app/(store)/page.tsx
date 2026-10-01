@@ -107,13 +107,6 @@ export default async function HomePage() {
               <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-canvas/70 via-transparent to-transparent" />
             </div>
 
-            <div aria-hidden className="absolute right-6 top-28 hidden size-[132px] items-center justify-center rounded-full border border-white/15 bg-canvas/70 backdrop-blur md:flex xl:right-[10%]">
-              <svg className="cl-spin" viewBox="0 0 120 120" width={120} height={120}>
-                <defs><path id="clCirc" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0" /></defs>
-                <text style={{ fontFamily: "var(--font-dm-sans)", fontSize: 10.5, fontWeight: 700, letterSpacing: 2.6, fill: "#F6B81A" }}><textPath href="#clCirc">CALORIE COUNTED • NAIJA MADE • </textPath></text>
-              </svg>
-              <span className="absolute font-serif text-[30px] text-fg">-0.5<span className="text-sm">kg</span></span>
-            </div>
           </div>
         </div>
       </section>
