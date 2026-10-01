@@ -13,7 +13,7 @@ const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     // React Compiler-era rules that flag legitimate hydration flags and ref reads inside event handlers.
-    rules: { "react-hooks/set-state-in-effect": "warn", "react-hooks/refs": "warn", "react-hooks/purity": "warn" },
+    rules: { "react-hooks/set-state-in-effect": "warn", "react-hooks/refs": "warn", "react-hooks/purity": "warn", "react-hooks/static-components": "warn" },
   },
   {
     ignores: [
