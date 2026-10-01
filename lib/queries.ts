@@ -33,8 +33,8 @@ export async function getRecentReviews(limit = 2) {
     .select({ id: s.reviews.id, rating: s.reviews.rating, body: s.reviews.body, name: s.reviews.name, verified: s.reviews.verified, product: s.products.name })
     .from(s.reviews)
     .innerJoin(s.products, eq(s.products.id, s.reviews.productId))
-    .where(and(eq(s.reviews.isVisible, true), eq(s.reviews.verified, true)))
-    .orderBy(desc(s.reviews.createdAt))
+    .where(eq(s.reviews.isVisible, true))
+    .orderBy(desc(s.reviews.verified), desc(s.reviews.createdAt))
     .limit(limit);
 }
 

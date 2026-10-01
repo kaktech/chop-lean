@@ -56,5 +56,7 @@ export async function submitReview(_prev: ReviewResult | null, formData: FormDat
     fullness: d.fullness, pepper: d.pepper, weightChange: d.weightChange, name: d.name, email: d.email ?? session?.user?.email ?? "", verified,
   });
   revalidatePath(`/${prod.type === "plan" ? "plans" : "meals"}/${prod.slug}`);
+  revalidatePath("/");
+  revalidatePath("/shop");
   return { ok: true, message: verified ? "Thanks! Your verified review is live." : "Thanks! Your review is live." };
 }

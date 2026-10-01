@@ -1,13 +1,10 @@
 import Link from "next/link";
 
-export function LogoMark() {
+export function LogoMark({ size = 40 }: { size?: number }) {
   return (
-    <span className="flex size-10 items-center justify-center rounded-xl bg-yellow">
-      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#15201A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 12h18a9 9 0 0 1-18 0z" />
-        <path d="M12 12c0-4 2-7 6-8-1 4-3 6-6 8z" />
-      </svg>
-    </span>
+    <svg width={size} height={size} viewBox="0 0 64 64" aria-hidden="true" className="shrink-0">
+      <circle cx="32" cy="32" r="32" fill="#17785F" /><path d="M32 33C25 29 24 17 38 9c6 9 3 21-6 24z" fill="#FBB826" /><path d="M33 31c0-6 2-11 6-14" stroke="#17785F" strokeWidth="1.6" fill="none" strokeLinecap="round" /><path d="M11 38c0-1.5 9-4 21-4s21 2.5 21 4-9 4-21 4-21-2.5-21-4z" fill="#FBB826" /><path d="M14 41c1 9 8 14 18 14s17-5 18-14c-5 2.5-11 3.5-18 3.5S19 43.5 14 41z" fill="#FBB826" />
+    </svg>
   );
 }
 

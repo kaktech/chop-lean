@@ -6,6 +6,7 @@ import { db } from "@/db";
 import { products } from "@/db/schema";
 import { getPlans, getProductsBySlugs, getRecentReviews } from "@/lib/queries";
 import { getCollectionCounts } from "@/lib/collections";
+import { RotatingDishChip } from "@/components/home/RotatingDishChip";
 import { PlanCard } from "@/components/shop/ProductCard";
 import { MenuList, type MenuItem } from "@/components/home/MenuList";
 import { Reveal } from "@/components/ui/Reveal";
@@ -103,7 +104,7 @@ export default async function HomePage() {
             <div className="cl-up cl-d5 relative h-[440px] overflow-hidden rounded-[28px] border border-line shadow-chip md:hidden">
               <Image src="/images/hero-tall.jpg" alt="A smiling woman holding a Chop Lean jollof meal box" fill priority sizes="100vw" className="object-cover [object-position:center_30%]" />
               <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-canvas/70 via-transparent to-transparent" />
-              <div className="glass absolute bottom-4 left-4 flex items-center gap-3 rounded-2xl py-2.5 pl-2.5 pr-4"><Image src="/images/jollof.jpg" alt="" width={44} height={44} className="size-11 rounded-xl object-cover" /><span className="leading-snug"><b className="block text-sm text-fg">Jollof and chicken</b><span className="text-xs text-muted">450 kcal · 38g protein</span></span></div>
+              <RotatingDishChip meals={tickerMeals.map((m) => ({ slug: m.slug, name: m.name, image: m.image, kcal: m.kcal, proteinG: m.proteinG }))} />
             </div>
 
             <div className="cl-float glass absolute bottom-28 right-6 hidden items-center gap-3.5 rounded-[20px] py-3 pl-3 pr-[18px] lg:flex xl:right-[8%]">
@@ -302,16 +303,25 @@ export default async function HomePage() {
           <div className="flex flex-col justify-between gap-5 overflow-hidden rounded-[26px] bg-green pb-9 text-white">
             <Image src="/images/woman-cafe.jpg" alt="Woman enjoying a meal at a table" width={600} height={190} className="h-[190px] w-full object-cover" />
             <span className="px-9 pt-1.5 font-serif text-[44px] leading-[1.05]">Real people.<br /><span className="italic text-yellow">Real plates.</span></span>
-            <span className="px-9 text-[15px] leading-relaxed text-mint">Reviews from verified orders only. Customers can add their weekly weigh-ins to their review.</span>
+            <span className="px-9 text-[15px] leading-relaxed text-mint">Reviews from real customers, with a Verified badge when the order checks out. New ones appear here as soon as they are posted.</span>
             <Link href="/results" className="mx-9 text-sm font-bold text-yellow underline">See all results →</Link>
           </div>
           {[0, 1].map((i) => {
             const r = reviews[i];
+            if (!r) {
+              return i === 0 || !reviews[0] ? (
+                <div key={i} className="flex flex-col justify-center gap-4 rounded-[26px] border border-dashed border-line bg-surface p-[34px]">
+                  <span className="font-serif text-2xl leading-snug">{i === 0 ? "No reviews yet. Be the first." : "Tried a plan? Tell us how it went."}</span>
+                  <span className="text-sm text-muted">Open any plan or meal and tap “Write a review”. Yours shows up here straight away.</span>
+                  <Link href="/shop" className="cl-btn tap inline-flex w-fit items-center rounded-full bg-yellow px-5 text-sm font-bold text-canvas no-underline">Browse plans</Link>
+                </div>
+              ) : null;
+            }
             return (
               <div key={i} className="flex flex-col gap-[18px] rounded-[26px] border border-line bg-surface p-[34px]">
-                <span className="text-xl tracking-[2px] text-yellow" aria-label={r ? `${r.rating} out of 5 stars` : "No rating yet"}>{r ? "★".repeat(r.rating) + "☆".repeat(5 - r.rating) : "★★★★★"}</span>
-                <span className="font-serif text-2xl leading-snug">{r ? `“${r.body}”` : "“[Customer review goes here, pulled from a verified order.]”"}</span>
-                <span className="mt-auto flex items-center gap-3"><span className={`size-11 rounded-full ${i ? "bg-tint-blue" : "bg-tint-red"}`} /><span className="flex flex-col"><b>{r ? r.name : "[Customer name]"}</b><span className="text-[13px] text-muted">{r ? r.product : "[Plan] · [weeks on plan]"}</span></span></span>
+                <span className="text-xl tracking-[2px] text-yellow" aria-label={`${r.rating} out of 5 stars`}>{"★".repeat(r.rating) + "☆".repeat(5 - r.rating)}</span>
+                <span className="font-serif text-2xl leading-snug">{`“${r.body}”`}</span>
+                <span className="mt-auto flex items-center gap-3"><span className={`flex size-11 items-center justify-center rounded-full font-bold ${i ? "bg-tint-blue" : "bg-tint-red"}`}>{r.name.charAt(0).toUpperCase()}</span><span className="flex flex-col"><b>{r.name}{r.verified && <span className="ml-2 rounded-full bg-tint-green px-2 py-0.5 text-[11px] font-bold text-leaf-soft">Verified</span>}</b><span className="text-[13px] text-muted">{r.product}</span></span></span>
               </div>
             );
           })}
