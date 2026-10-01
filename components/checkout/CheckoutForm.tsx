@@ -28,6 +28,7 @@ const formSchema = z.object({
   deliveryWindow: z.enum(DELIVERY_WINDOWS),
   address: z.string(),
   notes: z.string().max(300).optional(),
+  terms: z.boolean().refine((v) => v, "Please agree to the Terms and Privacy Policy to continue."),
 });
 type FormValues = z.infer<typeof formSchema>;
 
@@ -53,7 +54,7 @@ export function CheckoutForm({ zones, dates, user, googleReady = false }: { goog
     defaultValues: {
       email: user?.email ?? "", firstName: user?.firstName ?? "", lastName: user?.lastName ?? "", phone: user?.phone ?? "",
       zoneId: zones.find((z) => z.id === "island")?.id ?? zones[0]?.id ?? "",
-      deliveryDate: dates[0]?.iso ?? "", deliveryWindow: DELIVERY_WINDOWS[0], address: "", notes: "",
+      deliveryDate: dates[0]?.iso ?? "", deliveryWindow: DELIVERY_WINDOWS[0], address: "", notes: "", terms: false,
     },
   });
   const zoneId = watch("zoneId");
@@ -153,6 +154,13 @@ export function CheckoutForm({ zones, dates, user, googleReady = false }: { goog
             </Field>
           )}
           <Field label="Notes for the kitchen (optional)" id="notes"><input id="notes" placeholder="Allergies, gate code, call before arriving…" className={input} {...register("notes")} /></Field>
+          <div>
+            <label className="flex min-h-11 cursor-pointer items-start gap-3 text-sm leading-relaxed">
+              <input type="checkbox" aria-invalid={!!errors.terms} className="mt-1 size-5 shrink-0 accent-[#F6B81A]" {...register("terms")} />
+              <span>I agree to the <Link href="/terms" target="_blank" className="font-bold text-leaf underline">Terms of Service</Link> and <Link href="/privacy" target="_blank" className="font-bold text-leaf underline">Privacy Policy</Link>.</span>
+            </label>
+            {errors.terms && <p role="alert" className="mt-1 text-sm text-price-red">{errors.terms.message}</p>}
+          </div>
         </div>
       </div>
 

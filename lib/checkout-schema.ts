@@ -46,6 +46,7 @@ export const checkoutSchema = z.object({
   address: z.string().trim().max(400),
   notes: z.string().trim().max(300).optional(),
   promo: z.string().trim().toUpperCase().max(30).optional(),
+  terms: z.boolean().refine((v) => v, "Please agree to the Terms and Privacy Policy to continue."),
   lines: z.array(lineSchema).min(1, "Your cart is empty").max(30),
 });
 export type CheckoutInput = z.infer<typeof checkoutSchema>;

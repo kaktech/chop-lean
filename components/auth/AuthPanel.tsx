@@ -141,6 +141,10 @@ function Signup({ callbackUrl, onBack, emailReady }: { callbackUrl: string; onBa
         <button type="button" onClick={() => setShow((s) => !s)} aria-pressed={show} className="absolute right-2 top-1/2 min-h-11 -translate-y-1/2 px-3 text-sm font-bold text-muted">{show ? "Hide" : "Show"}</button>
       </div>
       <p id="su-hint" className="-mt-1 text-xs text-muted">At least 8 characters with a letter and a number.</p>
+      <label className="flex min-h-11 cursor-pointer items-start gap-3 text-sm leading-relaxed">
+        <input type="checkbox" name="terms" required className="mt-1 size-5 shrink-0 accent-[#F6B81A]" />
+        <span>I agree to the <a href="/terms" target="_blank" rel="noopener" className="font-bold text-leaf underline">Terms of Service</a> and <a href="/privacy" target="_blank" rel="noopener" className="font-bold text-leaf underline">Privacy Policy</a>.</span>
+      </label>
       <Err>{state?.error}</Err>
       <button disabled={pending} className={`${primary} bg-yellow text-canvas`}>{pending ? (emailReady ? "Sending code…" : "Creating…") : "Create account"}</button>
       {emailReady && <p className="text-xs text-muted">We&apos;ll email a code to confirm it&apos;s really your address.</p>}

@@ -25,6 +25,7 @@ test("guest buys a plan with pay on delivery", async ({ page }) => {
   await expect(page.getByText("Please provide a more detailed address")).toBeVisible();
 
   await page.getByLabel("Delivery address").fill("12 Admiralty Way, Lekki Phase 1, opposite Circle Mall");
+  await page.getByRole("checkbox", { name: /Terms of Service/ }).check();
   await page.getByRole("button", { name: "Review order" }).first().click();
 
   await expect(page).toHaveURL(/\/checkout\/pay\?o=/);

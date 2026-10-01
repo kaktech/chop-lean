@@ -67,6 +67,7 @@ const signupSchema = z.object({ name: z.string().trim().min(2, "Enter your name"
 export async function requestSignup(_prev: OtpState | null, fd: FormData): Promise<OtpState> {
   const p = signupSchema.safeParse({ name: fd.get("name"), email: fd.get("email"), password: fd.get("password") });
   if (!p.success) return { step: "email", purpose: "signup", error: p.error.issues[0].message };
+  if (fd.get("terms") !== "on") return { step: "email", purpose: "signup", email: p.data.email, error: "Please agree to the Terms and Privacy Policy to create an account." };
   const problem = passwordProblem(p.data.password);
   if (problem) return { step: "email", purpose: "signup", email: p.data.email, error: problem };
   if (!rateLimit(`otp-ip:${await clientIp()}`, 10, 10 * 60_000)) return { step: "email", purpose: "signup", email: p.data.email, error: "Too many requests. Please wait a few minutes and try again." };
