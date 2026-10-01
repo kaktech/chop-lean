@@ -33,7 +33,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 type Quote = NonNullable<Awaited<ReturnType<typeof getQuote>>>;
 
-const input = "min-h-[50px] w-full rounded-[14px] border border-input-line bg-white px-4 text-base placeholder:text-muted/70";
+const input = "min-h-[50px] w-full rounded-[14px] border border-input-line bg-surface px-4 text-base placeholder:text-muted/70";
 const bad = "!border-price-red";
 
 export function CheckoutForm({ zones, dates, user }: { zones: Zone[]; dates: DateOpt[]; user: { email: string; firstName: string; lastName: string; phone: string } | null }) {
@@ -104,7 +104,7 @@ export function CheckoutForm({ zones, dates, user }: { zones: Zone[]; dates: Dat
           <>
             <GoogleButton redirectTo="/checkout">Continue with Google to fill this in</GoogleButton>
             <div className="my-7 flex items-center gap-3 text-[13px] text-muted"><span className="h-px flex-1 bg-line" />or check out as a guest<span className="h-px flex-1 bg-line" /></div>
-            <p className="-mt-3 mb-6 text-center text-[13px] text-muted">Prefer email? <Link href="/signin?callbackUrl=/checkout" className="font-bold text-green underline">Sign in with an emailed code</Link></p>
+            <p className="-mt-3 mb-6 text-center text-[13px] text-muted">Prefer email? <Link href="/signin?callbackUrl=/checkout" className="font-bold text-leaf underline">Sign in with an emailed code</Link></p>
           </>
         )}
 
@@ -122,7 +122,7 @@ export function CheckoutForm({ zones, dates, user }: { zones: Zone[]; dates: Dat
         <fieldset className="flex flex-col gap-2.5">
           <legend className="sr-only">Delivery zone</legend>
           {zones.map((z) => (
-            <label key={z.id} className={`flex min-h-[76px] cursor-pointer items-center gap-4 rounded-[18px] border bg-white px-5 py-4 has-[:focus-visible]:outline has-[:focus-visible]:outline-[3px] has-[:focus-visible]:outline-green ${zoneId === z.id ? "border-2 border-green bg-green-tint" : "border-line"}`}>
+            <label key={z.id} className={`flex min-h-[76px] cursor-pointer items-center gap-4 rounded-[18px] border bg-surface px-5 py-4 has-[:focus-visible]:outline has-[:focus-visible]:outline-[3px] has-[:focus-visible]:outline-green ${zoneId === z.id ? "border-2 border-green bg-tint-green" : "border-line"}`}>
               <input type="radio" value={z.id} className="sr-only" {...register("zoneId")} />
               <span aria-hidden className={`size-6 shrink-0 rounded-full border-2 ${zoneId === z.id ? "border-[7px] border-green" : "border-input-line"}`} />
               <span className="flex-1"><b className="block font-display text-[17px]">{z.name}</b><span className="text-[13px] text-muted">{z.areas}</span></span>
@@ -136,7 +136,7 @@ export function CheckoutForm({ zones, dates, user }: { zones: Zone[]; dates: Dat
           <fieldset className="grid grid-cols-3 gap-2.5">
             <legend className="sr-only">Delivery date</legend>
             {dates.map((d) => (
-              <label key={d.iso} className={`flex min-h-[76px] cursor-pointer flex-col items-center justify-center rounded-[18px] border has-[:focus-visible]:outline has-[:focus-visible]:outline-[3px] has-[:focus-visible]:outline-green ${deliveryDate === d.iso ? "border-ink bg-ink text-white" : "border-line bg-white"}`}>
+              <label key={d.iso} className={`flex min-h-[76px] cursor-pointer flex-col items-center justify-center rounded-[18px] border has-[:focus-visible]:outline has-[:focus-visible]:outline-[3px] has-[:focus-visible]:outline-green ${deliveryDate === d.iso ? "border-fg bg-ink text-white" : "border-line bg-surface"}`}>
                 <input type="radio" value={d.iso} className="sr-only" {...register("deliveryDate")} />
                 <b className="font-display text-lg">{d.dow} {d.day}</b><span className="text-xs">{d.month}</span>
               </label>
@@ -157,7 +157,7 @@ export function CheckoutForm({ zones, dates, user }: { zones: Zone[]; dates: Dat
       </div>
 
       {/* Summary */}
-      <aside className="h-fit rounded-[26px] border border-line bg-white p-6 md:p-7 lg:sticky lg:top-6" aria-label="Order summary">
+      <aside className="h-fit rounded-[26px] border border-line bg-surface p-6 md:p-7 lg:sticky lg:top-6" aria-label="Order summary">
         <h2 className="text-2xl">Order Summary</h2>
         <ul className="mt-4 flex flex-col gap-4">
           {items.map((l) => (
@@ -167,30 +167,30 @@ export function CheckoutForm({ zones, dates, user }: { zones: Zone[]; dates: Dat
               <b className="font-display">{formatNaira(l.unitKobo * l.qty)}</b>
             </li>
           ))}
-          {items.length === 0 && hydrated && <li className="text-muted">Your cart is empty. <Link href="/shop" className="font-bold text-green underline">Browse plans</Link></li>}
+          {items.length === 0 && hydrated && <li className="text-muted">Your cart is empty. <Link href="/shop" className="font-bold text-leaf underline">Browse plans</Link></li>}
         </ul>
         <div className="mt-5 flex gap-2 border-t border-line pt-5">
           <label htmlFor="promo" className="sr-only">Promo code</label>
           <input id="promo" value={code} onChange={(e) => setCode(e.target.value.toUpperCase())} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); apply(); } }} placeholder="Promo code" className="min-h-12 min-w-0 flex-1 rounded-xl border border-input-line px-4 uppercase tracking-wide" />
           <button type="button" onClick={apply} className="cl-btn tap rounded-xl bg-ink px-6 text-xs font-bold uppercase tracking-[0.12em] text-white">Apply</button>
         </div>
-        <p role="status" className={`mt-2 min-h-5 text-[13px] ${promoMsg && !promoMsg.ok ? "text-price-red" : "font-bold text-green"}`}>{promoMsg ? (promoMsg.ok ? `✓ ${promoMsg.text}` : promoMsg.text) : quote?.promo ? `✓ ${quote.promo.code} applied` : quote?.promoError ?? ""}</p>
+        <p role="status" className={`mt-2 min-h-5 text-[13px] ${promoMsg && !promoMsg.ok ? "text-price-red" : "font-bold text-leaf"}`}>{promoMsg ? (promoMsg.ok ? `✓ ${promoMsg.text}` : promoMsg.text) : quote?.promo ? `✓ ${quote.promo.code} applied` : quote?.promoError ?? ""}</p>
         <dl className="mt-3 flex flex-col gap-2.5 text-[15px] text-muted">
           <div className="flex justify-between"><dt>Subtotal</dt><dd className="text-body">{t ? formatNairaFull(t.subtotalKobo) : "–"}</dd></div>
-          {t && t.discountKobo > 0 && <div className="flex justify-between"><dt>Discount</dt><dd className="text-green">- {formatNairaFull(t.discountKobo)}</dd></div>}
+          {t && t.discountKobo > 0 && <div className="flex justify-between"><dt>Discount</dt><dd className="text-leaf">- {formatNairaFull(t.discountKobo)}</dd></div>}
           <div className="flex justify-between"><dt>Delivery ({zone?.name.replace("Lagos ", "Lagos ") ?? ""})</dt><dd className="text-body">{t ? (t.deliveryKobo ? formatNairaFull(t.deliveryKobo) : "Free") : "–"}</dd></div>
         </dl>
         <div className="mt-5 border-t border-line pt-5">
           <div className="label-sm text-[11px] text-muted">Total to pay</div>
           <div className="font-display text-[40px] font-bold leading-tight tracking-tight">{t ? formatNairaFull(t.totalKobo) : "–"}</div>
         </div>
-        {serverError && <p role="alert" className="mt-3 rounded-xl bg-pink px-4 py-3 text-sm text-price-red">{serverError}</p>}
+        {serverError && <p role="alert" className="mt-3 rounded-xl bg-tint-red px-4 py-3 text-sm text-price-red">{serverError}</p>}
         <button disabled={pending || !items.length || !dates.length} className="cl-btn mt-5 hidden w-full rounded-xl bg-ink py-[18px] text-sm font-bold uppercase tracking-[0.16em] text-white disabled:opacity-60 lg:block">{pending ? "Checking…" : "Review order"}</button>
         <p className="mt-4 hidden text-center text-xs text-muted lg:block">Next: choose card, bank transfer or pay on delivery.</p>
       </aside>
 
       {/* Mobile sticky bar */}
-      <div className="fixed inset-x-0 bottom-0 z-30 flex items-center gap-4 border-t border-line bg-white px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] lg:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-30 flex items-center gap-4 border-t border-line bg-surface px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] lg:hidden">
         <div><div className="label-sm text-[10px] text-muted">Total</div><div className="font-display text-xl font-bold">{t ? formatNairaFull(t.totalKobo) : "–"}</div></div>
         <button disabled={pending || !items.length} className="cl-btn min-h-12 flex-1 rounded-xl bg-ink text-sm font-bold uppercase tracking-[0.14em] text-white disabled:opacity-60">{pending ? "Checking…" : "Review order"}</button>
       </div>

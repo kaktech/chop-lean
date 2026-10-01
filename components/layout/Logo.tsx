@@ -14,14 +14,14 @@ export function LogoMark() {
 export function Wordmark({ dark = false, className = "" }: { dark?: boolean; className?: string }) {
   return (
     <span className={`font-display font-bold tracking-tight ${className}`}>
-      Chop<span className={dark ? "text-yellow" : "text-green"}>Lean</span>
+      Chop<span className={dark ? "text-yellow" : "text-leaf"}>Lean</span>
     </span>
   );
 }
 
 export function Logo() {
   return (
-    <Link href="/" className="flex items-center gap-2.5 text-ink no-underline" aria-label="Chop Lean home">
+    <Link href="/" className="flex items-center gap-2.5 text-fg no-underline" aria-label="Chop Lean home">
       <LogoMark />
       <Wordmark className="text-[26px]" />
     </Link>

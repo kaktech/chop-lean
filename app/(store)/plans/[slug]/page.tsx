@@ -43,7 +43,7 @@ export default async function PlanPage({ params }: P) {
     <>
       <JsonLd data={productJsonLd(p, stats)} />
       <nav aria-label="Breadcrumb" className="container-x pt-5 text-xs text-muted md:text-[13px]">
-        <Link href="/" className="text-green underline">Home</Link> / <Link href="/shop?tab=plans" className="text-green underline">Meal Plans</Link> / {p.name}
+        <Link href="/" className="text-leaf underline">Home</Link> / <Link href="/shop?tab=plans" className="text-leaf underline">Meal Plans</Link> / {p.name}
       </nav>
       <PlanProvider>
         <PlanPurchase

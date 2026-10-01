@@ -1,19 +1,14 @@
 export function SectionTitle({
-  watermark,
-  children,
-  sub,
-  align = "center",
+  watermark, children, sub, align = "center", eyebrow,
 }: {
-  watermark: string;
-  children: React.ReactNode;
-  sub?: string;
-  align?: "center" | "left";
+  watermark?: string; children: React.ReactNode; sub?: string; align?: "center" | "left"; eyebrow?: string;
 }) {
   return (
-    <div className={`relative mb-8 md:mb-11 ${align === "center" ? "text-center" : ""}`}>
-      <div aria-hidden className={`watermark absolute -top-8 text-[84px] md:-top-[70px] md:text-[170px] ${align === "center" ? "inset-x-0" : "left-0"}`}>{watermark}</div>
-      <h2 className="relative text-[30px] tracking-[-0.03em] md:text-5xl">{children}</h2>
-      {sub && <p className="relative mt-2.5 text-sm text-muted md:text-base">{sub}</p>}
+    <div className={`relative mb-8 md:mb-12 ${align === "center" ? "text-center" : ""}`}>
+      {watermark && <div aria-hidden className={`watermark absolute -top-8 text-[84px] md:-top-[74px] md:text-[170px] ${align === "center" ? "inset-x-0" : "left-0"}`}>{watermark}</div>}
+      {eyebrow && <div className={`eyebrow both relative ${align === "center" ? "justify-center" : ""}`}>{eyebrow}</div>}
+      <h2 className="display-xl relative mt-3 text-[32px] md:text-[52px]">{children}</h2>
+      {sub && <p className={`relative mt-3 text-sm text-muted md:text-base ${align === "center" ? "mx-auto max-w-[620px]" : "max-w-[620px]"}`}>{sub}</p>}
     </div>
   );
 }

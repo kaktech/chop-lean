@@ -29,11 +29,11 @@ export function WeightForm({ latest }: { latest: number | null }) {
     <form action={action} className="flex flex-col gap-3">
       <div className="flex items-center gap-3">
         <label htmlFor="kg" className="sr-only">Weight in kilograms</label>
-        <input id="kg" name="kg" type="number" step="0.1" min="30" max="300" inputMode="decimal" defaultValue={latest ?? ""} placeholder="e.g. 83.6" className="min-h-14 min-w-0 flex-1 rounded-2xl border border-input-line bg-white px-4 font-display text-2xl font-bold" />
+        <input id="kg" name="kg" type="number" step="0.1" min="30" max="300" inputMode="decimal" defaultValue={latest ?? ""} placeholder="e.g. 83.6" className="min-h-14 min-w-0 flex-1 rounded-2xl border border-input-line bg-surface px-4 font-display text-2xl font-bold" />
         <span className="text-muted">kg</span>
         <button disabled={pending} className="cl-btn min-h-14 rounded-2xl bg-ink px-6 font-bold text-white disabled:opacity-60">{pending ? "…" : "Save"}</button>
       </div>
-      <p role="status" className={`text-sm ${state && !state.ok ? "text-price-red" : "text-green"}`}>{state?.message}</p>
+      <p role="status" className={`text-sm ${state && !state.ok ? "text-price-red" : "text-leaf"}`}>{state?.message}</p>
     </form>
   );
 }
@@ -64,7 +64,7 @@ export function ReorderButton({ orderId }: { orderId: string }) {
       if (!lines.length) { toast.error("Those items aren't available any more."); return; }
       for (const l of lines) add(l as Omit<CartLine, "id" | "qty"> & { qty: number });
       setCartOpen(true);
-    })} className="min-h-11 font-bold text-green underline disabled:opacity-60">{pending ? "…" : "Reorder"}</button>
+    })} className="min-h-11 font-bold text-leaf underline disabled:opacity-60">{pending ? "…" : "Reorder"}</button>
   );
 }
 
@@ -83,12 +83,12 @@ export function WeightChart({ data, goal }: { data: WeightPoint[]; goal: number 
       {mounted && (
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
-            <CartesianGrid stroke="#EDEBE3" vertical={false} />
-            <XAxis dataKey="label" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: "#5B6560" }} />
-            <YAxis domain={[min, max]} tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: "#5B6560" }} width={44} />
-            <Tooltip formatter={(v) => [`${v} kg`, ""]} contentStyle={{ borderRadius: 12, border: "1px solid #E6E4DC" }} />
-            <Line type="linear" dataKey="pace" stroke="#9AA096" strokeDasharray="5 5" dot={false} strokeWidth={1.5} isAnimationActive={false} />
-            <Line type="linear" dataKey="kg" stroke="#3D6B1F" strokeWidth={2.5} dot={{ r: 4, fill: "#3D6B1F", stroke: "#3D6B1F" }} isAnimationActive={false} />
+            <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
+            <XAxis dataKey="label" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: "#A7B1AA" }} />
+            <YAxis domain={[min, max]} tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: "#A7B1AA" }} width={44} />
+            <Tooltip formatter={(v) => [`${v} kg`, ""]} contentStyle={{ borderRadius: 12, border: "1px solid rgba(255,255,255,.15)", background: "#141A17", color: "#F4EFE6" }} />
+            <Line type="linear" dataKey="pace" stroke="#6E7871" strokeDasharray="5 5" dot={false} strokeWidth={1.5} isAnimationActive={false} />
+            <Line type="linear" dataKey="kg" stroke="#92CF5C" strokeWidth={2.5} dot={{ r: 4, fill: "#92CF5C", stroke: "#92CF5C" }} isAnimationActive={false} />
             <ReferenceDot x={data[data.length - 1].label} y={data[data.length - 1].kg} r={7} fill="#F6B81A" stroke="#15201A" strokeWidth={2} />
           </LineChart>
         </ResponsiveContainer>
@@ -99,13 +99,13 @@ export function WeightChart({ data, goal }: { data: WeightPoint[]; goal: number 
 
 export function PasswordForm({ hasPassword }: { hasPassword: boolean }) {
   const [state, action, pending] = useActionState(setPassword, null);
-  const input = "min-h-12 w-full rounded-xl border border-input-line bg-white px-4";
+  const input = "min-h-12 w-full rounded-xl border border-input-line bg-surface px-4";
   return (
     <form action={action} className="mt-4 grid max-w-[420px] gap-3">
       {hasPassword && <div><label htmlFor="cur-pw" className="mb-1.5 block text-[13px] font-bold">Current password</label><input id="cur-pw" name="currentPassword" type="password" autoComplete="current-password" required className={input} /></div>}
       <div><label htmlFor="new-pw" className="mb-1.5 block text-[13px] font-bold">{hasPassword ? "New password" : "Add a password"}</label><input id="new-pw" name="newPassword" type="password" autoComplete="new-password" minLength={8} required className={input} /></div>
       <button disabled={pending} className="cl-btn min-h-12 rounded-xl bg-ink font-bold text-white disabled:opacity-60">{pending ? "Saving…" : hasPassword ? "Change password" : "Save password"}</button>
-      <p role="status" className={`text-sm ${state && !state.ok ? "text-price-red" : "text-green"}`}>{state?.message}</p>
+      <p role="status" className={`text-sm ${state && !state.ok ? "text-price-red" : "text-leaf"}`}>{state?.message}</p>
     </form>
   );
 }

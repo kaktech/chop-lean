@@ -10,7 +10,7 @@ import { imgSrc } from "@/lib/img";
 
 export type AdminProduct = { id: string; slug: string; type: "plan" | "meal" | "drink"; name: string; description: string | null; image: string | null; kcal: number | null; priceKobo: number; compareAtKobo: number | null; weeklySlots: number | null; slotsTaken: number; isLive: boolean; tags: string[]; slot: string | null };
 
-const input = "min-h-11 w-full rounded-xl border border-input-line bg-white px-3.5 text-[15px]";
+const input = "min-h-11 w-full rounded-xl border border-input-line bg-surface px-3.5 text-[15px]";
 
 export function ProductsClient({ products, tab, counts, locked, selectedId, creating }: { products: AdminProduct[]; tab: string; counts: Record<string, number>; locked: boolean; selectedId: string | null; creating: boolean }) {
   const router = useRouter();
@@ -25,22 +25,22 @@ export function ProductsClient({ products, tab, counts, locked, selectedId, crea
 
   return (
     <div className="grid gap-5 xl:grid-cols-[1fr_360px]">
-      <section className="min-w-0 rounded-[24px] border border-line bg-white p-5 md:p-6">
+      <section className="min-w-0 rounded-[24px] border border-line bg-surface p-5 md:p-6">
         <div className="flex flex-wrap items-center gap-2">
           {([["plans", "Plans"], ["meals", "Meals"], ["drinks", "Snacks and drinks"]] as const).map(([k, l]) => (
-            <Link key={k} href={`/admin/products?tab=${k}`} className={`tap flex items-center rounded-full border px-4 text-[13px] font-medium no-underline ${tab === k ? "border-green bg-green font-bold text-white" : "border-line text-ink"}`}>{l} ({counts[k] ?? 0})</Link>
+            <Link key={k} href={`/admin/products?tab=${k}`} className={`tap flex items-center rounded-full border px-4 text-[13px] font-medium no-underline ${tab === k ? "border-green bg-green font-bold text-white" : "border-line text-fg"}`}>{l} ({counts[k] ?? 0})</Link>
           ))}
           <label className="ml-auto flex items-center gap-2.5 text-[13px] font-bold">
             Lock inventory
-            <button type="button" role="switch" aria-checked={locked} disabled={pending} onClick={() => act(() => setInventoryLock(!locked))} className={`relative h-6 w-11 rounded-full transition-colors ${locked ? "bg-green" : "bg-input-line"}`}><span className={`absolute top-0.5 size-5 rounded-full bg-white transition-all ${locked ? "left-[22px]" : "left-0.5"}`} /></button>
+            <button type="button" role="switch" aria-checked={locked} disabled={pending} onClick={() => act(() => setInventoryLock(!locked))} className={`relative h-6 w-11 rounded-full transition-colors ${locked ? "bg-green" : "bg-input-line"}`}><span className={`absolute top-0.5 size-5 rounded-full bg-surface transition-all ${locked ? "left-[22px]" : "left-0.5"}`} /></button>
           </label>
         </div>
         <p className="mt-2 text-xs text-muted">When locked, a plan sells out automatically once its weekly kitchen slots are full.</p>
         <div className="mt-4 flex flex-wrap gap-2">
           <label className="sr-only" htmlFor="pq">Search products</label>
-          <input id="pq" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search products…" className="min-h-11 min-w-0 flex-1 rounded-xl bg-[#F2F1EC] px-4 text-sm" />
-          <button type="button" onClick={() => setSoldOutOnly(false)} className={`tap rounded-xl border px-4 text-[13px] font-bold ${!soldOutOnly ? "border-line bg-[#F2F1EC]" : "border-line bg-white"}`}>All</button>
-          <button type="button" onClick={() => setSoldOutOnly(true)} className={`tap rounded-xl border px-4 text-[13px] ${soldOutOnly ? "border-line bg-[#F2F1EC] font-bold" : "border-line bg-white"}`}>Sold out this week</button>
+          <input id="pq" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search products…" className="min-h-11 min-w-0 flex-1 rounded-xl bg-surface-2 px-4 text-sm" />
+          <button type="button" onClick={() => setSoldOutOnly(false)} className={`tap rounded-xl border px-4 text-[13px] font-bold ${!soldOutOnly ? "border-line bg-[#F2F1EC]" : "border-line bg-surface"}`}>All</button>
+          <button type="button" onClick={() => setSoldOutOnly(true)} className={`tap rounded-xl border px-4 text-[13px] ${soldOutOnly ? "border-line bg-[#F2F1EC] font-bold" : "border-line bg-surface"}`}>Sold out this week</button>
           {tab === "plans" && <button type="button" disabled={pending} onClick={() => act(resetWeeklySlots)} className="tap rounded-xl border border-line px-4 text-[13px] text-muted">Reset weekly counts</button>}
         </div>
         <div className="mt-4 overflow-x-auto">
@@ -48,9 +48,9 @@ export function ProductsClient({ products, tab, counts, locked, selectedId, crea
             <thead><tr className="label-sm border-b border-line text-[11px] text-muted"><th className="py-3">Product</th><th>Calories</th><th>Price{tab === "plans" ? " / week" : ""}</th><th>Weekly slots</th><th>Live</th></tr></thead>
             <tbody>
               {list.map((p) => (
-                <tr key={p.id} className={`border-b border-line last:border-0 ${p.id === selectedId ? "bg-green-tint" : ""}`}>
+                <tr key={p.id} className={`border-b border-line last:border-0 ${p.id === selectedId ? "bg-tint-green" : ""}`}>
                   <td className="py-3">
-                    <Link href={`/admin/products?tab=${tab}&id=${p.id}`} className="flex items-center gap-3 text-ink no-underline">
+                    <Link href={`/admin/products?tab=${tab}&id=${p.id}`} className="flex items-center gap-3 text-fg no-underline">
                       <Image src={imgSrc(p.image)} alt="" width={44} height={44} className="size-11 rounded-lg object-cover" />
                       <span><b className="block font-display">{p.name}</b><span className="text-xs text-muted uppercase">{p.type}-{p.slug.slice(0, 12)}</span></span>
                     </Link>
@@ -58,7 +58,7 @@ export function ProductsClient({ products, tab, counts, locked, selectedId, crea
                   <td>{p.kcal ?? "–"}</td>
                   <td className="font-display font-bold">{formatNaira(p.priceKobo)}</td>
                   <td className={p.weeklySlots != null && p.slotsTaken >= p.weeklySlots ? "font-bold text-price-red" : "text-muted"}>{p.weeklySlots != null ? `${p.slotsTaken} / ${p.weeklySlots}` : "Unlimited"}</td>
-                  <td><button type="button" role="switch" aria-checked={p.isLive} aria-label={`${p.name} live`} disabled={pending} onClick={() => act(() => toggleLive(p.id, !p.isLive))} className={`relative h-6 w-11 rounded-full ${p.isLive ? "bg-green" : "bg-input-line"}`}><span className={`absolute top-0.5 size-5 rounded-full bg-white transition-all ${p.isLive ? "left-[22px]" : "left-0.5"}`} /></button></td>
+                  <td><button type="button" role="switch" aria-checked={p.isLive} aria-label={`${p.name} live`} disabled={pending} onClick={() => act(() => toggleLive(p.id, !p.isLive))} className={`relative h-6 w-11 rounded-full ${p.isLive ? "bg-green" : "bg-input-line"}`}><span className={`absolute top-0.5 size-5 rounded-full bg-surface transition-all ${p.isLive ? "left-[22px]" : "left-0.5"}`} /></button></td>
                 </tr>
               ))}
               {list.length === 0 && <tr><td colSpan={5} className="py-8 text-center text-muted">Nothing here.</td></tr>}
@@ -88,7 +88,7 @@ function ProductForm({ product, type, tab }: { product: AdminProduct | null; typ
   }, null);
   const lab = "mb-1.5 block text-[13px] font-bold";
   return (
-    <form action={action} className="rounded-[24px] border border-line bg-white p-5 md:p-6">
+    <form action={action} className="rounded-[24px] border border-line bg-surface p-5 md:p-6">
       <h2 className="text-xl">{product ? `Edit: ${product.name}` : "New product"}</h2>
       {product && <input type="hidden" name="id" value={product.id} />}
       <input type="hidden" name="type" value={product?.type ?? type} />

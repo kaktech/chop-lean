@@ -17,7 +17,7 @@ export function AdminNav() {
           <div className="label-sm hidden px-3 pb-2 pt-5 text-[11px] text-muted lg:block">{g}</div>
           {links.map(([label, href]) => {
             const active = href === "/admin" ? path === "/admin" : path.startsWith(href) && href !== "/";
-            return <Link key={href} href={href} aria-current={active ? "page" : undefined} className={`flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-xl px-3 text-[15px] no-underline ${active ? "bg-green font-bold text-white" : "text-ink hover:bg-cream"}`}>{label}</Link>;
+            return <Link key={href} href={href} aria-current={active ? "page" : undefined} className={`flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-xl px-3 text-[15px] no-underline ${active ? "bg-green font-bold text-white" : "text-fg hover:bg-canvas"}`}>{label}</Link>;
           })}
         </div>
       ))}

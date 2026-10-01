@@ -3,6 +3,7 @@ import Link from "next/link";
 import { and, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { products } from "@/db/schema";
+import { PageHero } from "@/components/ui/PageHero";
 import { MealCard, PlanCard } from "@/components/shop/ProductCard";
 import { FilterSidebar, MobileFilterButton, SortSelect } from "@/components/shop/FilterPanel";
 import { TABS, applyFilters, buckets, facetCounts, groupsFor, parseFilters, tagLabel, toQuery, GOALS, MEALS_PER_DAY, SLOTS, type Filters } from "@/lib/shop-filters";
@@ -16,6 +17,8 @@ const COPY = {
   meals: ["Single Meals", "One plate at a time. Cooked fresh, calorie counted, delivered chilled on Mon, Wed or Fri.", "Meals"],
   drinks: ["Snacks and Drinks", "Zero-sugar zobo, tiger nut and more, to go with your plan.", "Drinks"],
 } as const;
+
+const HERO_IMG = { plans: "ofada.jpg", meals: "efo-riro.jpg", drinks: "zobo.jpg" } as const;
 
 type SP = Promise<Record<string, string | string[] | undefined>>;
 
@@ -51,29 +54,16 @@ export default async function ShopPage({ searchParams }: { searchParams: SP }) {
 
   return (
     <>
-      <section className="relative overflow-hidden bg-green text-white">
-        <div aria-hidden className="absolute -right-5 -top-2 select-none font-serif text-[110px] leading-none text-white/10 md:text-[300px]">{watermark}</div>
-        <div className="container-x relative pb-8 pt-5 md:pb-14 md:pt-[44px]">
-          <nav aria-label="Breadcrumb" className="text-xs md:text-[13px]">
-            <Link href="/" className="text-white underline">Home</Link> / Shop{f.tab === "plans" ? " / Meal Plans" : ""}
-          </nav>
-          <h1 className="mt-3 text-[34px] tracking-[-0.03em] md:mt-8 md:text-[60px]">{title}</h1>
-          <p className="mt-2 max-w-[560px] text-base text-[#E8F2DF] md:mt-4 md:text-lg">{blurb}</p>
-          <div className="-mx-4 mt-5 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:mt-7 md:gap-3 [&::-webkit-scrollbar]:hidden" role="tablist" aria-label="Product type">
-            {TABS.map((t, i) => (
-              <Link
-                key={t.key}
-                href={toQuery({ tab: t.key })}
-                role="tab"
-                aria-selected={f.tab === t.key}
-                className={`tap flex shrink-0 items-center rounded-full border border-white/60 px-5 text-sm font-medium no-underline md:text-[15px] ${f.tab === t.key ? "bg-white font-bold text-ink" : "text-white hover:bg-white/10"}`}
-              >
-                {t.label} ({tabCounts[i]})
-              </Link>
-            ))}
-          </div>
+      <PageHero image={HERO_IMG[f.tab]} eyebrow={watermark} title={title} blurb={blurb} crumbs={[{ label: "Home", href: "/" }, { label: "Shop", href: "/shop" }, { label: title }]} size="sm" position="center 55%">
+        <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:gap-3 [&::-webkit-scrollbar]:hidden" role="tablist" aria-label="Product type">
+          {TABS.map((t, i) => (
+            <Link key={t.key} href={toQuery({ tab: t.key })} role="tab" aria-selected={f.tab === t.key}
+              className={`tap flex shrink-0 items-center rounded-full border px-5 text-sm font-medium no-underline md:text-[15px] ${f.tab === t.key ? "border-yellow bg-yellow font-bold text-canvas" : "border-white/40 text-fg hover:border-yellow"}`}>
+              {t.label} ({tabCounts[i]})
+            </Link>
+          ))}
         </div>
-      </section>
+      </PageHero>
 
       <div className="container-x flex gap-9 py-5 md:py-10">
         <FilterSidebar f={f} groups={groups} counts={counts} />
@@ -82,7 +72,7 @@ export default async function ShopPage({ searchParams }: { searchParams: SP }) {
             <MobileFilterButton f={f} groups={groups} counts={counts} />
             <div className="-mx-4 flex flex-1 gap-2 overflow-x-auto px-4 md:mx-0 md:order-2 md:flex-none md:justify-end md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden">
               {chips.map((c) => (
-                <Link key={c.label} href={c.href} scroll={false} aria-label={`Remove filter ${c.label}`} className="tap flex shrink-0 items-center gap-1.5 rounded-full border border-line bg-white px-4 text-[13px] no-underline text-ink">
+                <Link key={c.label} href={c.href} scroll={false} aria-label={`Remove filter ${c.label}`} className="tap flex shrink-0 items-center gap-1.5 rounded-full border border-line bg-surface px-4 text-[13px] no-underline text-fg">
                   {c.label} <span aria-hidden>×</span>
                 </Link>
               ))}
@@ -94,10 +84,10 @@ export default async function ShopPage({ searchParams }: { searchParams: SP }) {
           </div>
 
           {items.length === 0 ? (
-            <div className="rounded-[22px] border border-dashed border-input-line bg-white px-6 py-16 text-center">
+            <div className="rounded-[22px] border border-dashed border-input-line bg-surface px-6 py-16 text-center">
               <p className="font-serif text-2xl">Nothing matches that.</p>
               <p className="mt-2 text-muted">Try removing a filter or searching for something else.</p>
-              <Link href={toQuery({ tab: f.tab })} className="cl-btn mt-5 inline-block rounded-full bg-yellow px-6 py-3 font-bold text-ink no-underline">Clear filters</Link>
+              <Link href={toQuery({ tab: f.tab })} className="cl-btn mt-5 inline-block rounded-full bg-yellow px-6 py-3 font-bold text-canvas no-underline">Clear filters</Link>
             </div>
           ) : (
             <div className={`grid grid-cols-2 gap-3 md:gap-5 ${f.tab === "plans" ? "md:grid-cols-2 xl:grid-cols-3" : "md:grid-cols-2 xl:grid-cols-3"}`}>
@@ -108,9 +98,9 @@ export default async function ShopPage({ searchParams }: { searchParams: SP }) {
           {pages > 1 && (
             <nav aria-label="Pagination" className="mt-10 flex items-center justify-center gap-2">
               {Array.from({ length: pages }, (_, i) => i + 1).map((n) => (
-                <Link key={n} href={toQuery(f, { page: n })} aria-current={n === page ? "page" : undefined} className={`flex size-11 items-center justify-center rounded-full text-[15px] font-medium no-underline ${n === page ? "bg-ink text-white" : "border border-line bg-white text-ink"}`}>{n}</Link>
+                <Link key={n} href={toQuery(f, { page: n })} aria-current={n === page ? "page" : undefined} className={`flex size-11 items-center justify-center rounded-full text-[15px] font-medium no-underline ${n === page ? "bg-ink text-white" : "border border-line bg-surface text-fg"}`}>{n}</Link>
               ))}
-              {page < pages && <Link href={toQuery(f, { page: page + 1 })} aria-label="Next page" className="flex size-11 items-center justify-center rounded-full border border-line bg-white text-ink no-underline">→</Link>}
+              {page < pages && <Link href={toQuery(f, { page: page + 1 })} aria-label="Next page" className="flex size-11 items-center justify-center rounded-full border border-line bg-surface text-fg no-underline">→</Link>}
             </nav>
           )}
         </div>

@@ -55,11 +55,11 @@ export function ReviewsSection({ productId, productName, reviews }: { productId:
       <div>
         <div className="flex items-end justify-between md:block">
           <h2 className="text-[26px] uppercase md:text-[34px]">Reviews <span className="text-muted">{average ? average.toFixed(1) : "0.0"}</span></h2>
-          <button type="button" onClick={() => setOpen(true)} className="min-h-11 text-sm font-bold text-green underline md:hidden">+ Add a review</button>
+          <button type="button" onClick={() => setOpen(true)} className="min-h-11 text-sm font-bold text-leaf underline md:hidden">+ Add a review</button>
         </div>
         <div className="mt-1 flex items-center gap-2 text-sm text-muted"><Stars n={average ?? 0} size="text-sm" /> ({reviews.length})</div>
         <button type="button" onClick={() => setOpen(true)} className="cl-btn mt-5 hidden w-full rounded-full bg-ink py-3.5 text-[13px] font-bold uppercase tracking-[0.1em] text-white md:block">+ Add a review</button>
-        <div className="mt-6 hidden rounded-[18px] border border-line bg-white p-5 md:block">
+        <div className="mt-6 hidden rounded-[18px] border border-line bg-surface p-5 md:block">
           <div className="label-sm text-[11px]">How people rate it</div>
           <Scale label="Fullness" left="Still hungry" right="Very full" value={fullness} />
           <Scale label="Pepper level" left="Too mild" right="Too hot" value={pepper} />
@@ -67,7 +67,7 @@ export function ReviewsSection({ productId, productName, reviews }: { productId:
       </div>
 
       <div>
-        <div className="rounded-[18px] bg-mint px-6 py-5 text-sm text-green-dark">
+        <div className="rounded-[18px] bg-tint-green px-6 py-5 text-sm text-leaf-soft">
           <div className="label-sm mb-1.5 text-[11px]">What customers are saying</div>
           {summary}
         </div>
@@ -75,11 +75,11 @@ export function ReviewsSection({ productId, productName, reviews }: { productId:
           <span className="label-sm text-[11px] text-muted">Showing {shown.length} of {reviews.length} reviews</span>
           <span className="flex flex-wrap items-center gap-3">
             <label className="flex items-center gap-2"><span className="label-sm text-[11px]">Filter</span>
-              <select value={filter} onChange={(e) => setFilter(e.target.value)} className="min-h-11 rounded-lg border border-input-line bg-white px-2">
+              <select value={filter} onChange={(e) => setFilter(e.target.value)} className="min-h-11 rounded-lg border border-input-line bg-surface px-2">
                 <option value="all">All ratings</option>{[5, 4, 3, 2, 1].map((n) => <option key={n} value={n}>{n} stars</option>)}
               </select></label>
             <label className="flex items-center gap-2"><span className="label-sm text-[11px]">Sort</span>
-              <select value={sort} onChange={(e) => setSort(e.target.value)} className="min-h-11 rounded-lg border border-input-line bg-white px-2">
+              <select value={sort} onChange={(e) => setSort(e.target.value)} className="min-h-11 rounded-lg border border-input-line bg-surface px-2">
                 <option value="highest">Highest rated</option><option value="lowest">Lowest rated</option><option value="newest">Newest</option>
               </select></label>
           </span>
@@ -89,15 +89,15 @@ export function ReviewsSection({ productId, productName, reviews }: { productId:
           <div className="mt-5 rounded-[22px] border-2 border-dashed border-input-line px-6 py-14 text-center">
             <p className="font-serif text-[28px]">No reviews yet.</p>
             <p className="mx-auto mt-2 max-w-sm text-sm text-muted">Finished a week on this plan? Tell others how it tasted, whether it kept you full and how your weigh-in went.</p>
-            <button type="button" onClick={() => setOpen(true)} className="cl-btn mt-5 rounded-full bg-yellow px-6 py-3 text-sm font-bold text-ink">Write the first review</button>
+            <button type="button" onClick={() => setOpen(true)} className="cl-btn mt-5 rounded-full bg-yellow px-6 py-3 text-sm font-bold text-canvas">Write the first review</button>
           </div>
         ) : (
           <ul className="mt-5 flex flex-col gap-4">
             {shown.map((r) => (
-              <li key={r.id} className="rounded-[22px] border border-line bg-white p-6">
-                <div className="flex items-center justify-between gap-3"><Stars n={r.rating} />{r.verified && <span className="rounded-full bg-mint px-2.5 py-1 text-[11px] font-bold text-green-dark">Verified order</span>}</div>
+              <li key={r.id} className="rounded-[22px] border border-line bg-surface p-6">
+                <div className="flex items-center justify-between gap-3"><Stars n={r.rating} />{r.verified && <span className="rounded-full bg-tint-green px-2.5 py-1 text-[11px] font-bold text-leaf-soft">Verified order</span>}</div>
                 <p className="mt-3 text-[15px] leading-relaxed">{r.body}</p>
-                <div className="mt-3 flex flex-wrap items-center gap-x-3 text-[13px] text-muted"><b className="text-ink">{r.name}</b>{r.weightChange && <span>· {r.weightChange}</span>}<span>· {new Date(r.createdAt).toLocaleDateString("en-NG", { day: "numeric", month: "short", year: "numeric" })}</span></div>
+                <div className="mt-3 flex flex-wrap items-center gap-x-3 text-[13px] text-muted"><b className="text-fg">{r.name}</b>{r.weightChange && <span>· {r.weightChange}</span>}<span>· {new Date(r.createdAt).toLocaleDateString("en-NG", { day: "numeric", month: "short", year: "numeric" })}</span></div>
               </li>
             ))}
           </ul>
@@ -118,13 +118,13 @@ function ReviewModal({ productId, productName, onClose }: { productId: string; p
     return () => { document.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
   }, [onClose]);
   const err = (k: string) => state?.errors?.[k];
-  const field = "min-h-11 w-full rounded-xl border border-line bg-cream px-4 text-[15px]";
+  const field = "min-h-11 w-full rounded-xl border border-line bg-canvas px-4 text-[15px]";
   const lab = "label-sm mb-2 block text-[11px]";
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center md:items-center md:p-6" role="dialog" aria-modal="true" aria-labelledby="rv-title">
-      <button type="button" aria-label="Close" onClick={onClose} className="cl-fade absolute inset-0 bg-ink/55" />
-      <div className="cl-sheet relative max-h-[92dvh] w-full max-w-[560px] overflow-y-auto rounded-t-[28px] bg-white p-6 md:rounded-[28px] md:p-8">
+      <button type="button" aria-label="Close" onClick={onClose} className="cl-fade absolute inset-0 bg-black/60" />
+      <div className="cl-sheet relative max-h-[92dvh] w-full max-w-[560px] overflow-y-auto rounded-t-[28px] bg-surface p-6 md:rounded-[28px] md:p-8">
         <div className="flex items-center justify-between"><h2 id="rv-title" className="text-2xl uppercase">Write a review</h2>
           <button type="button" onClick={onClose} aria-label="Close" className="flex size-11 items-center justify-center rounded-full border border-line"><X size={18} aria-hidden /></button></div>
         <p className="mt-1 text-sm text-muted">{productName}</p>

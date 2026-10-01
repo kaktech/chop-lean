@@ -39,7 +39,7 @@ export function CartButton({ variant = "outline" }: { variant?: "outline" | "yel
       onClick={() => setCartOpen(true)}
       aria-label={`Cart, ${count} item${count === 1 ? "" : "s"}`}
       className={`relative flex size-11 items-center justify-center rounded-full ${
-        variant === "yellow" ? "bg-yellow" : "border border-line bg-white"
+        variant === "yellow" ? "bg-yellow text-canvas" : "border border-line bg-transparent text-fg hover:border-yellow"
       }`}
     >
       <ShoppingBag size={20} strokeWidth={1.8} aria-hidden />

@@ -22,7 +22,7 @@ const PREFS = ["No pork", "No beef", "No shellfish", "Pescatarian", "No swallow"
 const PEPPER = ["Mild", "Medium-mild", "Medium", "Hot", "Naija hot"];
 
 const lab = "flex flex-col gap-1.5 text-[13px] font-bold";
-const field = "min-h-12 rounded-[14px] border border-input-line bg-white px-3.5 text-[15px] font-normal";
+const field = "min-h-12 rounded-[14px] border border-input-line bg-surface px-3.5 text-[15px] font-normal";
 
 export function QuizClient({ plans, signedIn }: { plans: PlanLite[]; signedIn: boolean }) {
   const [goal, setGoal] = useState<"lose" | "keep" | "gain">("lose");
@@ -87,14 +87,14 @@ export function QuizClient({ plans, signedIn }: { plans: PlanLite[]; signedIn: b
         <p className="relative leading-[1.7] text-mint">We use the Mifflin-St Jeor formula to estimate how much energy you burn in a day, subtract a safe deficit, and round to the nearest Chop Lean plan.</p>
         <div className="relative mt-2 flex gap-2" aria-hidden>{[1, 2, 3, 4].map((i) => <span key={i} className={`h-1.5 flex-1 rounded-full ${i <= 2 || done ? "bg-yellow" : "bg-white/25"}`} />)}</div>
 
-        <div id="quiz-result" className="relative mt-auto flex flex-col gap-3.5 rounded-3xl bg-white p-7 text-ink">
+        <div id="quiz-result" className="relative mt-auto flex flex-col gap-3.5 rounded-3xl bg-surface p-7 text-fg">
           <span className="label-sm text-[13px] text-muted">{done ? "Your daily target" : "Your estimate so far"}</span>
           <span className="flex items-baseline gap-2.5">
-            <span className="font-display text-[58px] font-extrabold leading-none tracking-tight text-green" aria-live="polite">{calc ? (Math.round(calc.target / 10) * 10).toLocaleString("en-NG") : "–"}</span>
+            <span className="font-display text-[58px] font-extrabold leading-none tracking-tight text-leaf" aria-live="polite">{calc ? (Math.round(calc.target / 10) * 10).toLocaleString("en-NG") : "–"}</span>
             <span className="text-muted">kcal / day</span>
           </span>
           <div className="grid grid-cols-3 gap-2.5 text-[13px]">
-            {[[pace, paceLabel], [`${protein} g`, "protein"], ["3 meals", "+ 1 snack"]].map(([v, l]) => <span key={l} className="rounded-2xl bg-[#F4F1E8] p-3"><b className="block text-[17px]">{v}</b>{l}</span>)}
+            {[[pace, paceLabel], [`${protein} g`, "protein"], ["3 meals", "+ 1 snack"]].map(([v, l]) => <span key={l} className="rounded-2xl bg-surface-2 p-3"><b className="block text-[17px]">{v}</b>{l}</span>)}
           </div>
           {calc && calc.target === 1200 && goal === "lose" && <p className="text-xs text-muted">We never go below 1,200 kcal a day without a doctor&apos;s advice.</p>}
           {match && (
@@ -106,12 +106,12 @@ export function QuizClient({ plans, signedIn }: { plans: PlanLite[]; signedIn: b
         </div>
       </aside>
 
-      <form onSubmit={(e) => { e.preventDefault(); submit(); }} className="cl-up cl-d3 flex flex-col gap-9 rounded-[30px] border border-line bg-white p-6 md:p-12 lg:col-span-7">
+      <form onSubmit={(e) => { e.preventDefault(); submit(); }} className="cl-up cl-d3 flex flex-col gap-9 rounded-[30px] border border-line bg-surface p-6 md:p-12 lg:col-span-7">
         <fieldset>
           <legend className="mb-3.5 font-display text-2xl font-bold">What&apos;s your goal?</legend>
           <div className="grid gap-3 sm:grid-cols-3">
             {GOALS.map((g) => (
-              <button key={g.id} type="button" aria-pressed={goal === g.id} onClick={() => setGoal(g.id)} className={`min-h-11 rounded-[18px] border-2 p-[18px] text-left ${goal === g.id ? "border-green bg-mint" : "border-line bg-white"}`}>
+              <button key={g.id} type="button" aria-pressed={goal === g.id} onClick={() => setGoal(g.id)} className={`min-h-11 rounded-[18px] border-2 p-[18px] text-left ${goal === g.id ? "border-leaf bg-tint-green" : "border-line bg-surface"}`}>
                 <span className="block font-display text-lg font-bold">{g.t}</span><span className="mt-1 block text-[13px] text-body">{g.d}</span>
               </button>
             ))}
@@ -136,7 +136,7 @@ export function QuizClient({ plans, signedIn }: { plans: PlanLite[]; signedIn: b
           <p className="mb-3.5 text-sm text-muted">We&apos;ll remove these from every menu you get.</p>
           <div className="flex flex-wrap gap-2.5">
             {PREFS.map((p) => (
-              <button key={p} type="button" aria-pressed={prefs.includes(p)} onClick={() => toggle(p)} className={`tap rounded-full border px-[18px] text-sm font-medium ${prefs.includes(p) ? "border-ink bg-ink text-white" : "border-input-line bg-white"}`}>{prefs.includes(p) ? "✓ " : ""}{p}</button>
+              <button key={p} type="button" aria-pressed={prefs.includes(p)} onClick={() => toggle(p)} className={`tap rounded-full border px-[18px] text-sm font-medium ${prefs.includes(p) ? "border-ink bg-ink text-white" : "border-input-line bg-surface"}`}>{prefs.includes(p) ? "✓ " : ""}{p}</button>
             ))}
           </div>
         </fieldset>
@@ -151,13 +151,13 @@ export function QuizClient({ plans, signedIn }: { plans: PlanLite[]; signedIn: b
           <p className="mt-2 text-center text-sm text-muted">{PEPPER[pepper - 1]}</p>
         </fieldset>
 
-        <p className="rounded-2xl bg-[#FFF7E0] px-[18px] py-4 text-[13px] leading-relaxed text-[#5A4A12]">Pregnant, breastfeeding, under 18, or managing diabetes or kidney disease? Please check with your doctor before starting a calorie-reduced plan. Our plans support weight management and are not medical treatment.</p>
+        <p className="rounded-2xl bg-tint-amber px-[18px] py-4 text-[13px] leading-relaxed text-[#F6D58A]">Pregnant, breastfeeding, under 18, or managing diabetes or kidney disease? Please check with your doctor before starting a calorie-reduced plan. Our plans support weight management and are not medical treatment.</p>
         {msg && <p role="alert" className="text-sm text-price-red">{msg}</p>}
-        {done && <p role="status" className="rounded-2xl bg-mint px-4 py-3 text-sm text-green-dark">{signedIn ? "Saved to your profile." : <>Saved on this device. <Link href="/signin?callbackUrl=/account" className="font-bold underline">Sign in</Link> to keep it in your account.</>}</p>}
+        {done && <p role="status" className="rounded-2xl bg-tint-green px-4 py-3 text-sm text-leaf-soft">{signedIn ? "Saved to your profile." : <>Saved on this device. <Link href="/signin?callbackUrl=/account" className="font-bold underline">Sign in</Link> to keep it in your account.</>}</p>}
 
         <div className="flex items-center justify-between">
-          <Link href="/" className="font-bold text-ink no-underline">← Back</Link>
-          <button disabled={pending || !valid} className="cl-btn min-h-12 rounded-full bg-yellow px-8 text-base font-bold text-ink disabled:opacity-60">{pending ? "Saving…" : "See My Plan →"}</button>
+          <Link href="/" className="font-bold text-fg no-underline">← Back</Link>
+          <button disabled={pending || !valid} className="cl-btn min-h-12 rounded-full bg-yellow px-8 text-base font-bold text-canvas disabled:opacity-60">{pending ? "Saving…" : "See My Plan →"}</button>
         </div>
       </form>
     </section>

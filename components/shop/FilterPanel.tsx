@@ -17,7 +17,7 @@ function Panel({ f, groups, counts, onNavigate }: { f: Filters; groups: Group[];
     <div>
       <div className="flex items-center justify-between">
         <h2 className="text-lg">Filter</h2>
-        <Link href={toQuery({ tab: f.tab, q: f.q })} scroll={false} className="text-[13px] font-medium text-green underline" onClick={onNavigate}>Clear all</Link>
+        <Link href={toQuery({ tab: f.tab, q: f.q })} scroll={false} className="text-[13px] font-medium text-leaf underline" onClick={onNavigate}>Clear all</Link>
       </div>
       {groups.map((g) => (
         <fieldset key={g.field} className="mt-6">
@@ -39,7 +39,7 @@ function Panel({ f, groups, counts, onNavigate }: { f: Filters; groups: Group[];
           </ul>
         </fieldset>
       ))}
-      <div className="mt-8 rounded-[20px] bg-butter p-5">
+      <div className="mt-8 rounded-[20px] bg-tint-amber p-5">
         <div className="font-serif text-xl">Not sure which plan?</div>
         <p className="mt-1.5 text-sm text-body">Answer 6 questions and we&apos;ll give you a calorie target.</p>
         <Link href="/quiz" className="cl-btn mt-3 inline-block rounded-full bg-ink px-5 py-2.5 text-sm font-bold text-white no-underline">Take the quiz</Link>
@@ -69,9 +69,9 @@ export function MobileFilterButton(props: { f: Filters; groups: Group[]; counts:
       </button>
       {open && (
         <div className="fixed inset-0 z-50 md:hidden" role="dialog" aria-modal="true" aria-label="Filters">
-          <button type="button" aria-label="Close filters" className="cl-fade absolute inset-0 bg-ink/50" onClick={() => setOpen(false)} />
-          <div className="cl-sheet absolute inset-x-0 bottom-0 max-h-[88dvh] overflow-y-auto rounded-t-[28px] bg-cream p-6 pb-10">
-            <button type="button" onClick={() => setOpen(false)} aria-label="Close filters" className="absolute right-4 top-4 flex size-11 items-center justify-center rounded-full border border-line bg-white"><X size={18} aria-hidden /></button>
+          <button type="button" aria-label="Close filters" className="cl-fade absolute inset-0 bg-black/60" onClick={() => setOpen(false)} />
+          <div className="cl-sheet absolute inset-x-0 bottom-0 max-h-[88dvh] overflow-y-auto rounded-t-[28px] bg-canvas p-6 pb-10">
+            <button type="button" onClick={() => setOpen(false)} aria-label="Close filters" className="absolute right-4 top-4 flex size-11 items-center justify-center rounded-full border border-line bg-surface"><X size={18} aria-hidden /></button>
             <Panel {...props} />
             <button type="button" onClick={() => setOpen(false)} className="cl-btn mt-6 w-full rounded-full bg-green py-3.5 font-bold text-white">Show results</button>
           </div>
@@ -89,7 +89,7 @@ export function SortSelect({ f }: { f: Filters }) {
       <select
         value={f.sort}
         onChange={(e) => router.push(toQuery(f, { sort: e.target.value, page: 1 }), { scroll: false })}
-        className="min-h-11 rounded-xl border border-input-line bg-white px-3 text-sm"
+        className="min-h-11 rounded-xl border border-input-line bg-surface px-3 text-sm"
       >
         <option value="featured">Featured</option>
         <option value="kcal-asc">Lowest calories</option>

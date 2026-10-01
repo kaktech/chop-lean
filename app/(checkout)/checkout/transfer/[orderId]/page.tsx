@@ -32,7 +32,7 @@ export default async function TransferPage({ params }: { params: Promise<{ order
         awaiting={f.order.paymentStatus === "awaiting_confirmation"} receiptUploaded={!!transfer.receiptUrl}
         summary={{ title, subtotal: f.order.subtotalKobo, discount: f.order.discountKobo, delivery: f.order.deliveryKobo, promo: f.order.promoCode, deliveryLine: `First delivery ${dd.dow} ${dd.day} ${dd.month}, ${f.order.deliveryWindow.split(" (")[0].replace(/\s/g, "")} · ${f.zone?.name ?? ""}`, fmt: formatNaira(f.order.totalKobo) }}
       />
-      <p className="container-x pb-10 text-sm"><Link href={`/checkout/pay?o=${orderId}`} className="text-green underline">Pay with card instead</Link></p>
+      <p className="container-x pb-10 text-sm"><Link href={`/checkout/pay?o=${orderId}`} className="text-leaf underline">Pay with card instead</Link></p>
     </>
   );
 }

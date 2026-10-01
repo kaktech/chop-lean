@@ -1,24 +1,29 @@
 @import "tailwindcss";
 
 @theme {
-  --color-cream: #f7f6f1;
-  --color-surface: #ffffff;
-  --color-ink: #15201a;
-  --color-muted: #5b6560;
-  --color-body: #3a4540;
-  --color-line: #e6e4dc;
-  --color-input-line: #d6d3c8;
-  --color-green: #3d6b1f;
-  --color-green-dark: #24421a;
-  --color-green-tint: #f1f8ec;
-  --color-yellow: #f6b81a;
-  --color-red: #d93a2b;
-  --color-price-red: #b4281c;
-  --color-mint: #dcefd2;
-  --color-pink: #f9dcdc;
-  --color-lavender: #dde0f6;
-  --color-butter: #fcebc9;
-  --color-dark-card: #1f2d25;
+  /* Dark kitchen theme */
+  --color-canvas: #0C100E;
+  --color-surface: #141A17;
+  --color-surface-2: #1B231F;
+  --color-fg: #F4EFE6;
+  --color-ink: #222B26;          /* lifted dark fill for secondary buttons and bars */
+  --color-muted: #A7B1AA;
+  --color-body: #D6DCD7;
+  --color-line: rgb(255 255 255 / 0.1);
+  --color-input-line: rgb(255 255 255 / 0.2);
+  --color-green: #3D6B1F;        /* brand green fill (white text on it) */
+  --color-green-dark: #24421A;
+  --color-leaf: #92CF5C;         /* brand green as text on dark */
+  --color-leaf-soft: #C3E6A6;
+  --color-yellow: #F6B81A;
+  --color-red: #D93A2B;
+  --color-price-red: #FF9082;    /* prices and errors on dark */
+  --color-mint: #DCEFD2;         /* light green text on green panels */
+  --color-tint-green: #1D3622;
+  --color-tint-red: #3A2020;
+  --color-tint-amber: #382E15;
+  --color-tint-blue: #202545;
+  --color-dark-card: #1A241E;
 
   --font-display: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
@@ -26,8 +31,8 @@
 
   --radius-card: 24px;
   --radius-input: 12px;
-  --shadow-soft: 0 10px 30px rgba(21, 32, 26, 0.08);
-  --shadow-chip: 0 18px 44px rgba(21, 32, 26, 0.22);
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --shadow-chip: 0 18px 44px rgba(0, 0, 0, 0.5);
 }
 
 @layer base {
@@ -35,8 +40,8 @@
     scroll-behavior: smooth;
   }
   body {
-    background: var(--color-cream);
-    color: var(--color-ink);
+    background: var(--color-canvas);
+    color: var(--color-fg);
     font-family: var(--font-sans);
     font-size: 16px;
     line-height: 1.6;
@@ -48,7 +53,7 @@
     letter-spacing: -0.025em;
   }
   :focus-visible {
-    outline: 3px solid var(--color-green);
+    outline: 3px solid var(--color-yellow);
     outline-offset: 2px;
     border-radius: 6px;
   }
@@ -74,13 +79,27 @@
   }
   .watermark {
     font-family: var(--font-serif);
-    color: var(--color-ink);
-    opacity: 0.05;
+    color: #fff;
+    opacity: 0.045;
     line-height: 1;
     pointer-events: none;
     user-select: none;
   }
   .tap { min-height: 44px; min-width: 44px; }
+
+  /* Section eyebrow: amber label with a rule, as in the reference. */
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-yellow);
+  }
+  .eyebrow::before, .eyebrow.both::after { content: ""; width: 28px; height: 1.5px; background: currentColor; opacity: 0.8; }
+  .display-xl { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: -0.03em; line-height: 0.98; }
+  .serif-accent { font-family: var(--font-serif); font-style: italic; font-weight: 400; text-transform: none; letter-spacing: -0.01em; color: var(--color-yellow); }
+  .glass { background: rgb(12 16 14 / 0.62); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgb(255 255 255 / 0.12); }
+  .btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 30px; border-radius: 999px; background: var(--color-yellow); color: var(--color-canvas); font-weight: 700; text-decoration: none; }
+  .btn-outline { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 28px; border-radius: 999px; border: 1.5px solid rgb(255 255 255 / 0.55); color: var(--color-fg); font-weight: 700; text-decoration: none; background: transparent; }
+  .btn-outline:hover { background: rgb(255 255 255 / 0.1); }
+  .dotted-leader { flex: 1; border-bottom: 2px dotted rgb(255 255 255 / 0.22); transform: translateY(-4px); min-width: 16px; }
 }
 
 /* Keyframes and animation classes from design-source/animations.css */
@@ -109,13 +128,24 @@
 .cl-fade{animation:clIn .3s ease both}
 .cl-pop{animation:clPop .5s ease both}
 .cl-lift{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
-.cl-lift:hover{transform:translateY(-6px);box-shadow:0 26px 44px rgba(21,32,26,.13)}
+.cl-lift:hover{transform:translateY(-6px);box-shadow:0 26px 44px rgba(0,0,0,.45)}
 .cl-zoom{overflow:hidden}
 .cl-zoom img{transition:transform .7s cubic-bezier(.2,.7,.2,1)}
 .cl-zoom:hover img{transform:scale(1.07)}
 .cl-btn{transition:transform .2s,box-shadow .2s,background-color .2s}
-.cl-btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(21,32,26,.18)}
+.cl-btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.4)}
 .cl-btn:active{transform:translateY(0) scale(.98)}
 .cl-reveal{animation:clReveal .9s cubic-bezier(.2,.7,.2,1) both}
 @supports (animation-timeline: view()){.cl-reveal{animation:clReveal linear both;animation-timeline:view();animation-range:entry 0% cover 28%}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+
+/* Long-form text on info pages */
+.prose-cl { color: var(--color-body); font-size: 16px; line-height: 1.75; }
+.prose-cl h2 { font-size: 28px; margin: 2.2em 0 0.5em; color: var(--color-fg); }
+.prose-cl h3 { font-size: 20px; margin: 1.6em 0 0.4em; color: var(--color-fg); }
+.prose-cl p { margin: 0 0 1em; }
+.prose-cl ul { margin: 0 0 1.2em; padding-left: 1.2em; list-style: disc; }
+.prose-cl li { margin: 0.35em 0; }
+.prose-cl a { color: var(--color-yellow); text-decoration: underline; text-underline-offset: 3px; }
+.prose-cl strong { color: var(--color-fg); }

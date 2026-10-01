@@ -4,11 +4,11 @@ import { toast } from "sonner";
 import { confirmTransfer, rejectTransfer, updateOrderStatus } from "@/app/actions/admin";
 
 export const STATUS_STYLE: Record<string, [string, string, string]> = {
-  pending_payment: ["Pending payment", "#FCEBC9", "#6B4A00"],
-  cooking: ["Cooking", "#DDE0F6", "#2B3480"],
-  out_for_delivery: ["Out for delivery", "#F9DCDC", "#8E1F14"],
-  delivered: ["Delivered", "#DCEFD2", "#24421A"],
-  cancelled: ["Cancelled", "#E6E4DC", "#3A4540"],
+  pending_payment: ["Pending payment", "#3A2F14", "#F6D58A"],
+  cooking: ["Cooking", "#232A55", "#C5CBFF"],
+  out_for_delivery: ["Out for delivery", "#4A2222", "#FFB4A8"],
+  delivered: ["Delivered", "#1F3A22", "#B6E39A"],
+  cancelled: ["Cancelled", "#2A332E", "#C8D0CA"],
 };
 
 export function StatusSelect({ orderId, status }: { orderId: string; status: string }) {
@@ -29,11 +29,11 @@ export function TransferActions({ orderId }: { orderId: string }) {
   return (
     <span className="flex gap-2">
       <button disabled={pending} onClick={() => run(confirmTransfer)} className="tap rounded-lg bg-green px-4 text-[13px] font-bold text-white disabled:opacity-60">Confirm paid</button>
-      <button disabled={pending} onClick={() => run(rejectTransfer)} className="tap rounded-lg border border-line bg-white px-4 text-[13px] font-bold text-price-red disabled:opacity-60">Not received</button>
+      <button disabled={pending} onClick={() => run(rejectTransfer)} className="tap rounded-lg border border-line bg-surface px-4 text-[13px] font-bold text-price-red disabled:opacity-60">Not received</button>
     </span>
   );
 }
 
 export function PrintButton({ children }: { children: React.ReactNode }) {
-  return <button type="button" onClick={() => window.print()} className="tap rounded-xl bg-[#F2F1EC] px-4 text-[13px] font-bold print:hidden">{children}</button>;
+  return <button type="button" onClick={() => window.print()} className="tap rounded-xl bg-surface-2 px-4 text-[13px] font-bold print:hidden">{children}</button>;
 }

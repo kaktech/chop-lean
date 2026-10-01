@@ -19,11 +19,11 @@ export default async function AdminSettings() {
   return (
     <div className="flex max-w-[760px] flex-col gap-5">
       <h1 className="text-[34px] md:text-[40px]">Store settings</h1>
-      <section className="rounded-[24px] border border-line bg-white p-6"><h2 className="text-xl">Bank transfer details</h2>
+      <section className="rounded-[24px] border border-line bg-surface p-6"><h2 className="text-xl">Bank transfer details</h2>
         <p className="mb-4 mt-1 text-sm text-muted">Shown to customers who pay by transfer and included in their confirmation email.</p>
         <BankForm bankName={st.bankName ?? ""} accountNumber={st.accountNumber ?? ""} accountName={st.accountName ?? ""} /></section>
-      <section className="rounded-[24px] border border-line bg-white p-6"><h2 className="text-xl">Integrations</h2>
-        <ul className="mt-3 divide-y divide-line">{checks.map(([l, ok, env]) => <li key={l} className="flex items-center justify-between gap-4 py-3 text-sm"><span><b>{l}</b><br /><span className="text-xs text-muted">{env}</span></span><span className={`rounded-full px-3 py-1 text-xs font-bold ${ok ? "bg-mint text-green-dark" : "bg-butter text-[#6B4A00]"}`}>{ok ? "Connected" : "Not set"}</span></li>)}</ul></section>
+      <section className="rounded-[24px] border border-line bg-surface p-6"><h2 className="text-xl">Integrations</h2>
+        <ul className="mt-3 divide-y divide-line">{checks.map(([l, ok, env]) => <li key={l} className="flex items-center justify-between gap-4 py-3 text-sm"><span><b>{l}</b><br /><span className="text-xs text-muted">{env}</span></span><span className={`rounded-full px-3 py-1 text-xs font-bold ${ok ? "bg-tint-green text-leaf-soft" : "bg-tint-amber text-[#F6D58A]"}`}>{ok ? "Connected" : "Not set"}</span></li>)}</ul></section>
     </div>
   );
 }

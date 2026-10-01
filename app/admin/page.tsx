@@ -8,7 +8,7 @@ import { formatNaira } from "@/lib/money";
 import { PrintButton, StatusSelect } from "@/components/admin/AdminBits";
 import { paystackConfigured } from "@/lib/paystack";
 
-const card = "rounded-[22px] border border-line bg-white p-6";
+const card = "rounded-[22px] border border-line bg-surface p-6";
 
 export default async function AdminDashboard() {
   const [d, settings, [{ plans }], [{ zones }]] = await Promise.all([
@@ -45,12 +45,12 @@ export default async function AdminDashboard() {
             <span className="absolute inset-0 flex items-center justify-center font-display text-2xl font-bold">{pct}%</span>
           </div>
           <div><h2 className="text-lg">Store setup</h2>
-            <ul className="mt-1 text-[13px]">{checklist.map(([l, done, href]) => <li key={l}>{done ? <span className="text-muted line-through">✓ {l}</span> : <Link href={href} className="font-bold text-green underline">○ {l}</Link>}</li>)}</ul></div>
+            <ul className="mt-1 text-[13px]">{checklist.map(([l, done, href]) => <li key={l}>{done ? <span className="text-muted line-through">✓ {l}</span> : <Link href={href} className="font-bold text-leaf underline">○ {l}</Link>}</li>)}</ul></div>
         </div>
         <div className={card}>
-          <div className="flex items-center justify-between"><h2 className="text-lg">Storefront theme</h2><Link href="/" className="text-[13px] font-bold text-green underline">View store</Link></div>
+          <div className="flex items-center justify-between"><h2 className="text-lg">Storefront theme</h2><Link href="/" className="text-[13px] font-bold text-leaf underline">View store</Link></div>
           <div className="mt-3 grid grid-cols-2 gap-3 text-xs">
-            <div className="overflow-hidden rounded-xl border-2 border-green"><div className="flex h-12"><span className="flex-1 bg-cream" /><span className="flex-1 bg-green" /></div><div className="flex justify-between px-2.5 py-1.5"><b>Editorial Green</b><span className="text-green">Live</span></div></div>
+            <div className="overflow-hidden rounded-xl border-2 border-green"><div className="flex h-12"><span className="flex-1 bg-canvas" /><span className="flex-1 bg-green" /></div><div className="flex justify-between px-2.5 py-1.5"><b>Editorial Green</b><span className="text-leaf">Live</span></div></div>
             <div className="overflow-hidden rounded-xl border border-line opacity-60"><div className="flex h-12"><span className="flex-1 bg-ink" /><span className="flex-1 bg-yellow" /></div><div className="flex justify-between px-2.5 py-1.5"><b>Night Market</b><span>Soon</span></div></div>
           </div>
         </div>
@@ -74,7 +74,7 @@ export default async function AdminDashboard() {
         <section className={card} aria-label="Plans by subscribers">
           <h2 className="text-xl">Plans by subscribers</h2>
           {d.mix.length === 0 ? <p className="mt-4 text-muted">No plan orders yet.</p> : (
-            <ul className="mt-4 flex flex-col gap-3">{d.mix.map(([n, c]) => <li key={n}><div className="flex justify-between text-sm"><span>{n}</span><b>{c}</b></div><div className="mt-1 h-2 rounded-full bg-[#EDE8D8]"><div className="h-full rounded-full bg-green" style={{ width: `${(c / maxMix) * 100}%` }} /></div></li>)}</ul>
+            <ul className="mt-4 flex flex-col gap-3">{d.mix.map(([n, c]) => <li key={n}><div className="flex justify-between text-sm"><span>{n}</span><b>{c}</b></div><div className="mt-1 h-2 rounded-full bg-white/10"><div className="h-full rounded-full bg-green" style={{ width: `${(c / maxMix) * 100}%` }} /></div></li>)}</ul>
           )}
         </section>
       </div>
@@ -82,7 +82,7 @@ export default async function AdminDashboard() {
       <section className={card} aria-label="Recent orders">
         <div className="flex flex-wrap items-center justify-between gap-2"><h2 className="text-xl">Recent orders</h2><span className="text-[13px] text-muted">Changing a status emails the customer</span></div>
         <div className="mt-3 overflow-x-auto"><table className="w-full min-w-[760px] text-left text-sm"><thead><tr className="label-sm border-b border-line text-[11px] text-muted"><th className="py-3">Order</th><th>Customer</th><th>Plan</th><th>Zone</th><th>Payment</th><th>Total</th><th>Status</th></tr></thead>
-          <tbody>{d.recent.map((o) => <tr key={o.id} className="border-b border-line last:border-0"><td className="py-3 font-bold"><Link href={`/order/${o.id}`} className="text-ink no-underline hover:underline">{o.number}</Link></td><td>{o.customer}</td><td className="max-w-[200px] truncate">{o.plan}</td><td className="text-muted">{o.zone}</td><td className="capitalize text-muted">{o.payment === "pod" ? "On delivery" : o.payment}</td><td className="font-bold">{formatNaira(o.totalKobo)}</td><td><StatusSelect orderId={o.id} status={o.status} /></td></tr>)}
+          <tbody>{d.recent.map((o) => <tr key={o.id} className="border-b border-line last:border-0"><td className="py-3 font-bold"><Link href={`/order/${o.id}`} className="text-fg no-underline hover:underline">{o.number}</Link></td><td>{o.customer}</td><td className="max-w-[200px] truncate">{o.plan}</td><td className="text-muted">{o.zone}</td><td className="capitalize text-muted">{o.payment === "pod" ? "On delivery" : o.payment}</td><td className="font-bold">{formatNaira(o.totalKobo)}</td><td><StatusSelect orderId={o.id} status={o.status} /></td></tr>)}
             {d.recent.length === 0 && <tr><td colSpan={7} className="py-6 text-muted">No orders yet.</td></tr>}</tbody></table></div>
       </section>
     </div>

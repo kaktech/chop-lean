@@ -14,7 +14,7 @@ export function GoogleIcon() {
 export function GoogleButton({ redirectTo, children, className = "" }: { redirectTo: string; children: React.ReactNode; className?: string }) {
   return (
     <form action={signInWithGoogle.bind(null, redirectTo)}>
-      <button className={`cl-btn tap flex w-full items-center justify-center gap-3 rounded-2xl border border-line bg-white px-5 py-3.5 font-bold ${className}`}>
+      <button className={`cl-btn tap flex w-full items-center justify-center gap-3 rounded-2xl border border-line bg-surface px-5 py-3.5 font-bold ${className}`}>
         <GoogleIcon />{children}
       </button>
     </form>

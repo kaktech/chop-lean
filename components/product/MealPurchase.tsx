@@ -12,7 +12,7 @@ export function MealPurchase({ product, kcal, protein, carbs, fat, description, 
   const tiles: [string, string][] = [[`${kcal ?? "–"}`, "kcal"], [protein != null ? `${protein}g` : "–", "protein"], ...(carbs != null ? [[`${carbs}g`, "carbs"] as [string, string]] : []), ...(fat != null ? [[`${fat}g`, "fat"] as [string, string]] : [])];
   return (
     <section className="container-x grid gap-8 pb-28 pt-5 md:grid-cols-2 md:gap-12 md:pb-20 md:pt-8">
-      <div className="relative aspect-square overflow-hidden rounded-[28px] border border-line bg-white">
+      <div className="relative aspect-square overflow-hidden rounded-[28px] border border-line bg-surface">
         <Image src={imgSrc(product.image)} alt={product.name} fill priority sizes="(min-width:768px) 45vw, 100vw" className="object-cover" />
       </div>
       <div>
@@ -21,12 +21,12 @@ export function MealPurchase({ product, kcal, protein, carbs, fat, description, 
         <div className="mt-4 font-display text-[28px] font-bold text-price-red md:text-4xl">{formatNaira(product.priceKobo * qty)}</div>
         {description && <p className="mt-4 max-w-[520px] text-body">{description}</p>}
         <dl className="mt-5 grid grid-cols-4 gap-2.5">
-          {tiles.map(([v, l]) => <div key={l} className="rounded-2xl border border-line bg-white px-3 py-3 text-center"><dt className="sr-only">{l}</dt><dd className="font-display text-lg font-bold">{v}<span className="block text-[11px] font-normal text-muted">{l}</span></dd></div>)}
+          {tiles.map(([v, l]) => <div key={l} className="rounded-2xl border border-line bg-surface px-3 py-3 text-center"><dt className="sr-only">{l}</dt><dd className="font-display text-lg font-bold">{v}<span className="block text-[11px] font-normal text-muted">{l}</span></dd></div>)}
         </dl>
         <p className="mt-5 text-sm text-muted">Delivered chilled on Mon, Wed or Fri. Order by 6pm the day before.</p>
-        {soldOut && <p role="status" className="mt-4 rounded-2xl bg-butter px-4 py-3 text-sm font-medium">Sold out for now.</p>}
-        <div className="fixed inset-x-0 bottom-0 z-30 flex gap-3 border-t border-line bg-white px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:static md:mt-6 md:border-0 md:bg-transparent md:p-0">
-          <div className="flex items-center rounded-full border border-input-line bg-white">
+        {soldOut && <p role="status" className="mt-4 rounded-2xl bg-tint-amber px-4 py-3 text-sm font-medium">Sold out for now.</p>}
+        <div className="fixed inset-x-0 bottom-0 z-30 flex gap-3 border-t border-line bg-surface px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:static md:mt-6 md:border-0 md:bg-transparent md:p-0">
+          <div className="flex items-center rounded-full border border-input-line bg-surface">
             <button type="button" aria-label="Decrease quantity" onClick={() => setQty((q) => Math.max(1, q - 1))} className="tap flex items-center justify-center"><Minus size={16} aria-hidden /></button>
             <span className="min-w-10 text-center text-sm font-bold" aria-live="polite">{qty}</span>
             <button type="button" aria-label="Increase quantity" onClick={() => setQty((q) => Math.min(20, q + 1))} className="tap flex items-center justify-center"><Plus size={16} aria-hidden /></button>

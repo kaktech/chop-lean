@@ -9,7 +9,7 @@ export function ProductInfo() {
     <section className="container-x py-10 md:py-14">
       <div className="grid gap-3 md:grid-cols-3 md:gap-5">
         {INFO.map(([t, d]) => (
-          <details key={t} className="group rounded-2xl border border-line bg-white px-5 py-4 [&_summary::-webkit-details-marker]:hidden">
+          <details key={t} className="group rounded-2xl border border-line bg-surface px-5 py-4 [&_summary::-webkit-details-marker]:hidden">
             <summary className="flex min-h-11 cursor-pointer list-none items-center gap-3 font-display font-bold">
               <span aria-hidden className="text-xs transition-transform group-open:rotate-90">▶</span>{t}
             </summary>

@@ -27,7 +27,7 @@ export default async function MealPage({ params }: P) {
     <>
       <JsonLd data={productJsonLd(p, stats)} />
       <nav aria-label="Breadcrumb" className="container-x pt-5 text-xs text-muted md:text-[13px]">
-        <Link href="/" className="text-green underline">Home</Link> / <Link href={`/shop?tab=${p.type === "drink" ? "drinks" : "meals"}`} className="text-green underline">{p.type === "drink" ? "Snacks and Drinks" : "Single Meals"}</Link> / {p.name}
+        <Link href="/" className="text-leaf underline">Home</Link> / <Link href={`/shop?tab=${p.type === "drink" ? "drinks" : "meals"}`} className="text-leaf underline">{p.type === "drink" ? "Snacks and Drinks" : "Single Meals"}</Link> / {p.name}
       </nav>
       <MealPurchase product={{ id: p.id, slug: p.slug, type: p.type, name: p.name, image: p.image, priceKobo: p.priceKobo }} kcal={p.kcal} protein={p.proteinG} carbs={p.carbsG} fat={p.fatG} description={p.description ?? `${p.kcal} kcal, ${p.proteinG ?? 0}g protein. Cooked fresh with measured oil and weighed portions.`} soldOut={soldOut} />
       <ProductInfo />

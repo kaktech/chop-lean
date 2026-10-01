@@ -25,17 +25,17 @@ export function MenuBuilder({ weeks, meals, initial }: { weeks: string[]; meals:
     <div>
       <div className="flex flex-wrap items-center gap-3">
         <label className="flex items-center gap-2 text-sm font-bold">Week of
-          <select value={week} onChange={(e) => setWeek(e.target.value)} className="min-h-11 rounded-xl border border-input-line bg-white px-3 font-normal">{weeks.map((w) => <option key={w} value={w}>{w}</option>)}</select></label>
+          <select value={week} onChange={(e) => setWeek(e.target.value)} className="min-h-11 rounded-xl border border-input-line bg-surface px-3 font-normal">{weeks.map((w) => <option key={w} value={w}>{w}</option>)}</select></label>
         <button onClick={save} disabled={pending} className="cl-btn tap rounded-xl bg-ink px-6 font-bold text-white disabled:opacity-60">{pending ? "Saving…" : "Save menu"}</button>
       </div>
       <div className="mt-5 grid gap-3 md:grid-cols-5">
         {DAYS.map((day) => (
-          <div key={day} className="rounded-[20px] border border-line bg-white p-3.5">
+          <div key={day} className="rounded-[20px] border border-line bg-surface p-3.5">
             <div className="mb-2 flex items-baseline justify-between"><b className="font-display">{day}</b><span className="text-xs text-muted">{total(day)} kcal</span></div>
             {SLOTS.map((slot) => (
               <div key={slot} className="mb-2.5">
-                <label htmlFor={`${day}-${slot}`} className="label-sm text-[10px] text-green">{slot}</label>
-                <select id={`${day}-${slot}`} value={cur[`${day}-${slot}`] ?? ""} onChange={(e) => set(day, slot, e.target.value)} className="mt-1 min-h-11 w-full rounded-lg border border-input-line bg-white px-2 text-[13px]">
+                <label htmlFor={`${day}-${slot}`} className="label-sm text-[10px] text-leaf">{slot}</label>
+                <select id={`${day}-${slot}`} value={cur[`${day}-${slot}`] ?? ""} onChange={(e) => set(day, slot, e.target.value)} className="mt-1 min-h-11 w-full rounded-lg border border-input-line bg-surface px-2 text-[13px]">
                   <option value="">Choose a dish…</option>
                   {meals.filter((m) => m.slot === slot).map((m) => <option key={m.id} value={m.id}>{m.name} ({m.kcal})</option>)}
                 </select>

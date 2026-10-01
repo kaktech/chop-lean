@@ -54,7 +54,7 @@ export function PlanPurchase({ product: p, pricing, shots, dates, soldOut, ratin
   const [shareUrl, setShareUrl] = useState("");
   useEffect(() => setShareUrl(window.location.href), []);
   const shareText = `${p.name} from Chop Lean`;
-  const sel = "min-h-11 w-full rounded-xl border border-input-line bg-white px-3.5 text-[15px]";
+  const sel = "min-h-11 w-full rounded-xl border border-input-line bg-surface px-3.5 text-[15px]";
   const lab = "label-sm mb-2 block text-[11px] text-muted";
 
   return (
@@ -71,12 +71,12 @@ export function PlanPurchase({ product: p, pricing, shots, dates, soldOut, ratin
             ))}
           </div>
           {current && (
-            <div className="absolute bottom-4 left-4 rounded-2xl bg-white px-4 py-2.5 shadow-soft md:bottom-12 md:left-12">
+            <div className="absolute bottom-4 left-4 rounded-2xl bg-surface px-4 py-2.5 shadow-soft md:bottom-12 md:left-12">
               <b className="block text-sm">{current.day}</b><span className="text-xs text-muted">{current.title}</span>
             </div>
           )}
           <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5 md:hidden" aria-hidden>
-            {shots.map((_, i) => <span key={i} className={`h-1.5 rounded-full bg-white ${i === shot ? "w-6" : "w-1.5 opacity-60"}`} />)}
+            {shots.map((_, i) => <span key={i} className={`h-1.5 rounded-full bg-surface ${i === shot ? "w-6" : "w-1.5 opacity-60"}`} />)}
           </div>
         </div>
         {shots.length > 1 && (
@@ -97,12 +97,12 @@ export function PlanPurchase({ product: p, pricing, shots, dates, soldOut, ratin
       <div>
         <div className="flex items-center gap-2.5 text-[13px] font-medium">
           <span className="hidden h-[3px] w-6 rounded-sm bg-yellow md:block" />
-          <span className="text-red md:text-ink">{GOAL_LABEL[p.goal ?? "lose"]} <span className="text-red">· Weekly subscription</span></span>
+          <span className="text-red md:text-fg">{GOAL_LABEL[p.goal ?? "lose"]} <span className="text-red">· Weekly subscription</span></span>
         </div>
         <h1 className="mt-2 text-[34px] uppercase leading-none tracking-[-0.04em] md:mt-3 md:text-[56px]">{p.name}</h1>
         <div className="mt-3 flex items-center gap-2 text-sm text-muted">
           <span aria-hidden className="tracking-widest text-input-line">★★★★★</span>
-          {rating.count > 0 ? <span>{rating.avg.toFixed(1)} ({rating.count}) · <a href="#reviews" className="text-green underline">Read reviews</a></span> : <span>No reviews yet · <a href="#reviews" className="text-green underline">Be the first</a></span>}
+          {rating.count > 0 ? <span>{rating.avg.toFixed(1)} ({rating.count}) · <a href="#reviews" className="text-leaf underline">Read reviews</a></span> : <span>No reviews yet · <a href="#reviews" className="text-leaf underline">Be the first</a></span>}
         </div>
         <div className="mt-3 flex flex-wrap items-baseline gap-3">
           <span className="font-display text-[26px] font-bold text-price-red md:text-4xl"><span className="md:hidden">{formatNaira(unit * weeks)}</span><span className="hidden md:inline">{formatNairaFull(unit * weeks)}</span></span>
@@ -113,7 +113,7 @@ export function PlanPurchase({ product: p, pricing, shots, dates, soldOut, ratin
 
         <dl className="mt-5 grid grid-cols-4 gap-2.5">
           {[[(kcal ?? 0).toLocaleString("en-NG"), "kcal / day"], [`${Math.round((p.proteinG ?? 0) * ratio)}g`, "protein"], [`${Math.round((p.carbsG ?? 0) * ratio)}g`, "carbs"], [`${Math.round((p.fatG ?? 0) * ratio)}g`, "fat"]].map(([v, l]) => (
-            <div key={l} className="rounded-2xl border border-line bg-white px-2 py-3 text-center md:px-4 md:py-3.5 md:text-left"><dt className="sr-only">{l}</dt><dd className="font-display text-lg font-bold leading-tight md:text-xl">{v}<span className="block text-[11px] font-normal text-muted md:text-xs">{l}</span></dd></div>
+            <div key={l} className="rounded-2xl border border-line bg-surface px-2 py-3 text-center md:px-4 md:py-3.5 md:text-left"><dt className="sr-only">{l}</dt><dd className="font-display text-lg font-bold leading-tight md:text-xl">{v}<span className="block text-[11px] font-normal text-muted md:text-xs">{l}</span></dd></div>
           ))}
         </dl>
 
@@ -122,7 +122,7 @@ export function PlanPurchase({ product: p, pricing, shots, dates, soldOut, ratin
             <div className="flex gap-2.5 overflow-x-auto pb-1">
               {calorieOptions.map((k) => (
                 <button key={k} type="button" onClick={() => setKcal(k)} aria-pressed={kcal === k}
-                  className={`tap shrink-0 rounded-full border px-5 text-sm ${kcal === k ? "border-ink bg-ink font-bold text-white" : "border-input-line bg-white"}`}>{k.toLocaleString("en-NG")} kcal</button>
+                  className={`tap shrink-0 rounded-full border px-5 text-sm ${kcal === k ? "border-fg bg-ink font-bold text-white" : "border-input-line bg-surface"}`}>{k.toLocaleString("en-NG")} kcal</button>
               ))}
             </div></fieldset>
         )}
@@ -140,10 +140,10 @@ export function PlanPurchase({ product: p, pricing, shots, dates, soldOut, ratin
         <div className="mt-4"><label htmlFor="pp-excl" className={lab}>Allergies or ingredients to leave out (optional)</label>
           <input id="pp-excl" value={excl} onChange={(e) => setExcl(e.target.value.slice(0, 200))} placeholder="e.g. no crayfish, no groundnut" className={sel} /></div>
 
-        {soldOut && <p role="status" className="mt-5 rounded-2xl bg-butter px-4 py-3 text-sm font-medium">This plan is sold out for the week. Check back Sunday for new slots.</p>}
+        {soldOut && <p role="status" className="mt-5 rounded-2xl bg-tint-amber px-4 py-3 text-sm font-medium">This plan is sold out for the week. Check back Sunday for new slots.</p>}
 
-        <div className="fixed inset-x-0 bottom-0 z-30 flex gap-3 border-t border-line bg-white px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:static md:z-auto md:mt-5 md:border-0 md:bg-transparent md:p-0">
-          <div className="flex items-center rounded-full border border-input-line bg-white">
+        <div className="fixed inset-x-0 bottom-0 z-30 flex gap-3 border-t border-line bg-surface px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:static md:z-auto md:mt-5 md:border-0 md:bg-transparent md:p-0">
+          <div className="flex items-center rounded-full border border-input-line bg-surface">
             <button type="button" aria-label="Fewer weeks" onClick={() => setWeeks((w) => Math.max(1, w - 1))} className="tap flex items-center justify-center"><Minus size={16} aria-hidden /></button>
             <span className="min-w-12 text-center text-sm font-bold" aria-live="polite">{weeks}<span className="hidden md:inline"> wk</span></span>
             <button type="button" aria-label="More weeks" onClick={() => setWeeks((w) => Math.min(12, w + 1))} className="tap flex items-center justify-center"><Plus size={16} aria-hidden /></button>
@@ -152,13 +152,13 @@ export function PlanPurchase({ product: p, pricing, shots, dates, soldOut, ratin
             Add to Cart<span className="md:hidden"> · {formatNaira(unit * weeks)}</span>
           </button>
         </div>
-        <button type="button" disabled={soldOut} onClick={() => add(true)} className="cl-btn mt-3 hidden min-h-12 w-full rounded-full bg-yellow font-bold text-ink disabled:opacity-50 md:block">Subscribe and save 10% every week ({formatNaira(subUnit)} / wk)</button>
+        <button type="button" disabled={soldOut} onClick={() => add(true)} className="cl-btn mt-3 hidden min-h-12 w-full rounded-full bg-yellow font-bold text-canvas disabled:opacity-50 md:block">Subscribe and save 10% every week ({formatNaira(subUnit)} / wk)</button>
 
         <div className="mt-4 flex items-center gap-4 text-[13px] text-muted">
           Share
-          <a href={`https://wa.me/?text=${encodeURIComponent(`${shareText} ${shareUrl}`)}`} target="_blank" rel="noopener noreferrer" className="font-bold text-green underline">WhatsApp</a>
-          <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener noreferrer" className="font-bold text-green underline">X</a>
-          <button type="button" className="font-bold text-green underline" onClick={() => navigator.clipboard?.writeText(shareUrl).then(() => toast.success("Link copied"))}>Copy link</button>
+          <a href={`https://wa.me/?text=${encodeURIComponent(`${shareText} ${shareUrl}`)}`} target="_blank" rel="noopener noreferrer" className="font-bold text-leaf underline">WhatsApp</a>
+          <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener noreferrer" className="font-bold text-leaf underline">X</a>
+          <button type="button" className="font-bold text-leaf underline" onClick={() => navigator.clipboard?.writeText(shareUrl).then(() => toast.success("Link copied"))}>Copy link</button>
         </div>
       </div>
     </section>
