@@ -53,23 +53,46 @@ export default async function AccountPage() {
   const card = "rounded-[26px] border border-line bg-surface p-6 md:p-7";
 
   return (
-    <div className="container-x grid gap-8 py-8 md:py-12 lg:grid-cols-[296px_1fr]">
+    <div className="container-x grid grid-cols-[minmax(0,1fr)] gap-6 py-6 md:gap-8 md:py-12 lg:grid-cols-[296px_minmax(0,1fr)]">
       <SyncQuiz />
-      <aside className="lg:sticky lg:top-6 lg:self-start">
-        <div className="flex items-center gap-4">
-          <span className="flex size-[52px] items-center justify-center rounded-full bg-tint-red font-display text-xl font-bold">{initial}</span>
-          <div><b className="block break-all font-display">{displayName}</b><span className="text-[13px] text-muted">{user.image ? "Signed in with Google" : "Signed in with email"}</span></div>
+      <aside className="min-w-0 lg:sticky lg:top-6 lg:self-start">
+        <div className="relative overflow-hidden rounded-[26px] bg-green p-5 text-white md:p-6">
+          <div aria-hidden className="absolute -right-4 -top-6 font-serif text-[120px] leading-none text-white/[0.08]">{initial}</div>
+          <div className="relative flex items-center gap-4">
+            {user.image
+              ? <img src={user.image} alt="" referrerPolicy="no-referrer" className="size-14 shrink-0 rounded-full border-2 border-yellow object-cover" />
+              : <span className="flex size-14 shrink-0 items-center justify-center rounded-full bg-yellow font-display text-2xl font-bold text-canvas">{initial}</span>}
+            <div className="min-w-0">
+              <b className="block truncate font-display text-lg">{displayName}</b>
+              {user.email && user.name && <span className="block truncate text-[13px] text-mint">{user.email}</span>}
+              <span className="mt-1 inline-block rounded-full bg-white/15 px-2.5 py-0.5 text-[11px] font-bold">{user.image ? "Google account" : "Email account"}</span>
+            </div>
+          </div>
         </div>
-        <nav aria-label="Account" className="mt-6 flex gap-2 overflow-x-auto lg:flex-col lg:gap-1">
-          {nav.map(([l, h], i) => <a key={l} href={h} className={`flex min-h-11 shrink-0 items-center rounded-xl px-4 text-[15px] no-underline ${i === 0 ? "bg-ink font-medium text-white" : "text-fg hover:bg-surface"}`}>{l}</a>)}
-          <form action={async () => { "use server"; await signOut({ redirectTo: "/" }); }}><button className="flex min-h-11 w-full shrink-0 items-center rounded-xl px-4 text-left text-[15px] hover:bg-surface">Log out</button></form>
+        <nav aria-label="Account" className="-mx-4 mt-4 flex gap-2 overflow-x-auto px-4 pb-1 lg:mx-0 lg:flex-col lg:gap-1 lg:px-0 lg:pb-0">
+          {nav.map(([l, h], i) => <a key={l} href={h} className={`flex min-h-11 shrink-0 items-center rounded-full px-4 text-[15px] no-underline lg:rounded-xl ${i === 0 ? "bg-yellow font-bold text-canvas" : "border border-line text-fg hover:bg-surface lg:border-0"}`}>{l}</a>)}
+          <form action={async () => { "use server"; await signOut({ redirectTo: "/" }); }}><button className="flex min-h-11 w-full shrink-0 items-center rounded-full border border-line px-4 text-left text-[15px] hover:bg-surface lg:rounded-xl lg:border-0">Log out</button></form>
         </nav>
       </aside>
 
       <div className="min-w-0">
         <h1 id="overview" className="text-[34px] tracking-[-0.03em] md:text-[48px]">Welcome back, {firstName}</h1>
 
-        <div className="mt-6 grid gap-5 md:grid-cols-2" id="plan">
+        <div className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-4">
+          {[
+            ["Daily target", profile?.dailyKcalTarget ? `${profile.dailyKcalTarget.toLocaleString("en-NG")} kcal` : "Take the quiz"],
+            ["Weight", latest != null ? `${latest} kg` : "Not logged"],
+            [lost != null && lost >= 0 ? "Lost so far" : "Change", lost != null ? `${lost > 0 ? "−" : lost < 0 ? "+" : ""}${Math.abs(lost)} kg` : "–"],
+            ["Orders", String(orders.length)],
+          ].map(([l, v]) => (
+            <div key={l} className="min-w-0 rounded-[20px] border border-line bg-surface p-4">
+              <div className="label-sm text-[11px] text-muted">{l}</div>
+              <div className="mt-1 truncate font-display text-xl font-bold md:text-2xl">{v}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-5 grid gap-5 md:grid-cols-2" id="plan">
           <section className="relative overflow-hidden rounded-[26px] bg-green p-7 text-white" aria-label="Active plan">
             <span className="label-sm text-[11px] tracking-[0.16em] text-yellow">Active plan</span>
             {activePlan ? (
@@ -110,7 +133,24 @@ export default async function AccountPage() {
         <section className={`${card} mt-5`} id="orders" aria-label="Order history">
           <h2 className="text-2xl">Order history</h2>
           {orders.length === 0 ? <p className="mt-4 text-muted">No orders yet. <Link href="/shop" className="font-bold text-leaf underline">Browse plans</Link></p> : (
-            <div className="mt-4 overflow-x-auto">
+            <>
+            <ul className="mt-4 flex flex-col gap-3 md:hidden">
+              {orders.map((o) => {
+                const [label, bg, fg] = PILL[o.status] ?? PILL.pending_payment;
+                return (
+                  <li key={o.id} className="rounded-2xl border border-line bg-surface-2 p-4">
+                    <div className="flex items-center justify-between gap-2">
+                      <Link href={`/order/${o.id}`} className="font-bold text-fg no-underline">{o.number}</Link>
+                      <span className="rounded-full px-3 py-1 text-xs font-bold" style={{ background: bg, color: fg }}>{label}</span>
+                    </div>
+                    <p className="mt-1 text-[13px] text-muted">{o.createdAt.toLocaleDateString("en-NG", { day: "numeric", month: "short", year: "numeric" })}</p>
+                    <p className="mt-2 text-sm">{items.filter((i) => i.orderId === o.id).map((i) => `${i.name}${i.qty > 1 ? ` ×${i.qty}` : ""}`).join(", ")}</p>
+                    <div className="mt-3 flex items-center justify-between"><b className="font-display text-lg">{formatNaira(o.totalKobo)}</b><ReorderButton orderId={o.id} /></div>
+                  </li>
+                );
+              })}
+            </ul>
+            <div className="mt-4 hidden overflow-x-auto md:block">
               <table className="w-full min-w-[640px] text-left text-sm">
                 <thead><tr className="label-sm border-b border-line text-[11px] text-muted"><th className="py-3">Order</th><th>Date</th><th>Items</th><th>Total</th><th>Status</th><th /></tr></thead>
                 <tbody>
@@ -130,17 +170,24 @@ export default async function AccountPage() {
                 </tbody>
               </table>
             </div>
+            </>
           )}
         </section>
 
         <section className={`${card} mt-5`} id="preferences" aria-label="Dietary preferences">
           <h2 className="text-2xl">Dietary preferences</h2>
           {profile?.dailyKcalTarget ? (
-            <dl className="mt-4 grid gap-4 text-sm sm:grid-cols-3">
-              <div><dt className="label-sm text-[11px] text-muted">Daily target</dt><dd className="mt-1 font-display text-xl font-bold">{profile.dailyKcalTarget.toLocaleString("en-NG")} kcal</dd></div>
-              <div><dt className="label-sm text-[11px] text-muted">Leave out</dt><dd className="mt-1">{profile.exclusions.length ? profile.exclusions.join(", ") : "Nothing"}</dd></div>
-              <div><dt className="label-sm text-[11px] text-muted">Pepper level</dt><dd className="mt-1">{profile.pepperLevel ?? 3} / 5</dd></div>
-            </dl>
+            <div className="mt-4 grid gap-5 text-sm sm:grid-cols-3">
+              <div><div className="label-sm text-[11px] text-muted">Daily target</div><div className="mt-1 font-display text-2xl font-bold text-leaf">{profile.dailyKcalTarget.toLocaleString("en-NG")} kcal</div></div>
+              <div>
+                <div className="label-sm text-[11px] text-muted">Leave out</div>
+                <div className="mt-2 flex flex-wrap gap-1.5">{profile.exclusions.length ? profile.exclusions.map((x) => <span key={x} className="rounded-full bg-surface-2 px-3 py-1 text-[13px]">{x}</span>) : <span>Nothing</span>}</div>
+              </div>
+              <div>
+                <div className="label-sm text-[11px] text-muted">Pepper level</div>
+                <div className="mt-2 flex gap-1.5" aria-label={`${profile.pepperLevel ?? 3} out of 5`}>{[1, 2, 3, 4, 5].map((n) => <span key={n} className={`h-2 flex-1 rounded-full ${n <= (profile.pepperLevel ?? 3) ? "bg-red" : "bg-line"}`} />)}</div>
+              </div>
+            </div>
           ) : <p className="mt-3 text-muted">You haven&apos;t taken the quiz yet.</p>}
           <Link href="/quiz" className="mt-4 inline-block min-h-11 font-bold text-leaf underline">{profile?.dailyKcalTarget ? "Retake the quiz" : "Take the quiz"}</Link>
         </section>
