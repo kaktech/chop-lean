@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Scale, User } from "lucide-react";
 import { auth } from "@/auth";
-import { Logo, Wordmark } from "./Logo";
+import { Logo, LogoMark, Wordmark } from "./Logo";
 import { CartButton } from "./CartButton";
 import { MenuButton } from "./MenuDrawer";
 import { NavLinks } from "./NavLinks";
@@ -61,7 +61,7 @@ export async function Header() {
       {/* Mobile and tablet */}
       <header className="flex items-center gap-2.5 border-b border-line bg-canvas/90 px-4 py-2.5 backdrop-blur-xl lg:hidden">
         <MenuButton />
-        <Link href="/" className="flex-1 text-center text-fg no-underline" aria-label="Chop Lean home"><Wordmark className="text-[23px]" /></Link>
+        <Link href="/" className="flex flex-1 items-center justify-center gap-2 text-fg no-underline" aria-label="Chop Lean home"><LogoMark size={30} /><Wordmark className="text-[22px]" /></Link>
         <SearchButton />
         <CartButton variant="yellow" />
       </header>

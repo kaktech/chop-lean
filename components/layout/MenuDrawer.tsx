@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { ChevronRight, Menu, X } from "lucide-react";
 import { useUI } from "@/lib/store";
 import { CartBadge } from "./CartButton";
-import { Wordmark } from "./Logo";
+import { LogoMark, Wordmark } from "./Logo";
 import { whatsappUrl } from "@/lib/site";
 
 const ITEMS = [
@@ -58,7 +58,7 @@ export function MenuDrawer() {
         <button type="button" onClick={close} aria-label="Close menu" className="flex size-11 items-center justify-center rounded-full border border-line bg-surface">
           <X size={20} aria-hidden />
         </button>
-        <Link href="/" onClick={close} className="flex-1 text-center text-fg no-underline"><Wordmark className="text-[23px]" /></Link>
+        <Link href="/" onClick={close} className="flex flex-1 items-center justify-center gap-2 text-fg no-underline"><LogoMark size={28} /><Wordmark className="text-[22px]" /></Link>
         <Link href="/cart" onClick={close} aria-label="Cart" className="relative flex size-11 items-center justify-center rounded-full bg-yellow font-display font-bold">
           <CartBadge className="static !m-0 size-auto bg-transparent text-[15px] text-fg" />
         </Link>
