@@ -7,7 +7,7 @@ import * as s from "@/db/schema";
 import { auth, signOut } from "@/auth";
 import { formatNaira } from "@/lib/money";
 import { describeDate, isPastPauseCutoff, nextDeliveryDates, nextWeekMonday } from "@/lib/lagos-time";
-import { PauseButton, ReorderButton, SyncQuiz, WeightChart, WeightForm, type WeightPoint } from "@/components/account/AccountClient";
+import { PasswordForm, PauseButton, ReorderButton, SyncQuiz, WeightChart, WeightForm, type WeightPoint } from "@/components/account/AccountClient";
 
 export const metadata: Metadata = { title: "My account", robots: { index: false } };
 export const dynamic = "force-dynamic";
@@ -26,6 +26,8 @@ export default async function AccountPage() {
   if (!user?.id) redirect("/signin?callbackUrl=/account");
   const uid = user.id;
 
+  const [dbUser] = await db.select({ pw: s.users.passwordHash }).from(s.users).where(eq(s.users.id, uid)).limit(1);
+  const hasPassword = !!dbUser?.pw;
   const [profile] = await db.select().from(s.profiles).where(eq(s.profiles.userId, uid)).limit(1);
   const orders = await db.select().from(s.orders).where(or(eq(s.orders.userId, uid), user.email ? sql`lower(${s.orders.email}) = ${user.email.toLowerCase()}` : sql`false`)).orderBy(desc(s.orders.createdAt)).limit(20);
   const orderIds = orders.map((o) => o.id);
@@ -47,7 +49,7 @@ export default async function AccountPage() {
   const firstName = (user.name ?? (emailName ? emailName.charAt(0).toUpperCase() + emailName.slice(1) : "there")).split(" ")[0];
   const initial = firstName.charAt(0).toUpperCase();
 
-  const nav = [["Overview", "#overview"], ["My plan and menu", "#plan"], ["Weight tracker", "#weight"], ["Orders", "#orders"], ["Dietary preferences", "#preferences"]];
+  const nav = [["Overview", "#overview"], ["My plan and menu", "#plan"], ["Weight tracker", "#weight"], ["Orders", "#orders"], ["Dietary preferences", "#preferences"], ["Password", "#security"]];
   const card = "rounded-[26px] border border-line bg-white p-6 md:p-7";
 
   return (
@@ -141,6 +143,12 @@ export default async function AccountPage() {
             </dl>
           ) : <p className="mt-3 text-muted">You haven&apos;t taken the quiz yet.</p>}
           <Link href="/quiz" className="mt-4 inline-block min-h-11 font-bold text-green underline">{profile?.dailyKcalTarget ? "Retake the quiz" : "Take the quiz"}</Link>
+        </section>
+
+        <section className={`${card} mt-5`} id="security" aria-label="Password">
+          <h2 className="text-2xl">Password</h2>
+          <p className="mt-1 text-sm text-muted">{hasPassword ? "Change the password you use with your email." : "Add a password so you can also sign in with your email and password."}</p>
+          <PasswordForm hasPassword={hasPassword} />
         </section>
       </div>
     </div>

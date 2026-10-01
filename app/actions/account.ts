@@ -55,3 +55,16 @@ export async function reorderLines(orderId: string) {
     return [{ productId: p.id, slug: p.slug, type: p.type, name: p.name, image: p.image ?? "meal-box.jpg", unitKobo: i.unitPriceKobo, qty: i.qty, options: { ...(i.options as object), firstDelivery: undefined, subscribe: undefined } }];
   });
 }
+
+export async function setPassword(_prev: { ok: boolean; message: string } | null, fd: FormData): Promise<{ ok: boolean; message: string }> {
+  const userId = await requireUser();
+  const { hashPassword, passwordProblem, verifyPassword } = await import("@/lib/password");
+  const next = String(fd.get("newPassword") ?? "");
+  const current = String(fd.get("currentPassword") ?? "");
+  const problem = passwordProblem(next);
+  if (problem) return { ok: false, message: problem };
+  const [user] = await db.select().from(s.users).where(eq(s.users.id, userId)).limit(1);
+  if (user?.passwordHash && !(await verifyPassword(current, user.passwordHash))) return { ok: false, message: "Your current password isn't right." };
+  await db.update(s.users).set({ passwordHash: await hashPassword(next) }).where(eq(s.users.id, userId));
+  return { ok: true, message: user?.passwordHash ? "Password changed." : "Password added. You can now sign in with it." };
+}

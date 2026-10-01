@@ -3,7 +3,7 @@ import { useActionState, useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { CartesianGrid, Line, LineChart, ReferenceDot, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { logWeight, pauseNextWeek, reorderLines, resumeNextWeek } from "@/app/actions/account";
+import { logWeight, setPassword, pauseNextWeek, reorderLines, resumeNextWeek } from "@/app/actions/account";
 import { saveQuizProfile } from "@/app/actions/profile";
 import type { QuizData } from "@/lib/quiz-schema";
 import { useCart, useUI, type CartLine } from "@/lib/store";
@@ -94,5 +94,18 @@ export function WeightChart({ data, goal }: { data: WeightPoint[]; goal: number 
         </ResponsiveContainer>
       )}
     </div>
+  );
+}
+
+export function PasswordForm({ hasPassword }: { hasPassword: boolean }) {
+  const [state, action, pending] = useActionState(setPassword, null);
+  const input = "min-h-12 w-full rounded-xl border border-input-line bg-white px-4";
+  return (
+    <form action={action} className="mt-4 grid max-w-[420px] gap-3">
+      {hasPassword && <div><label htmlFor="cur-pw" className="mb-1.5 block text-[13px] font-bold">Current password</label><input id="cur-pw" name="currentPassword" type="password" autoComplete="current-password" required className={input} /></div>}
+      <div><label htmlFor="new-pw" className="mb-1.5 block text-[13px] font-bold">{hasPassword ? "New password" : "Add a password"}</label><input id="new-pw" name="newPassword" type="password" autoComplete="new-password" minLength={8} required className={input} /></div>
+      <button disabled={pending} className="cl-btn min-h-12 rounded-xl bg-ink font-bold text-white disabled:opacity-60">{pending ? "Saving…" : hasPassword ? "Change password" : "Save password"}</button>
+      <p role="status" className={`text-sm ${state && !state.ok ? "text-price-red" : "text-green"}`}>{state?.message}</p>
+    </form>
   );
 }
