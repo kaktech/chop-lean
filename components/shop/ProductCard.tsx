@@ -28,7 +28,7 @@ export function PlanCard({ p, rating, showHeart = false, sizes }: { p: Product; 
           <span className="rounded-full bg-tint-green px-2.5 py-1 text-xs font-bold text-leaf-soft">{p.mealsPerDay === 1 ? `≈ ${p.kcal} kcal` : `${p.kcal?.toLocaleString("en-NG")} kcal${showHeart ? "" : "/day"}`}</span>
           <span className="rounded-full bg-surface-2 px-2.5 py-1 text-xs font-medium text-body">{planMeta(p.mealsPerDay, p.daysPerWeek)}</span>
         </span>
-        <span className="font-display text-[19px] font-bold tracking-tight md:text-xl">{p.name}</span>
+        <span className="font-display text-[17px] font-bold leading-snug tracking-tight md:text-xl">{p.name}</span>
         <span className={`min-h-[42px] text-sm leading-normal text-muted ${showHeart ? "hidden md:block" : ""}`}>{p.description}</span>
         {showHeart && (
           <span className="flex items-center gap-1 text-xs text-muted">
@@ -36,12 +36,12 @@ export function PlanCard({ p, rating, showHeart = false, sizes }: { p: Product; 
             {rating && rating.count > 0 ? `${rating.avg.toFixed(1)} (${rating.count})` : "(reviews)"}
           </span>
         )}
-        <span className="mt-auto flex items-baseline gap-2">
-          <span className="font-display text-xl font-bold text-price-red">{formatNaira(p.priceKobo)}</span>
+        <span className="mt-auto flex flex-wrap items-center gap-x-2 gap-y-1">
+          <span className="whitespace-nowrap font-display text-lg font-bold text-price-red md:text-xl">{formatNaira(p.priceKobo)}</span>
           {p.compareAtKobo && !showHeart && <span className="text-[13px] text-muted line-through">{formatNaira(p.compareAtKobo)}</span>}
-          <span className="text-[13px] text-muted">/ week</span>
+          <span className="whitespace-nowrap text-[13px] text-muted">/ week</span>
           {showHeart && (
-            <span aria-hidden className="ml-auto flex size-10 items-center justify-center rounded-full bg-yellow text-canvas"><Plus size={18} strokeWidth={2.5} /></span>
+            <span aria-hidden className="ml-auto flex size-10 shrink-0 items-center justify-center rounded-full bg-yellow text-canvas"><Plus size={18} strokeWidth={2.5} /></span>
           )}
         </span>
         {!showHeart && <span className="cl-btn mt-1 rounded-full bg-ink py-3 text-center text-sm font-bold text-white">Choose this plan</span>}
