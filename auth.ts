@@ -12,7 +12,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     verificationTokensTable: verificationTokens,
   }),
   session: { strategy: "database" },
-  providers: [Google({ allowDangerousEmailAccountLinking: false })],
+  // Google only returns verified emails, so linking to an existing email-code account is safe.
+  providers: [Google({ allowDangerousEmailAccountLinking: true })],
   pages: { signIn: "/signin" },
   callbacks: {
     session({ session, user }) {

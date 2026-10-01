@@ -48,6 +48,10 @@ export type EmailOrder = {
   deliveryDate: string; deliveryWindow: string; zoneName: string; paymentMethod: "card" | "transfer" | "pod" | null;
   subtotalKobo: number; discountKobo: number; deliveryKobo: number; podFeeKobo: number; totalKobo: number; promoCode: string | null;
   items: { name: string; qty: number; unitPriceKobo: number; isPlan?: boolean }[];
+  notes?: string | null;
+  paymentStatus?: "pending" | "awaiting_confirmation" | "paid" | "failed";
+  paymentRef?: string | null;
+  placedAt?: string;
 };
 
 export const fmtDate = (iso: string) => new Date(iso + "T12:00:00Z").toLocaleDateString("en-NG", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" });
@@ -70,6 +74,40 @@ export function OrderTable({ o }: { o: EmailOrder }) {
         {o.podFeeKobo > 0 && <Row label="Pay on delivery fee" value={naira(o.podFeeKobo)} />}
         <tr><td colSpan={2} style={{ borderTop: `1px solid ${c.line}`, padding: 0 }} /></tr>
         <Row label="Total" value={naira(o.totalKobo)} bold />
+      </tbody>
+    </table>
+  );
+}
+
+const METHOD_LABEL = { card: "Card (Paystack)", transfer: "Bank transfer", pod: "Pay on delivery" } as const;
+
+export function DetailsBlock({ o }: { o: EmailOrder }) {
+  const cell = { padding: "4px 0", fontSize: 14, verticalAlign: "top" as const };
+  return (
+    <table width="100%" role="presentation" style={{ margin: "0 0 18px" }}>
+      <tbody>
+        <tr><td style={{ ...cell, width: 130, color: c.muted }}>Order number</td><td style={{ ...cell, fontWeight: 700 }}>{o.number}</td></tr>
+        {o.placedAt && <tr><td style={{ ...cell, color: c.muted }}>Placed</td><td style={cell}>{o.placedAt}</td></tr>}
+        <tr><td style={{ ...cell, color: c.muted }}>Name</td><td style={cell}>{o.firstName}</td></tr>
+        <tr><td style={{ ...cell, color: c.muted }}>Email</td><td style={cell}>{o.email}</td></tr>
+        <tr><td style={{ ...cell, color: c.muted }}>Phone</td><td style={cell}>{o.phone}</td></tr>
+        <tr><td style={{ ...cell, color: c.muted }}>Delivery</td><td style={cell}>{fmtDate(o.deliveryDate)}, {o.deliveryWindow}<br />{o.zoneName} · {o.address}</td></tr>
+        {o.notes && <tr><td style={{ ...cell, color: c.muted }}>Kitchen notes</td><td style={cell}>{o.notes}</td></tr>}
+      </tbody>
+    </table>
+  );
+}
+
+export function PaymentBlock({ o }: { o: EmailOrder }) {
+  const paid = o.paymentStatus === "paid";
+  const status = paid ? "Paid ✓" : o.paymentMethod === "pod" ? `Due on delivery: ${naira(o.totalKobo)}` : o.paymentStatus === "awaiting_confirmation" ? "Transfer reported, we're confirming it" : "Awaiting payment";
+  return (
+    <table width="100%" role="presentation" style={{ background: paid ? "#DCEFD2" : "#FCEBC9", borderRadius: 14, padding: "12px 18px", margin: "0 0 18px" }}>
+      <tbody>
+        <tr><td style={{ fontSize: 13, color: c.muted, padding: "2px 0" }}>Payment</td><td align="right" style={{ fontSize: 14, fontWeight: 700 }}>{o.paymentMethod ? METHOD_LABEL[o.paymentMethod] : "Not chosen"}</td></tr>
+        <tr><td style={{ fontSize: 13, color: c.muted, padding: "2px 0" }}>Status</td><td align="right" style={{ fontSize: 14, fontWeight: 700 }}>{status}</td></tr>
+        <tr><td style={{ fontSize: 13, color: c.muted, padding: "2px 0" }}>Amount</td><td align="right" style={{ fontSize: 14, fontWeight: 700 }}>{naira(o.totalKobo)}</td></tr>
+        {o.paymentRef && <tr><td style={{ fontSize: 13, color: c.muted, padding: "2px 0" }}>Reference</td><td align="right" style={{ fontSize: 13, fontFamily: "'Courier New', monospace" }}>{o.paymentRef}</td></tr>}
       </tbody>
     </table>
   );

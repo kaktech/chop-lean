@@ -9,11 +9,13 @@ import PaymentConfirmed from "@/emails/PaymentConfirmed";
 import StatusUpdate from "@/emails/StatusUpdate";
 import { adminEmails } from "@/auth";
 
-function toEmailOrder(f: OrderFull): EmailOrder {
+export function toEmailOrder(f: OrderFull): EmailOrder {
   const o = f.order;
   return {
     number: o.number, firstName: o.firstName, email: o.email, phone: o.phone, address: o.address,
     deliveryDate: o.deliveryDate, deliveryWindow: o.deliveryWindow, zoneName: f.zone?.name ?? "Lagos", paymentMethod: o.paymentMethod,
+    notes: o.notes, paymentStatus: o.paymentStatus, paymentRef: f.payments.find((p) => p.providerRef)?.providerRef ?? o.number,
+    placedAt: o.createdAt.toLocaleString("en-NG", { dateStyle: "medium", timeStyle: "short", timeZone: "Africa/Lagos" }),
     subtotalKobo: o.subtotalKobo, discountKobo: o.discountKobo, deliveryKobo: o.deliveryKobo, podFeeKobo: o.podFeeKobo, totalKobo: o.totalKobo, promoCode: o.promoCode,
     items: f.items.map((i) => ({ name: i.name, qty: i.qty, unitPriceKobo: i.unitPriceKobo, isPlan: (i.options as { kcal?: number })?.kcal != null || /\b(plan|lean|smart|cut|owambe)\b/i.test(i.name) })),
   };

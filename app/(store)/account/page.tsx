@@ -42,7 +42,9 @@ export default async function AccountPage() {
   const points: WeightPoint[] = logs.slice(-8).map((l, i, arr) => ({ label: `Wk ${logs.length - arr.length + i + 1}`, kg: l.kg, pace: first ? +(first - 0.5 * (logs.length - arr.length + i)).toFixed(1) : l.kg }));
   const latest = logs.at(-1)?.kg ?? null;
   const lost = first != null && latest != null ? +(first - latest).toFixed(1) : null;
-  const firstName = (user.name ?? "there").split(" ")[0];
+  const emailName = (user.email ?? "").split("@")[0].replace(/[._+\d]+/g, " ").trim().split(" ")[0];
+  const displayName = user.name ?? user.email ?? "You";
+  const firstName = (user.name ?? (emailName ? emailName.charAt(0).toUpperCase() + emailName.slice(1) : "there")).split(" ")[0];
   const initial = firstName.charAt(0).toUpperCase();
 
   const nav = [["Overview", "#overview"], ["My plan and menu", "#plan"], ["Weight tracker", "#weight"], ["Orders", "#orders"], ["Dietary preferences", "#preferences"]];
@@ -54,7 +56,7 @@ export default async function AccountPage() {
       <aside className="lg:sticky lg:top-6 lg:self-start">
         <div className="flex items-center gap-4">
           <span className="flex size-[52px] items-center justify-center rounded-full bg-pink font-display text-xl font-bold">{initial}</span>
-          <div><b className="block font-display">{user.name}</b><span className="text-[13px] text-muted">Signed in with Google</span></div>
+          <div><b className="block break-all font-display">{displayName}</b><span className="text-[13px] text-muted">{user.image ? "Signed in with Google" : "Signed in with email"}</span></div>
         </div>
         <nav aria-label="Account" className="mt-6 flex gap-2 overflow-x-auto lg:flex-col lg:gap-1">
           {nav.map(([l, h], i) => <a key={l} href={h} className={`flex min-h-11 shrink-0 items-center rounded-xl px-4 text-[15px] no-underline ${i === 0 ? "bg-ink font-medium text-white" : "text-ink hover:bg-white"}`}>{l}</a>)}

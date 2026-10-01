@@ -104,6 +104,7 @@ export function CheckoutForm({ zones, dates, user }: { zones: Zone[]; dates: Dat
           <>
             <GoogleButton redirectTo="/checkout">Continue with Google to fill this in</GoogleButton>
             <div className="my-7 flex items-center gap-3 text-[13px] text-muted"><span className="h-px flex-1 bg-line" />or check out as a guest<span className="h-px flex-1 bg-line" /></div>
+            <p className="-mt-3 mb-6 text-center text-[13px] text-muted">Prefer email? <Link href="/signin?callbackUrl=/checkout" className="font-bold text-green underline">Sign in with an emailed code</Link></p>
           </>
         )}
 

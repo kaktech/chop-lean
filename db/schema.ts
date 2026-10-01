@@ -345,3 +345,19 @@ export const pausedWeeks = pgTable(
   },
   (t) => [uniqueIndex("paused_weeks_user_week").on(t.userId, t.weekOf)],
 );
+
+/* ---------- Passwordless email sign-in codes ---------- */
+
+export const loginCodes = pgTable(
+  "login_codes",
+  {
+    id: serial("id").primaryKey(),
+    email: text("email").notNull(),
+    codeHash: text("code_hash").notNull(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    attempts: integer("attempts").notNull().default(0),
+    usedAt: timestamp("used_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (t) => [index("login_codes_email_idx").on(t.email, t.createdAt)],
+);

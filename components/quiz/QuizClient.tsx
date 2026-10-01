@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useMemo, useState, useTransition } from "react";
-import { saveQuizProfile, type QuizData } from "@/app/actions/profile";
+import { saveQuizProfile } from "@/app/actions/profile";
+import type { QuizData } from "@/lib/quiz-schema";
 import { dailyKcalTarget, type Activity } from "@/lib/pricing";
 
 export const QUIZ_KEY = "chop-lean-quiz";

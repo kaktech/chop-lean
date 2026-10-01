@@ -4,7 +4,8 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { CartesianGrid, Line, LineChart, ReferenceDot, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { logWeight, pauseNextWeek, reorderLines, resumeNextWeek } from "@/app/actions/account";
-import { saveQuizProfile, type QuizData } from "@/app/actions/profile";
+import { saveQuizProfile } from "@/app/actions/profile";
+import type { QuizData } from "@/lib/quiz-schema";
 import { useCart, useUI, type CartLine } from "@/lib/store";
 import { QUIZ_KEY } from "@/components/quiz/QuizClient";
 

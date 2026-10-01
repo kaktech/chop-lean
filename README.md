@@ -50,6 +50,12 @@ Generate `AUTH_SECRET` with `openssl rand -base64 32`.
 
 Sessions are stored in the database (`sessions` table) through the Drizzle adapter.
 
+### Email sign-in (no password, no account set-up)
+
+`/signin` also offers "Email me a code": enter an email, receive a 6-digit code through Mailgun, type it in and you are signed in (an account is created silently the first time). Codes are hashed in the `login_codes` table, work once, expire after 10 minutes, allow 5 wrong attempts, and requests are rate-limited. A successful code creates the same database session Google sign-in does. Google and email sign-in link to the same account when the email matches.
+
+**Receiving the codes needs Mailgun configured** (section 4). Without it, in development only, the code is printed in the terminal running `pnpm dev`. In production a missing Mailgun key shows "We couldn't send the email" instead.
+
 **Admin access:** put your Google email(s) in `ADMIN_EMAILS` (comma separated). Those accounts can open `/admin`; everyone else gets a 404. Admin is checked in `app/admin/layout.tsx` and in every admin server action. `middleware.ts` only checks that a session cookie exists, because database sessions cannot be read at the edge.
 
 ## 4. Mailgun (confirmation emails)
@@ -67,6 +73,8 @@ Emails sent (React Email templates in `emails/`):
 - status update whenever an admin changes an order's status
 
 Email failures are logged and never block checkout.
+
+To preview an email without sending it (development only): `/api/dev/email?type=confirmation&order=<order uuid>` (also `type=paid`, `type=status`, `type=code`). The order uuid is the long id in `/order/<uuid>`.
 
 ## 5. Paystack (card payments, test mode)
 
