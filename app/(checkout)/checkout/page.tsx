@@ -4,6 +4,7 @@ import { db } from "@/db";
 import { deliveryZones, profiles } from "@/db/schema";
 import { auth } from "@/auth";
 import { CheckoutHeader } from "@/components/checkout/CheckoutShell";
+import { googleReady } from "@/lib/features";
 import { CheckoutForm } from "@/components/checkout/CheckoutForm";
 import { describeDate, nextDeliveryDates, toISODate } from "@/lib/lagos-time";
 
@@ -20,6 +21,7 @@ export default async function CheckoutPage() {
     <>
       <CheckoutHeader step={2} />
       <CheckoutForm
+        googleReady={googleReady()}
         zones={zones.map((z) => ({ id: z.id, name: z.name, areas: z.areas, feeKobo: z.feeKobo }))}
         dates={dates}
         user={session?.user ? { email: session.user.email ?? "", firstName: first, lastName: rest.join(" "), phone: profile?.phone ?? "" } : null}

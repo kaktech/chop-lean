@@ -11,6 +11,7 @@ import { rateLimit } from "@/lib/rate-limit";
 import { CODE_TTL_MS, MAX_ATTEMPTS, codesMatch, generateCode, hashCode, newSessionToken } from "@/lib/otp";
 import { hashPassword, passwordProblem, verifyPassword } from "@/lib/password";
 import LoginCode from "@/emails/LoginCode";
+import { emailReady } from "@/lib/features";
 
 export type Purpose = "login" | "signup" | "reset";
 export type OtpState = { step: "email" | "code"; purpose?: Purpose; email?: string; message?: string; error?: string; sentAt?: number };
@@ -72,6 +73,17 @@ export async function requestSignup(_prev: OtpState | null, fd: FormData): Promi
 
   const [existing] = await db.select({ pw: s.users.passwordHash }).from(s.users).where(eq(s.users.email, p.data.email)).limit(1);
   if (existing?.pw) return { step: "email", purpose: "signup", email: p.data.email, error: "An account with that email already exists. Sign in, or choose “Forgot password”." };
+
+  // Without Mailgun no code can be delivered, so create the account straight away (test deployments).
+  // Once Mailgun is configured this branch is skipped and the email is verified first.
+  if (!emailReady()) {
+    const passwordHash = await hashPassword(p.data.password);
+    let uid = existing ? (await db.select({ id: s.users.id }).from(s.users).where(eq(s.users.email, p.data.email)).limit(1))[0]?.id : undefined;
+    if (uid) await db.update(s.users).set({ passwordHash }).where(eq(s.users.id, uid));
+    else [{ id: uid }] = await db.insert(s.users).values({ email: p.data.email, name: p.data.name, passwordHash }).returning({ id: s.users.id });
+    await startSession(uid!);
+    redirect(safePath(String(fd.get("callbackUrl") ?? "")));
+  }
 
   const payload = JSON.stringify({ name: p.data.name, passwordHash: await hashPassword(p.data.password) });
   const err = await issueCode(p.data.email, "signup", payload);

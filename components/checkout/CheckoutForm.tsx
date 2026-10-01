@@ -36,7 +36,7 @@ type Quote = NonNullable<Awaited<ReturnType<typeof getQuote>>>;
 const input = "min-h-[50px] w-full rounded-[14px] border border-input-line bg-surface px-4 text-base placeholder:text-muted/70";
 const bad = "!border-price-red";
 
-export function CheckoutForm({ zones, dates, user }: { zones: Zone[]; dates: DateOpt[]; user: { email: string; firstName: string; lastName: string; phone: string } | null }) {
+export function CheckoutForm({ zones, dates, user, googleReady = false }: { googleReady?: boolean; zones: Zone[]; dates: DateOpt[]; user: { email: string; firstName: string; lastName: string; phone: string } | null }) {
   const router = useRouter();
   const hydrated = useHydrated();
   const { lines, promo, setPromo } = useCart();
@@ -102,9 +102,9 @@ export function CheckoutForm({ zones, dates, user }: { zones: Zone[]; dates: Dat
       <div className="min-w-0">
         {!user && (
           <>
-            <GoogleButton redirectTo="/checkout">Continue with Google to fill this in</GoogleButton>
+            {googleReady && <GoogleButton redirectTo="/checkout">Continue with Google to fill this in</GoogleButton>}
             <div className="my-7 flex items-center gap-3 text-[13px] text-muted"><span className="h-px flex-1 bg-line" />or check out as a guest<span className="h-px flex-1 bg-line" /></div>
-            <p className="-mt-3 mb-6 text-center text-[13px] text-muted">Prefer email? <Link href="/signin?callbackUrl=/checkout" className="font-bold text-leaf underline">Sign in with an emailed code</Link></p>
+            <p className="-mt-3 mb-6 text-center text-[13px] text-muted">Have an account? <Link href="/signin?callbackUrl=/checkout" className="font-bold text-leaf underline">Sign in</Link></p>
           </>
         )}
 

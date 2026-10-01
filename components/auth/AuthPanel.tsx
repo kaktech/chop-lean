@@ -15,20 +15,20 @@ const submitWith = (action: (fd: FormData) => void, remember?: (fd: FormData) =>
 
 type Mode = "signin" | "signup" | "code" | "forgot";
 
-export function AuthPanel({ callbackUrl }: { callbackUrl: string }) {
+export function AuthPanel({ callbackUrl, emailReady = true }: { callbackUrl: string; emailReady?: boolean }) {
   const [mode, setMode] = useState<Mode>("signin");
   const tab = mode === "code" ? "code" : "password";
 
   return (
     <div className="flex flex-col gap-4">
-      <div role="tablist" aria-label="Sign-in method" className="grid grid-cols-2 gap-1 rounded-full border border-line bg-surface p-1 text-sm font-bold">
+      {emailReady && <div role="tablist" aria-label="Sign-in method" className="grid grid-cols-2 gap-1 rounded-full border border-line bg-surface p-1 text-sm font-bold">
         {([["password", "Password"], ["code", "Email me a code"]] as const).map(([k, l]) => (
           <button key={k} role="tab" type="button" aria-selected={tab === k} onClick={() => setMode(k === "code" ? "code" : "signin")}
             className={`min-h-11 rounded-full ${tab === k ? "bg-ink text-white" : "text-muted"}`}>{l}</button>
         ))}
-      </div>
-      {mode === "signin" && <PasswordSignIn callbackUrl={callbackUrl} onSignup={() => setMode("signup")} onForgot={() => setMode("forgot")} />}
-      {mode === "signup" && <Signup callbackUrl={callbackUrl} onBack={() => setMode("signin")} />}
+      </div>}
+      {mode === "signin" && <PasswordSignIn callbackUrl={callbackUrl} onSignup={() => setMode("signup")} onForgot={() => setMode("forgot")} emailReady={emailReady} />}
+      {mode === "signup" && <Signup callbackUrl={callbackUrl} emailReady={emailReady} onBack={() => setMode("signin")} />}
       {mode === "forgot" && <Reset callbackUrl={callbackUrl} onBack={() => setMode("signin")} />}
       {mode === "code" && <EmailCode callbackUrl={callbackUrl} />}
     </div>
@@ -39,7 +39,7 @@ function Err({ children }: { children?: string }) {
   return children ? <p role="alert" className="text-sm text-price-red">{children}</p> : null;
 }
 
-function PasswordSignIn({ callbackUrl, onSignup, onForgot }: { callbackUrl: string; onSignup: () => void; onForgot: () => void }) {
+function PasswordSignIn({ callbackUrl, onSignup, onForgot, emailReady }: { callbackUrl: string; onSignup: () => void; onForgot: () => void; emailReady: boolean }) {
   const [state, action, pending] = useActionState<OtpState | null, FormData>(signInWithPassword, null);
   const [show, setShow] = useState(false);
   return (
@@ -48,7 +48,7 @@ function PasswordSignIn({ callbackUrl, onSignup, onForgot }: { callbackUrl: stri
       <label htmlFor="pw-email" className="text-[13px] font-bold">Email</label>
       <input id="pw-email" name="email" type="email" autoComplete="email" inputMode="email" required placeholder="you@email.com" defaultValue={state?.email} className={input} />
       <label htmlFor="pw-pass" className="flex justify-between text-[13px] font-bold">Password
-        <button type="button" onClick={onForgot} className="font-normal text-leaf underline">Forgot password?</button></label>
+        {emailReady && <button type="button" onClick={onForgot} className="font-normal text-leaf underline">Forgot password?</button>}</label>
       <div className="relative">
         <input id="pw-pass" name="password" type={show ? "text" : "password"} autoComplete="current-password" required className={`${input} pr-20`} />
         <button type="button" onClick={() => setShow((s) => !s)} aria-pressed={show} className="absolute right-2 top-1/2 min-h-11 -translate-y-1/2 px-3 text-sm font-bold text-muted">{show ? "Hide" : "Show"}</button>
@@ -117,7 +117,7 @@ function EmailCode({ callbackUrl }: { callbackUrl: string }) {
   );
 }
 
-function Signup({ callbackUrl, onBack }: { callbackUrl: string; onBack: () => void }) {
+function Signup({ callbackUrl, onBack, emailReady }: { callbackUrl: string; onBack: () => void; emailReady: boolean }) {
   const [state, action, pending] = useActionState<OtpState | null, FormData>(requestSignup, null);
   const [editing, setEditing] = useState(false);
   const [show, setShow] = useState(false);
@@ -130,6 +130,7 @@ function Signup({ callbackUrl, onBack }: { callbackUrl: string; onBack: () => vo
   }
   return (
     <form method="post" onSubmit={submitWith(action, (fd) => { last.current = fd; })} className="flex flex-col gap-3" noValidate>
+      <input type="hidden" name="callbackUrl" value={callbackUrl} />
       <label htmlFor="su-name" className="text-[13px] font-bold">Your name</label>
       <input id="su-name" name="name" autoComplete="name" required className={input} />
       <label htmlFor="su-email" className="text-[13px] font-bold">Email</label>
@@ -141,8 +142,8 @@ function Signup({ callbackUrl, onBack }: { callbackUrl: string; onBack: () => vo
       </div>
       <p id="su-hint" className="-mt-1 text-xs text-muted">At least 8 characters with a letter and a number.</p>
       <Err>{state?.error}</Err>
-      <button disabled={pending} className={`${primary} bg-yellow text-canvas`}>{pending ? "Sending code…" : "Create account"}</button>
-      <p className="text-xs text-muted">We&apos;ll email a code to confirm it&apos;s really your address.</p>
+      <button disabled={pending} className={`${primary} bg-yellow text-canvas`}>{pending ? (emailReady ? "Sending code…" : "Creating…") : "Create account"}</button>
+      {emailReady && <p className="text-xs text-muted">We&apos;ll email a code to confirm it&apos;s really your address.</p>}
       <p className="text-center text-sm text-muted">Already have an account? <button type="button" onClick={onBack} className="font-bold text-leaf underline">Sign in</button></p>
     </form>
   );
