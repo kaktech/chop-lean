@@ -11,19 +11,20 @@ export function EmailLayout({ preview, orderNumber, children }: { preview: strin
     <Html lang="en">
       <Head />
       <Preview>{preview}</Preview>
-      <Body style={{ margin: 0, background: c.cream, fontFamily: "'DM Sans', Arial, sans-serif", color: c.ink }}>
-        <Container style={{ maxWidth: 600, margin: "24px auto", background: "#fff", borderRadius: 20, overflow: "hidden", border: `1px solid ${c.line}` }}>
-          <Section style={{ background: c.green, padding: "22px 30px" }}>
+      <Body style={{ margin: 0, padding: "24px 12px", background: c.cream, fontFamily: "'DM Sans', Arial, sans-serif", color: c.ink }}>
+        <Container style={{ maxWidth: 560, margin: "0 auto", background: "#fff", borderRadius: 16, border: `1px solid ${c.line}` }}>
+          <Section style={{ padding: "22px 28px 16px", borderBottom: `1px solid ${c.line}` }}>
             <table width="100%" role="presentation"><tbody><tr>
-              <td><span style={{ fontFamily: "Arial, sans-serif", fontWeight: 700, fontSize: 24, color: "#fff" }}>Chop<span style={{ color: c.yellow }}>Lean</span></span></td>
-              {orderNumber && <td align="right" style={{ color: "#DCEFD2", fontSize: 13 }}>Order {orderNumber}</td>}
+              <td style={{ width: 40, verticalAlign: "middle" }}><Img src={`${SITE}/logo-mark.png`} alt="Chop Lean" width="36" height="36" style={{ display: "block", borderRadius: 18 }} /></td>
+              <td style={{ verticalAlign: "middle", paddingLeft: 10 }}><span style={{ fontFamily: "Arial, sans-serif", fontWeight: 700, fontSize: 20, color: c.ink }}>Chop<span style={{ color: c.green }}>Lean</span></span></td>
+              {orderNumber && <td align="right" style={{ verticalAlign: "middle", color: c.muted, fontSize: 13 }}>Order {orderNumber}</td>}
             </tr></tbody></table>
           </Section>
-          <Img src={`${SITE}/images/meal-box.jpg`} alt="" width="600" height="180" style={{ width: "100%", height: 180, objectFit: "cover", display: "block" }} />
-          <Section style={{ padding: "30px" }}>{children}</Section>
-          <Section style={{ padding: "0 30px 28px" }}>
-            <Text style={{ fontSize: 12, color: c.muted, margin: 0 }}>
-              Sent to you because you placed an order at Chop Lean. Our plans support weight management and are not medical treatment.
+          <Section style={{ padding: "26px 28px 8px" }}>{children}</Section>
+          <Section style={{ padding: "8px 28px 24px" }}>
+            <Text style={{ fontSize: 12, lineHeight: 1.5, color: c.muted, margin: 0 }}>
+              Chop Lean · Lagos · <Link href={SITE} style={{ color: c.muted }}>chop-lean.vercel.app</Link><br />
+              Our plans support weight management and are not medical treatment.
             </Text>
           </Section>
         </Container>
@@ -33,7 +34,7 @@ export function EmailLayout({ preview, orderNumber, children }: { preview: strin
 }
 
 export const H1 = ({ children }: { children: ReactNode }) => (
-  <Text style={{ fontFamily: "Georgia, 'DM Serif Display', serif", fontSize: 28, lineHeight: 1.2, margin: "0 0 10px", color: c.ink }}>{children}</Text>
+  <Text style={{ fontFamily: "Georgia, 'DM Serif Display', serif", fontSize: 24, lineHeight: 1.25, margin: "0 0 8px", color: c.ink }}>{children}</Text>
 );
 export const P = ({ children }: { children: ReactNode }) => <Text style={{ fontSize: 15, lineHeight: 1.6, margin: "0 0 14px", color: "#3A4540" }}>{children}</Text>;
 

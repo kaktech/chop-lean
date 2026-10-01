@@ -13,7 +13,7 @@ export default function LoginCode({ code, purpose = "login" }: { code: string; p
     <EmailLayout preview={`Your Chop Lean code is ${code}`}>
       <H1>{title}</H1>
       <P>{line} It works once and expires in 10 minutes.</P>
-      <Text style={{ fontFamily: "'Courier New', monospace", fontSize: 38, letterSpacing: 10, fontWeight: 700, background: "#F7F6F1", borderRadius: 14, padding: "18px 0", textAlign: "center", margin: "6px 0 18px" }}>{code}</Text>
+      <Text style={{ fontFamily: "'Courier New', monospace", fontSize: 32, letterSpacing: 8, fontWeight: 700, background: "#F7F6F1", borderRadius: 12, padding: "14px 0", textAlign: "center", margin: "6px 0 18px" }}>{code}</Text>
       <P>If you didn&apos;t ask for this, you can ignore this email. Nobody can get in without the code.</P>
     </EmailLayout>
   );
