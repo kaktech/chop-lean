@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chop Lean Admin — Dashboard</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&amp;family=DM+Serif+Display:ital@0;1&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&amp;display=swap">
+<style>body{margin:0;background:#F4F3EE}a{color:#3D6B1F}a:hover{color:#24421A}</style>
+</helmet>
+<div style="width: 100%; min-height: 1500px; background: #F4F3EE; font-family: 'DM Sans', sans-serif; color: #15201A; display: flex;">
+  <aside style="width: 260px; flex-shrink: 0; background: #FFFFFF; border-right: 1px solid #E6E4DC; padding: 24px 16px; display: flex; flex-direction: column; gap: 4px;">
+    <a href="Main.dc.html" style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 24px; color: #15201A; text-decoration: none; padding: 0 12px 20px;">Chop<span style="color: #3D6B1F;">Lean</span> <span style="font-size: 12px; font-weight: 500; color: #5B6560;">Admin</span></a>
+    <sc-for list="{{groups}}" as="g" hint-placeholder-count="4">
+      <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #5B6560; padding: 16px 12px 6px;">{{g.t}}</span>
+      <sc-for list="{{g.items}}" as="i" hint-placeholder-count="3">
+        <a href="{{i.href}}" style="padding: 11px 12px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 500; color: {{i.fg}}; background: {{i.bg}};">{{i.t}}</a>
+      </sc-for>
+    </sc-for>
+  </aside>
+  <main style="flex-grow: 1; padding: 32px 40px; display: flex; flex-direction: column; gap: 24px;">
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <h1 style="margin: 0; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 32px; flex-grow: 1;">Dashboard</h1>
+      <span style="font-size: 14px; color: #5B6560;">Week of 5 Oct · sample data</span>
+      <a href="AdminProducts.dc.html" style="background: #3D6B1F; color: #FFFFFF; font-weight: 700; font-size: 14px; padding: 11px 18px; border-radius: 10px; text-decoration: none;">+ Add product</a>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px;">
+      <sc-for list="{{kpis}}" as="k" hint-placeholder-count="4">
+        <div style="background: #FFFFFF; border: 1px solid #E6E4DC; border-radius: 18px; padding: 22px; display: flex; flex-direction: column; gap: 6px;">
+          <span style="font-size: 13px; color: #5B6560;">{{k.l}}</span>
+          <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 32px; letter-spacing: -0.02em;">{{k.v}}</span>
+          <span style="font-size: 12px; color: #5B6560;">{{k.s}}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px;">
+      <div style="background: #FFFFFF; border: 1px solid #E6E4DC; border-radius: 18px; padding: 22px; display: flex; gap: 20px; align-items: center;">
+        <div style="position: relative; width: 104px; height: 104px; flex-shrink: 0;">
+          <svg viewBox="0 0 36 36" width="104" height="104" aria-hidden="true" style="transform: rotate(-90deg);"><circle cx="18" cy="18" r="15.9" style="fill: none; stroke: #EEECE5; stroke-width: 3.4;"></circle><circle cx="18" cy="18" r="15.9" style="fill: none; stroke: #3D6B1F; stroke-width: 3.4; stroke-dasharray: 60 100; stroke-linecap: round;"></circle></svg>
+          <span style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 24px;">60%</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 13px;">
+          <b style="font-family: 'Outfit', sans-serif; font-size: 17px;">Store setup</b>
+          <span style="color: #5B6560; text-decoration: line-through;">✓ Add plans and meals</span>
+          <span style="color: #5B6560; text-decoration: line-through;">✓ Set delivery zones</span>
+          <span style="color: #5B6560; text-decoration: line-through;">✓ Add bank details</span>
+          <a href="Admin.dc.html" style="font-weight: 700;">○ Connect Paystack</a>
+          <a href="Admin.dc.html" style="font-weight: 700;">○ Connect custom domain</a>
+        </div>
+      </div>
+      <div style="background: #FFFFFF; border: 1px solid #E6E4DC; border-radius: 18px; padding: 22px; display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;"><b style="font-family: 'Outfit', sans-serif; font-size: 17px;">Storefront theme</b><a href="Main.dc.html" style="font-size: 13px; font-weight: 700;">View store</a></div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;">
+          <div style="border: 2px solid #3D6B1F; border-radius: 12px; overflow: hidden;">
+            <div style="height: 64px; display: flex;"><span style="flex: 1; background: #F7F6F1;"></span><span style="flex: 1; background: #3D6B1F;"></span></div>
+            <div style="padding: 8px 10px; font-size: 12px; display: flex; justify-content: space-between;"><b>Editorial Green</b><span style="color: #3D6B1F; font-weight: 700;">Live</span></div>
+          </div>
+          <div style="border: 1px solid #E6E4DC; border-radius: 12px; overflow: hidden;">
+            <div style="height: 64px; display: flex;"><span style="flex: 1; background: #15201A;"></span><span style="flex: 1; background: #F6B81A;"></span></div>
+            <div style="padding: 8px 10px; font-size: 12px; display: flex; justify-content: space-between;"><b>Night Market</b><span style="color: #5B6560;">Preview</span></div>
+          </div>
+        </div>
+        <span style="font-size: 12px; color: #5B6560;">Change colours, fonts and the hero photo without code.</span>
+      </div>
+      <div style="background: #15201A; color: #FFFFFF; border-radius: 18px; padding: 22px; display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;"><b style="font-family: 'Outfit', sans-serif; font-size: 17px;">First 100 orders challenge</b><span style="width: 36px; height: 36px; border-radius: 10px; background: #F6B81A; display: flex; align-items: center; justify-content: center;"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #15201A; stroke-width: 2;"><rect x="3" y="8" width="18" height="13" rx="2"></rect><path d="M12 8v13"></path><path d="M3 12h18"></path><path d="M12 8c-2-4-6-4-6-1 0 2 6 1 6 1z"></path><path d="M12 8c2-4 6-4 6-1 0 2-6 1-6 1z"></path></svg></span></div>
+        <span style="font-size: 13px; color: #B9BDB4;">Reach 100 paid orders to unlock a free month of featured placement.</span>
+        <span style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; color: #B9BDB4; margin-top: auto;"><span>PROGRESS</span><span style="color: #FFFFFF;">34 / 100</span></span>
+        <span style="height: 8px; border-radius: 4px; background: rgba(255,255,255,0.15);"><span style="display: block; width: 34%; height: 8px; border-radius: 4px; background: #F6B81A;"></span></span>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px;">
+      <div style="grid-column: span 3; background: #FFFFFF; border: 1px solid #E6E4DC; border-radius: 18px; padding: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 20px;">Kitchen prep list · Wed 7 Oct</span>
+          <button type="button" style="font: inherit; font-size: 13px; font-weight: 700; background: #F4F3EE; border: 1px solid #E6E4DC; border-radius: 10px; padding: 9px 14px; cursor: pointer;">Print labels</button>
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+          <thead><tr style="text-align: left; color: #5B6560; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;"><th style="padding: 10px 12px 10px 0; width: 36%;">Dish</th><th style="width: 12%; padding-right: 12px;">Qty</th><th style="width: 24%; padding-right: 12px;">Portion size</th><th style="width: 28%;">Swaps</th></tr></thead>
+          <tbody>
+            <sc-for list="{{prep}}" as="p" hint-placeholder-count="6">
+              <tr style="border-top: 1px solid #EEECE5;"><td style="padding: 13px 12px 13px 0; font-weight: 500;">{{p.d}}</td><td style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 18px;">{{p.n}}</td><td style="color: #5B6560;">{{p.g}}</td><td style="color: #5B6560;">{{p.x}}</td></tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+      <div style="grid-column: span 2; background: #FFFFFF; border: 1px solid #E6E4DC; border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 14px;">
+        <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 20px;">Plans by subscribers</span>
+        <sc-for list="{{mix}}" as="m" hint-placeholder-count="5">
+          <div style="display: flex; flex-direction: column; gap: 6px; font-size: 14px;">
+            <span style="display: flex; justify-content: space-between;"><span>{{m.t}}</span><b>{{m.n}}</b></span>
+            <span style="height: 8px; border-radius: 4px; background: #EEECE5;"><span style="display: block; height: 8px; border-radius: 4px; background: #3D6B1F; width: {{m.w}};"></span></span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="background: #FFFFFF; border: 1px solid #E6E4DC; border-radius: 18px; padding: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 20px;">Recent orders</span>
+        <span style="font-size: 13px; color: #5B6560;">Changing a status emails the customer</span>
+      </div>
+      <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+        <thead><tr style="text-align: left; color: #5B6560; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;"><th style="padding: 10px 0;">Order</th><th>Customer</th><th>Plan</th><th>Zone</th><th>Payment</th><th>Total</th><th>Status</th></tr></thead>
+        <tbody>
+          <sc-for list="{{orders}}" as="o" hint-placeholder-count="5">
+            <tr style="border-top: 1px solid #EEECE5;"><td style="padding: 13px 0; font-weight: 700;">{{o.id}}</td><td>{{o.c}}</td><td>{{o.p}}</td><td style="color: #5B6560;">{{o.z}}</td><td style="color: #5B6560;">{{o.pay}}</td><td style="font-weight: 700;">{{o.t}}</td>
+              <td><label style="position: absolute; width: 1px; height: 1px; overflow: hidden;" for="st-{{o.id}}">Status for {{o.id}}</label><select id="st-{{o.id}}" style="font: inherit; font-size: 13px; font-weight: 700; padding: 7px 10px; border-radius: 8px; border: 1px solid #E6E4DC; background: {{o.bg}};"><option>{{o.s}}</option><option>Pending payment</option><option>Cooking</option><option>Out for delivery</option><option>Delivered</option></select></td></tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const nav = (t, href, on) => ({ t, href, fg: on ? '#FFFFFF' : '#15201A', bg: on ? '#3D6B1F' : 'transparent' });
+    return {
+      groups: [
+        { t: 'Main', items: [nav('Dashboard', 'Admin.dc.html', true), nav('Storefront', 'Main.dc.html', false)] },
+        { t: 'Sales and menu', items: [nav('Products and plans', 'AdminProducts.dc.html', false), nav('Weekly menu', 'AdminProducts.dc.html', false), nav('Orders and delivery', 'Admin.dc.html', false), nav('Payments', 'AdminPayments.dc.html', false), nav('Reviews', 'Admin.dc.html', false)] },
+        { t: 'Customers', items: [nav('Customers', 'Admin.dc.html', false), nav('Subscriptions', 'Admin.dc.html', false), nav('Promo codes', 'Admin.dc.html', false)] },
+        { t: 'Settings', items: [nav('Delivery zones', 'Admin.dc.html', false), nav('Pages', 'Admin.dc.html', false), nav('Domain', 'Admin.dc.html', false), nav('Store settings', 'Admin.dc.html', false), nav('Staff', 'Admin.dc.html', false), nav('Plan and billing', 'Admin.dc.html', false)] }
+      ],
+      kpis: [
+        { l: 'Revenue this week', v: '₦1.84m', s: '34 paid orders' },
+        { l: 'Active subscribers', v: '41', s: '6 paused this week' },
+        { l: 'Meals to cook Wed', v: '372', s: 'Across 11 dishes' },
+        { l: 'Awaiting payment', v: '5', s: 'Bank transfer, not yet confirmed' }
+      ],
+      prep: [
+        { d: 'Efo riro with prawns', n: '58', g: '320g + 150g swallow', x: '4 no fish → chicken' },
+        { d: 'Cauli-blend jollof, grilled chicken', n: '51', g: '280g + 120g chicken', x: '—' },
+        { d: 'Moi moi, boiled egg, garden egg', n: '47', g: '1 wrap + 1 egg', x: '3 no egg → extra moi moi' },
+        { d: 'Catfish pepper soup, boiled yam', n: '39', g: '400ml + 100g yam', x: '2 no catfish → goat' },
+        { d: 'Okra soup, prawns, wheat swallow', n: '33', g: '300g + 150g swallow', x: '5 no shellfish → fish' },
+        { d: 'Chicken suya salad', n: '28', g: '250g', x: '1 no groundnut → no yaji' }
+      ],
+      mix: [
+        { t: 'Naija Lean 1400', n: '16', w: '100%' }, { t: 'Swallow Smart 1500', n: '9', w: '56%' }, { t: 'Low-Carb Owambe', n: '7', w: '44%' }, { t: 'Protein Cut 1800', n: '5', w: '31%' }, { t: 'Office Lunch Lean', n: '4', w: '25%' }
+      ],
+      orders: [
+        { id: 'CL-10482', c: 'Adaeze O.', p: 'Naija Lean 1400', z: 'Island', pay: 'Transfer', t: '₦52,700', s: 'Pending payment', bg: '#FCEBC9' },
+        { id: 'CL-10481', c: 'Tunde B.', p: 'Protein Cut 1800', z: 'Mainland', pay: 'Transfer', t: '₦66,500', s: 'Cooking', bg: '#DDE0F6' },
+        { id: 'CL-10480', c: 'Kemi A.', p: 'Swallow Smart 1500', z: 'Lekki–Ajah', pay: 'On delivery', t: '₦59,000', s: 'Cooking', bg: '#DDE0F6' },
+        { id: 'CL-10479', c: 'Ifeanyi N.', p: 'Office Lunch Lean', z: 'Island', pay: 'Transfer', t: '₦27,500', s: 'Out for delivery', bg: '#F9DCDC' },
+        { id: 'CL-10478', c: 'Zainab M.', p: 'Low-Carb Owambe', z: 'Pickup', pay: 'Transfer', t: '₦60,000', s: 'Delivered', bg: '#DCEFD2' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

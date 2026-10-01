@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chop Lean — Shop (mobile)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&amp;family=DM+Serif+Display:ital@0;1&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&amp;display=swap">
+<style>body{margin:0;background:#F7F6F1}a{color:#3D6B1F}a:hover{color:#24421A}*{-webkit-tap-highlight-color:transparent}.cl-scroll{scrollbar-width:none}.cl-scroll::-webkit-scrollbar{display:none}@keyframes clUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}@keyframes clIn{from{opacity:0}to{opacity:1}}@keyframes clFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}@keyframes clSpin{to{transform:rotate(360deg)}}@keyframes clMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}@keyframes clToast{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:none}}@keyframes clDrawer{from{transform:translateX(100%)}to{transform:none}}@keyframes clSheet{from{transform:translateY(100%)}to{transform:none}}@keyframes clPop{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}@keyframes clReveal{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}@keyframes clWipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}.cl-up{animation:clUp .9s cubic-bezier(.2,.7,.2,1) both}.cl-d1{animation-delay:.08s}.cl-d2{animation-delay:.18s}.cl-d3{animation-delay:.3s}.cl-d4{animation-delay:.44s}.cl-d5{animation-delay:.6s}.cl-float{animation:clFloat 5s ease-in-out infinite}.cl-float2{animation:clFloat 6.5s ease-in-out infinite;animation-delay:-2s}.cl-spin{animation:clSpin 18s linear infinite}.cl-marquee{animation:clMarquee 38s linear infinite}.cl-marquee:hover{animation-play-state:paused}.cl-wipe{animation:clWipe 1.2s cubic-bezier(.7,0,.2,1) .1s both}.cl-toast{animation:clToast .45s cubic-bezier(.2,.9,.3,1.2) both}.cl-drawer{animation:clDrawer .5s cubic-bezier(.2,.8,.2,1) both}.cl-sheet{animation:clSheet .5s cubic-bezier(.2,.8,.2,1) both}.cl-fade{animation:clIn .3s ease both}.cl-pop{animation:clPop .5s ease both}.cl-lift{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}.cl-lift:hover{transform:translateY(-6px);box-shadow:0 26px 44px rgba(21,32,26,.13)}.cl-zoom{overflow:hidden}.cl-zoom img{transition:transform .7s cubic-bezier(.2,.7,.2,1)}.cl-zoom:hover img{transform:scale(1.07)}.cl-btn{transition:transform .2s,box-shadow .2s,background-color .2s}.cl-btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(21,32,26,.18)}.cl-btn:active{transform:translateY(0) scale(.98)}.cl-reveal{animation:clReveal .9s cubic-bezier(.2,.7,.2,1) both}@supports (animation-timeline: view()){.cl-reveal{animation:clReveal linear both;animation-timeline:view();animation-range:entry 0% cover 28%}}@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}</style>
+</helmet>
+<div style="width: 390px; background: #F7F6F1; font-family: 'DM Sans', sans-serif; color: #15201A; overflow: hidden; position: relative;">
+  <div style="background: #24421A; color: #F3F1E8; font-size: 12px; text-align: center; padding: 8px 12px;">Order by 6pm for next-day delivery · <span style="color: #F6B81A;">Mon · Wed · Fri</span></div>
+  <header style="position: sticky; top: 0; z-index: 20; background: #FFFFFF; border-bottom: 1px solid #E6E4DC; padding: 10px 16px; display: flex; align-items: center; gap: 10px;">
+    <a href="Menu.dc.html" aria-label="Open menu" style="width: 44px; height: 44px; border-radius: 999px; border: 1px solid #E6E4DC; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #15201A; stroke-width: 2; stroke-linecap: round;"><path d="M4 7h16"></path><path d="M4 12h12"></path><path d="M4 17h16"></path></svg></a>
+    <a href="MHome.dc.html" style="flex-grow: 1; text-align: center; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 23px; color: #15201A; text-decoration: none; letter-spacing: -0.02em;">Chop<span style="color: #3D6B1F;">Lean</span></a>
+    <a href="MShop.dc.html" aria-label="Search" style="width: 44px; height: 44px; border-radius: 999px; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #15201A; stroke-width: 2;"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg></a>
+    <a href="MCart.dc.html" aria-label="Cart, 2 items" style="position: relative; width: 44px; height: 44px; border-radius: 999px; background: #F6B81A; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #15201A; stroke-width: 2; stroke-linejoin: round;"><path d="M5 8h14l-1.2 11a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg><span class="cl-pop" style="position: absolute; top: -3px; right: -3px; min-width: 18px; height: 18px; border-radius: 999px; background: #D93A2B; color: #FFFFFF; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center;">2</span></a>
+  </header>
+  <section style="background: #3D6B1F; color: #FFFFFF; padding: 22px 16px 24px; position: relative; overflow: hidden;">
+    <div aria-hidden="true" style="position: absolute; right: -10px; top: -14px; font-family: 'DM Serif Display', serif; font-size: 110px; line-height: 1; color: rgba(255,255,255,0.08);">Plans</div>
+    <div style="font-size: 12px; color: #DCEFD2; position: relative;">Home / Shop</div>
+    <h1 class="cl-up cl-d1" style="position: relative; margin: 8px 0 6px; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 36px; letter-spacing: -0.03em;">Meal Plans</h1>
+    <p style="position: relative; margin: 0 0 16px; font-size: 14px; color: #DCEFD2;">Weekly subscriptions. Pause or swap any time.</p>
+    <div class="cl-scroll" style="position: relative; display: flex; gap: 8px; overflow-x: auto;">
+      <a href="MShop.dc.html" style="flex-shrink: 0; background: #FFFFFF; color: #15201A; font-weight: 700; font-size: 13px; padding: 10px 16px; border-radius: 999px; text-decoration: none;">Plans (6)</a>
+      <a href="MShop.dc.html" style="flex-shrink: 0; border: 1px solid rgba(255,255,255,0.5); color: #FFFFFF; font-size: 13px; padding: 10px 16px; border-radius: 999px; text-decoration: none;">Single Meals (24)</a>
+      <a href="MShop.dc.html" style="flex-shrink: 0; border: 1px solid rgba(255,255,255,0.5); color: #FFFFFF; font-size: 13px; padding: 10px 16px; border-radius: 999px; text-decoration: none;">Drinks (9)</a>
+    </div>
+  </section>
+  <div class="cl-scroll" style="display: flex; gap: 8px; overflow-x: auto; padding: 14px 16px; background: #FFFFFF; border-bottom: 1px solid #E6E4DC;">
+    <button type="button" style="flex-shrink: 0; font: inherit; font-size: 13px; font-weight: 700; background: #15201A; color: #FFFFFF; border: 0; border-radius: 999px; padding: 10px 16px; display: flex; align-items: center; gap: 6px;"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #FFFFFF; stroke-width: 2.4; stroke-linecap: round;"><path d="M4 6h16"></path><path d="M7 12h10"></path><path d="M10 18h4"></path></svg>Filter</button>
+    <sc-for list="{{chips}}" as="c" hint-placeholder-count="5"><span style="flex-shrink: 0; font-size: 13px; border: 1px solid #D6D3C8; border-radius: 999px; padding: 9px 14px; white-space: nowrap;">{{c}}</span></sc-for>
+  </div>
+  <div style="padding: 14px 16px 6px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #5B6560;"><span>6 plans</span><label style="display: flex; align-items: center; gap: 6px; color: #15201A; font-weight: 700;">Sort<select style="font: inherit; font-weight: 500; padding: 7px 10px; border-radius: 999px; border: 1px solid #D6D3C8; background: #FFFFFF;"><option>Lowest calories</option><option>Price</option><option>Top rated</option></select></label></div>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 6px 16px 30px;">
+    <sc-for list="{{plans}}" as="p" hint-placeholder-count="6">
+      <a href="MProduct.dc.html" class="cl-up cl-zoom" style="position: relative; background: #FFFFFF; border: 1px solid #E6E4DC; border-radius: 18px; padding: 8px; display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: #15201A;">
+        <span style="position: absolute; z-index: 2; top: 14px; left: 14px; background: {{p.badgeBg}}; color: #FFFFFF; font-size: 10px; font-weight: 700; padding: 4px 7px; border-radius: 5px;">{{p.badge}}</span>
+        <span style="display: block; height: 150px; border-radius: 12px; overflow: hidden;"><img src="{{p.img}}" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block;"></span>
+        <span style="align-self: flex-start; font-size: 11px; font-weight: 700; background: #DCEFD2; color: #24421A; padding: 3px 8px; border-radius: 999px;">{{p.kcal}}</span>
+        <b style="font-family: 'Outfit', sans-serif; font-size: 15px; line-height: 1.2; min-height: 36px;">{{p.name}}</b>
+        <span style="display: flex; justify-content: space-between; align-items: center;"><b style="font-family: 'Outfit', sans-serif; font-size: 15px; color: #B4281C;">{{p.price}}</b><span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 999px; background: #F6B81A; display: flex; align-items: center; justify-content: center; font-weight: 700;">+</span></span>
+      </a>
+    </sc-for>
+  </div>
+  <nav aria-label="App" style="position: sticky; bottom: 0; z-index: 20; background: #FFFFFF; border-top: 1px solid #E6E4DC; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 8px 6px 14px;">
+    <a href="MHome.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 0; text-decoration: none; color: #5B6560; font-size: 11px; font-weight: 500;"><span style="width: 44px; height: 28px; border-radius: 999px; display: flex; align-items: center; justify-content: center; background: transparent;"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #5B6560; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round;"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"></path></svg></span>Home</a>
+    <a href="MShop.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 0; text-decoration: none; color: #3D6B1F; font-size: 11px; font-weight: 700;"><span style="width: 44px; height: 28px; border-radius: 999px; display: flex; align-items: center; justify-content: center; background: #DCEFD2;"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #3D6B1F; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round;"><rect x="4" y="4" width="7" height="7" rx="2"></rect><rect x="13" y="4" width="7" height="7" rx="2"></rect><rect x="4" y="13" width="7" height="7" rx="2"></rect><rect x="13" y="13" width="7" height="7" rx="2"></rect></svg></span>Plans</a>
+    <a href="Quiz.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 0; text-decoration: none; color: #5B6560; font-size: 11px; font-weight: 500;"><span style="width: 44px; height: 28px; border-radius: 999px; display: flex; align-items: center; justify-content: center; background: transparent;"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #5B6560; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round;"><circle cx="12" cy="12" r="8"></circle><path d="M12 8v4l3 2"></path></svg></span>Quiz</a>
+    <a href="MCart.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 0; text-decoration: none; color: #5B6560; font-size: 11px; font-weight: 500;"><span style="width: 44px; height: 28px; border-radius: 999px; display: flex; align-items: center; justify-content: center; background: transparent;"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #5B6560; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round;"><path d="M5 8h14l-1.2 11a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg></span>Cart</a>
+    <a href="MAccount.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 0; text-decoration: none; color: #5B6560; font-size: 11px; font-weight: 500;"><span style="width: 44px; height: 28px; border-radius: 999px; display: flex; align-items: center; justify-content: center; background: transparent;"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #5B6560; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round;"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></span>Me</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 390, "height": 1900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      chips: ['1,200–1,500 kcal', 'No pork', 'Low-carb', 'High-protein', '3 meals'],
+      plans: [
+        { badge: 'START', badgeBg: '#3D6B1F', name: 'Naija Lean 1400', kcal: '1,400 kcal', price: '₦52,500', img: '../public/images/ofada.jpg' },
+        { badge: '-10%', badgeBg: '#D93A2B', name: 'Swallow Smart 1500', kcal: '1,500 kcal', price: '₦55,000', img: '../public/images/white-soup.jpg' },
+        { badge: 'NEW', badgeBg: '#15201A', name: 'Low-Carb Owambe', kcal: '1,300 kcal', price: '₦60,000', img: '../public/images/chicken-salad.jpg' },
+        { badge: 'GENTLE', badgeBg: '#4B55B0', name: 'Naija Lean 1200', kcal: '1,200 kcal', price: '₦49,000', img: '../public/images/plantain-egg.jpg' },
+        { badge: 'LOW-GI', badgeBg: '#3D6B1F', name: 'Steady Sugar 1500', kcal: '1,500 kcal', price: '₦57,500', img: '../public/images/beans-porridge.jpg' },
+        { badge: 'LUNCH', badgeBg: '#15201A', name: 'Office Lunch Lean', kcal: '≈ 450 kcal', price: '₦24,000', img: '../public/images/meal-box.jpg' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

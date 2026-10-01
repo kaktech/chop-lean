@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chop Lean — My account</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&amp;family=DM+Serif+Display:ital@0;1&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&amp;display=swap">
+<style>body{margin:0;background:#F7F6F1}a{color:#3D6B1F}a:hover{color:#24421A}</style>
+</helmet>
+<div style="width: 100%; background: #F7F6F1; font-family: 'DM Sans', sans-serif; color: #15201A; overflow: hidden;">
+  <dc-import name="Header" hint-size="100%,190px"></dc-import>
+  <section style="max-width: 1280px; margin: 0 auto; padding: 44px 32px 80px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px;">
+    <nav aria-label="Account" style="display: flex; flex-direction: column; gap: 4px;">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+        <span style="width: 52px; height: 52px; border-radius: 999px; background: #F9DCDC; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 20px;">A</span>
+        <span><b style="display: block;">Adaeze O.</b><span style="font-size: 13px; color: #5B6560;">Signed in with Google</span></span>
+      </div>
+      <sc-for list="{{nav}}" as="n" hint-placeholder-count="7">
+        <a href="Account.dc.html" style="padding: 12px 16px; border-radius: 12px; text-decoration: none; font-weight: 500; color: {{n.color}}; background: {{n.bg}};">{{n.t}}</a>
+      </sc-for>
+    </nav>
+    <div style="grid-column: span 3; display: flex; flex-direction: column; gap: 24px;">
+      <h1 style="margin: 0; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 44px; letter-spacing: -0.03em;">Welcome back, Adaeze</h1>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px;">
+        <div style="background: #3D6B1F; color: #FFFFFF; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden;">
+          <div aria-hidden="true" style="position: absolute; right: -10px; bottom: -40px; font-family: 'DM Serif Display', serif; font-size: 140px; line-height: 1; color: rgba(255,255,255,0.08);">1400</div>
+          <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #F6B81A;">Active plan</span>
+          <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 28px;">Naija Lean 1400</span>
+          <span style="font-size: 14px; color: #DCEFD2;">Next delivery: <b style="color: #FFFFFF;">Wed 7 Oct, 7–10am</b> · Lekki Phase 1</span>
+          <div style="display: flex; gap: 10px; margin-top: 8px; position: relative;">
+            <a href="Product.dc.html" style="background: #F6B81A; color: #15201A; font-weight: 700; font-size: 13px; padding: 10px 16px; border-radius: 999px; text-decoration: none;">Swap meals</a>
+            <a href="Account.dc.html" style="border: 1px solid #FFFFFF; color: #FFFFFF; font-weight: 700; font-size: 13px; padding: 9px 16px; border-radius: 999px; text-decoration: none;">Pause next week</a>
+          </div>
+        </div>
+        <div style="background: #FFFFFF; border: 1px solid #E6E4DC; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 12px;">
+          <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #5B6560;">Log this week's weight</span>
+          <div style="display: flex; gap: 10px;">
+            <label for="wt" style="position: absolute; width: 1px; height: 1px; overflow: hidden;">Weight in kg</label>
+            <input id="wt" type="number" value="83.6" style="flex-grow: 1; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 26px; padding: 12px 16px; border-radius: 14px; border: 1px solid #D6D3C8;">
+            <span style="align-self: center; font-weight: 700; color: #5B6560;">kg</span>
+            <button type="button" style="font: inherit; font-weight: 700; background: #15201A; color: #FFFFFF; border: 0; border-radius: 14px; padding: 0 22px; cursor: pointer;">Save</button>
+          </div>
+          <span style="font-size: 13px; color: #5B6560;">Weigh yourself on the same day each week, in the morning before breakfast.</span>
+        </div>
+      </div>
+
+      <div style="background: #FFFFFF; border: 1px solid #E6E4DC; border-radius: 24px; padding: 28px;">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px;">
+          <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 22px;">Weight tracker</span>
+          <span style="font-size: 14px;"><b style="color: #3D6B1F;">−2.4 kg</b> <span style="color: #5B6560;">since you started · goal 72 kg</span></span>
+        </div>
+        <svg viewBox="0 0 800 240" width="100%" height="240" role="img" aria-label="Weight chart: 86.0 kilograms in week 1 down to 83.6 kilograms in week 5. Sample data.">
+          <line x1="40" y1="30" x2="780" y2="30" style="stroke: #EEECE5; stroke-width: 1;"></line>
+          <line x1="40" y1="100" x2="780" y2="100" style="stroke: #EEECE5; stroke-width: 1;"></line>
+          <line x1="40" y1="170" x2="780" y2="170" style="stroke: #EEECE5; stroke-width: 1;"></line>
+          <text x="0" y="34" style="font-size: 12px; fill: #5B6560;">86</text>
+          <text x="0" y="104" style="font-size: 12px; fill: #5B6560;">85</text>
+          <text x="0" y="174" style="font-size: 12px; fill: #5B6560;">84</text>
+          <line x1="40" y1="212" x2="780" y2="212" style="stroke: #3D6B1F; stroke-width: 1; stroke-dasharray: 5 5;"></line>
+          <polyline points="60,30 240,72 420,93 600,142 780,198" style="fill: none; stroke: #3D6B1F; stroke-width: 3; stroke-linejoin: round;"></polyline>
+          <circle cx="60" cy="30" r="6" style="fill: #3D6B1F;"></circle><circle cx="240" cy="72" r="6" style="fill: #3D6B1F;"></circle><circle cx="420" cy="93" r="6" style="fill: #3D6B1F;"></circle><circle cx="600" cy="142" r="6" style="fill: #3D6B1F;"></circle><circle cx="780" cy="198" r="8" style="fill: #F6B81A; stroke: #15201A; stroke-width: 2;"></circle>
+          <text x="48" y="234" style="font-size: 12px; fill: #5B6560;">Wk 1</text><text x="228" y="234" style="font-size: 12px; fill: #5B6560;">Wk 2</text><text x="408" y="234" style="font-size: 12px; fill: #5B6560;">Wk 3</text><text x="588" y="234" style="font-size: 12px; fill: #5B6560;">Wk 4</text><text x="752" y="234" style="font-size: 12px; fill: #15201A; font-weight: 700;">Wk 5</text>
+        </svg>
+        <span style="font-size: 12px; color: #5B6560;">Sample data shown. The dashed line is the pace your plan aims for (about 0.5 kg per week).</span>
+      </div>
+
+      <div style="background: #FFFFFF; border: 1px solid #E6E4DC; border-radius: 24px; padding: 28px;">
+        <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 22px;">Order history</span>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 14px;">
+          <thead><tr style="text-align: left; color: #5B6560; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;"><th style="padding: 10px 0;">Order</th><th>Date</th><th>Items</th><th>Total</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            <sc-for list="{{orders}}" as="o" hint-placeholder-count="4">
+              <tr style="border-top: 1px solid #E6E4DC;"><td style="padding: 16px 0; font-weight: 700;">{{o.id}}</td><td>{{o.d}}</td><td>{{o.i}}</td><td style="font-weight: 700;">{{o.t}}</td><td><span style="font-size: 12px; font-weight: 700; padding: 5px 10px; border-radius: 999px; background: {{o.bg}}; color: {{o.fg}};">{{o.s}}</span></td><td style="text-align: right;"><a href="Cart.dc.html" style="font-weight: 700;">Reorder</a></td></tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  <dc-import name="Footer" hint-size="100%,620px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1600}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const on = { color: '#FFFFFF', bg: '#15201A' }, off = { color: '#15201A', bg: 'transparent' };
+    return {
+      nav: [ { t: 'Overview', ...on }, { t: 'My plan and menu', ...off }, { t: 'Weight tracker', ...off }, { t: 'Orders', ...off }, { t: 'Addresses', ...off }, { t: 'Dietary preferences', ...off }, { t: 'Log out', ...off } ],
+      orders: [
+        { id: 'CL-10482', d: '1 Oct 2026', i: 'Naija Lean 1400, zobo ×6', t: '₦52,700', s: 'Baking', bg: '#FCEBC9', fg: '#6B4A00' },
+        { id: 'CL-10311', d: '24 Sep 2026', i: 'Naija Lean 1400', t: '₦56,000', s: 'Delivered', bg: '#DCEFD2', fg: '#24421A' },
+        { id: 'CL-10190', d: '17 Sep 2026', i: 'Naija Lean 1400', t: '₦56,000', s: 'Delivered', bg: '#DCEFD2', fg: '#24421A' },
+        { id: 'CL-10044', d: '10 Sep 2026', i: 'Swallow Smart 1500', t: '₦58,500', s: 'Delivered', bg: '#DCEFD2', fg: '#24421A' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

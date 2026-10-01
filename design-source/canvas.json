@@ -1,0 +1,299 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "Account.dc.html": {
+      "expand": "fill",
+      "h": 1600,
+      "is_interactive": true,
+      "title": "09 · My Account + Weight Tracker",
+      "w": 1440,
+      "x": 1520,
+      "y": 5700
+    },
+    "Admin.dc.html": {
+      "expand": "fill",
+      "h": 1800,
+      "is_interactive": true,
+      "title": "10 · Admin — Dashboard + Kitchen Prep",
+      "w": 1440,
+      "x": 3040,
+      "y": 5700
+    },
+    "AdminPayments.dc.html": {
+      "expand": "fill",
+      "h": 1300,
+      "is_interactive": true,
+      "title": "14 · Admin — Payments",
+      "w": 1440,
+      "x": 4560,
+      "y": 8900
+    },
+    "AdminProducts.dc.html": {
+      "expand": "fill",
+      "h": 1400,
+      "is_interactive": true,
+      "title": "11 · Admin — Products",
+      "w": 1440,
+      "x": 4560,
+      "y": 5700
+    },
+    "Cart.dc.html": {
+      "expand": "fill",
+      "h": 1400,
+      "is_interactive": true,
+      "title": "05 · Cart",
+      "w": 1440,
+      "x": 6080,
+      "y": 0
+    },
+    "Checkout.dc.html": {
+      "expand": "fill",
+      "h": 2000,
+      "is_interactive": true,
+      "title": "06 · Checkout",
+      "w": 1440,
+      "x": 7600,
+      "y": 0
+    },
+    "Footer.dc.html": {
+      "expand": "fill",
+      "h": 620,
+      "title": "Component · Footer",
+      "w": 1440,
+      "x": 1520,
+      "y": 7800
+    },
+    "Header.dc.html": {
+      "expand": "fill",
+      "h": 200,
+      "is_interactive": true,
+      "title": "Component · Header",
+      "w": 1440,
+      "x": 0,
+      "y": 7800
+    },
+    "Main.dc.html": {
+      "expand": "fill",
+      "h": 5300,
+      "is_interactive": true,
+      "title": "01 · Home",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "Menu.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "title": "12 · Mobile Menu Drawer",
+      "w": 390,
+      "x": 6080,
+      "y": 5700
+    },
+    "PayFailed.dc.html": {
+      "expand": "fill",
+      "h": 1100,
+      "is_interactive": true,
+      "title": "06d · Payment Failed",
+      "w": 1440,
+      "x": 3040,
+      "y": 8900
+    },
+    "Payment.dc.html": {
+      "expand": "fill",
+      "h": 1500,
+      "is_interactive": true,
+      "title": "06b · Review and Pay (card / transfer / on delivery)",
+      "w": 1440,
+      "x": 0,
+      "y": 8900
+    },
+    "Product.dc.html": {
+      "expand": "fill",
+      "h": 3700,
+      "is_interactive": true,
+      "title": "04 · Plan Detail + Reviews",
+      "w": 1440,
+      "x": 4560,
+      "y": 0
+    },
+    "Quiz.dc.html": {
+      "expand": "fill",
+      "h": 1600,
+      "is_interactive": true,
+      "title": "02 · Find My Plan (calorie quiz)",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "Review.dc.html": {
+      "h": 920,
+      "title": "13 · Write a Review (modal)",
+      "w": 560,
+      "x": 6550,
+      "y": 5700
+    },
+    "Shop.dc.html": {
+      "expand": "fill",
+      "h": 2500,
+      "is_interactive": true,
+      "title": "03 · Shop — Meal Plans",
+      "w": 1440,
+      "x": 3040,
+      "y": 0
+    },
+    "SignIn.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "is_interactive": true,
+      "title": "08 · Sign in with Google",
+      "w": 1440,
+      "x": 0,
+      "y": 5700
+    },
+    "Success.dc.html": {
+      "expand": "fill",
+      "h": 1600,
+      "is_interactive": true,
+      "title": "07 · Order Confirmed + Email",
+      "w": 1440,
+      "x": 9120,
+      "y": 0
+    },
+    "Transfer.dc.html": {
+      "expand": "fill",
+      "h": 1400,
+      "is_interactive": true,
+      "title": "06c · Bank Transfer + Awaiting Confirmation",
+      "w": 1440,
+      "x": 1520,
+      "y": 8900
+    },
+    "MHome.dc.html": {
+      "x": 0,
+      "y": 10900,
+      "w": 390,
+      "h": 4300,
+      "title": "M1 · Home (mobile)",
+      "is_interactive": true
+    },
+    "MShop.dc.html": {
+      "x": 470,
+      "y": 10900,
+      "w": 390,
+      "h": 1900,
+      "title": "M2 · Shop (mobile)",
+      "is_interactive": true
+    },
+    "MProduct.dc.html": {
+      "x": 940,
+      "y": 10900,
+      "w": 390,
+      "h": 2350,
+      "title": "M3 · Plan + weekly menu (mobile)",
+      "is_interactive": true
+    },
+    "MCart.dc.html": {
+      "x": 1410,
+      "y": 10900,
+      "w": 390,
+      "h": 844,
+      "title": "M4 · Cart sheet (mobile)",
+      "is_interactive": true
+    },
+    "MCheckout.dc.html": {
+      "x": 1880,
+      "y": 10900,
+      "w": 390,
+      "h": 2250,
+      "title": "M5 · Checkout + pay (mobile)",
+      "is_interactive": true
+    },
+    "MAccount.dc.html": {
+      "x": 2350,
+      "y": 10900,
+      "w": 390,
+      "h": 1500,
+      "title": "M6 · Account + weight tracker (mobile)",
+      "is_interactive": true
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-09-30T23:28:59Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "t1": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "Storefront — the customer journey",
+      "w": 240,
+      "x": 0,
+      "y": -320
+    },
+    "t2": {
+      "kind": "title1",
+      "maxW": 7110,
+      "text": "Accounts, admin and overlays",
+      "w": 240,
+      "x": 0,
+      "y": 5380
+    },
+    "t3": {
+      "kind": "title1",
+      "maxW": 2960,
+      "text": "Shared components",
+      "w": 240,
+      "x": 0,
+      "y": 7480
+    },
+    "t4": {
+      "kind": "title1",
+      "maxW": 5920,
+      "text": "Payment flow",
+      "w": 240,
+      "x": 0,
+      "y": 8580
+    },
+    "t5": {
+      "kind": "title1",
+      "maxW": 2700,
+      "text": "Mobile — phone screens",
+      "x": 0,
+      "y": 10580
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Quiz.dc.html",
+    "Shop.dc.html",
+    "Product.dc.html",
+    "Cart.dc.html",
+    "Checkout.dc.html",
+    "Success.dc.html",
+    "SignIn.dc.html",
+    "Account.dc.html",
+    "Admin.dc.html",
+    "AdminProducts.dc.html",
+    "Menu.dc.html",
+    "Review.dc.html",
+    "Header.dc.html",
+    "Footer.dc.html",
+    "Payment.dc.html",
+    "Transfer.dc.html",
+    "PayFailed.dc.html",
+    "AdminPayments.dc.html",
+    "MHome.dc.html",
+    "MShop.dc.html",
+    "MProduct.dc.html",
+    "MCart.dc.html",
+    "MCheckout.dc.html",
+    "MAccount.dc.html"
+  ],
+  "pages": [],
+  "title": "Chop Lean Store Design"
+}

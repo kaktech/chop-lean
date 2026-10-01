@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chop Lean — Payment didn't go through</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&amp;family=DM+Serif+Display:ital@0;1&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&amp;display=swap">
+<style>body{margin:0;background:#F7F6F1}a{color:#3D6B1F}a:hover{color:#24421A}</style>
+</helmet>
+<div style="width: 100%; min-height: 1100px; background: #F7F6F1; font-family: 'DM Sans', sans-serif; color: #15201A; overflow: hidden;">
+  <header style="background: #FFFFFF; border-bottom: 1px solid #E6E4DC;">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 20px 32px; display: flex; align-items: center;">
+      <a href="Main.dc.html" style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 26px; color: #15201A; text-decoration: none;">Chop<span style="color: #3D6B1F;">Lean</span></a>
+    </div>
+  </header>
+  <section style="max-width: 760px; margin: 0 auto; padding: 80px 32px 100px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 22px; position: relative;">
+    <div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 20px; font-family: 'DM Serif Display', serif; font-style: italic; font-size: 190px; line-height: 1; color: rgba(217,58,43,0.06);">Oops</div>
+    <span style="width: 72px; height: 72px; border-radius: 999px; background: #F9DCDC; display: flex; align-items: center; justify-content: center; position: relative;"><svg width="30" height="30" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #B4281C; stroke-width: 2.5; stroke-linecap: round;"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg></span>
+    <h1 style="margin: 0; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 52px; line-height: 1.02; letter-spacing: -0.03em; position: relative;">Your payment didn't go through</h1>
+    <p style="margin: 0; font-size: 17px; line-height: 1.7; color: #3A4540; max-width: 560px;">Your bank declined the card, so you haven't been charged. Your cart and delivery slot are saved for the next 30 minutes.</p>
+    <div style="background: #FFFFFF; border: 1px solid #E6E4DC; border-radius: 20px; padding: 20px 24px; width: 100%; box-sizing: border-box; text-align: left; display: flex; flex-direction: column; gap: 10px; font-size: 14px;">
+      <b style="font-size: 15px;">Common reasons</b>
+      <span>• Not enough funds, or the daily online spending limit on your card was reached</span>
+      <span>• The OTP expired or was entered incorrectly</span>
+      <span>• Your card isn't enabled for online payments (your bank app can switch this on)</span>
+    </div>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
+      <a href="Payment.dc.html" style="background: #F6B81A; color: #15201A; font-weight: 700; font-size: 16px; padding: 16px 28px; border-radius: 999px; text-decoration: none;">Try again</a>
+      <a href="Transfer.dc.html" style="background: #15201A; color: #FFFFFF; font-weight: 700; font-size: 16px; padding: 16px 28px; border-radius: 999px; text-decoration: none;">Pay by bank transfer</a>
+    </div>
+    <span style="font-size: 13px; color: #5B6560;">Order CL-10482 · ₦52,700.00 · Need help? <a href="Main.dc.html">Chat on WhatsApp</a></span>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

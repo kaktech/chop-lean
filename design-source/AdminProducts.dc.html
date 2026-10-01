@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chop Lean Admin — Products</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&amp;family=DM+Serif+Display:ital@0;1&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&amp;display=swap">
+<style>body{margin:0;background:#F4F3EE}a{color:#3D6B1F}a:hover{color:#24421A}</style>
+</helmet>
+<div style="width: 100%; min-height: 1400px; background: #F4F3EE; font-family: 'DM Sans', sans-serif; color: #15201A; display: flex;">
+  <aside style="width: 260px; flex-shrink: 0; background: #FFFFFF; border-right: 1px solid #E6E4DC; padding: 24px 16px; display: flex; flex-direction: column; gap: 4px;">
+    <a href="Main.dc.html" style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 24px; color: #15201A; text-decoration: none; padding: 0 12px 20px;">Chop<span style="color: #3D6B1F;">Lean</span> <span style="font-size: 12px; font-weight: 500; color: #5B6560;">Admin</span></a>
+    <a href="Admin.dc.html" style="padding: 11px 12px; border-radius: 10px; text-decoration: none; font-size: 14px; color: #15201A;">Dashboard</a>
+    <a href="AdminProducts.dc.html" style="padding: 11px 12px; border-radius: 10px; text-decoration: none; font-size: 14px; color: #FFFFFF; background: #3D6B1F; font-weight: 700;">Products and plans</a>
+    <a href="AdminProducts.dc.html" style="padding: 11px 12px; border-radius: 10px; text-decoration: none; font-size: 14px; color: #15201A;">Weekly menu</a>
+    <a href="Admin.dc.html" style="padding: 11px 12px; border-radius: 10px; text-decoration: none; font-size: 14px; color: #15201A;">Orders and delivery</a>
+    <a href="Admin.dc.html" style="padding: 11px 12px; border-radius: 10px; text-decoration: none; font-size: 14px; color: #15201A;">Reviews</a>
+    <a href="Admin.dc.html" style="padding: 11px 12px; border-radius: 10px; text-decoration: none; font-size: 14px; color: #15201A;">Customers</a>
+    <a href="Admin.dc.html" style="padding: 11px 12px; border-radius: 10px; text-decoration: none; font-size: 14px; color: #15201A;">Promo codes</a>
+    <a href="Admin.dc.html" style="padding: 11px 12px; border-radius: 10px; text-decoration: none; font-size: 14px; color: #15201A;">Delivery zones</a>
+  </aside>
+  <main style="flex-grow: 1; padding: 32px 40px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; align-content: start;">
+    <div style="grid-column: span 3; display: flex; align-items: center; gap: 12px;">
+      <h1 style="margin: 0; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 32px; flex-grow: 1;">Products and plans</h1>
+      <button type="button" style="font: inherit; font-weight: 700; font-size: 14px; background: #3D6B1F; color: #FFFFFF; border: 0; border-radius: 10px; padding: 11px 18px; cursor: pointer;">+ Add product</button>
+    </div>
+    <div style="grid-column: span 2; background: #FFFFFF; border: 1px solid #E6E4DC; border-radius: 18px; padding: 22px; display: flex; flex-direction: column; gap: 16px;">
+      <div style="display: flex; gap: 8px;">
+        <span style="background: #3D6B1F; color: #FFFFFF; font-weight: 700; font-size: 13px; padding: 9px 16px; border-radius: 999px;">Plans (6)</span>
+        <span style="border: 1px solid #E6E4DC; font-size: 13px; padding: 9px 16px; border-radius: 999px;">Meals (24)</span>
+        <span style="border: 1px solid #E6E4DC; font-size: 13px; padding: 9px 16px; border-radius: 999px;">Snacks and drinks (9)</span>
+        <span style="border: 1px solid #E6E4DC; font-size: 13px; padding: 9px 16px; border-radius: 999px;">Categories</span>
+        <label style="margin-left: auto; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 700;">Lock inventory
+          <span style="display: inline-block; width: 44px; height: 24px; border-radius: 999px; background: #C9C5B8; position: relative;"><span style="position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF;"></span></span>
+        </label>
+      </div>
+      <span style="font-size: 12px; color: #5B6560; margin-top: -6px;">When locked, a plan sells out automatically once its weekly kitchen slots are full.</span>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <label for="ps" style="position: absolute; width: 1px; height: 1px; overflow: hidden;">Search products</label>
+        <input id="ps" type="search" placeholder="Search products…" style="flex-grow: 1; font: inherit; font-size: 14px; padding: 11px 14px; border-radius: 10px; border: 1px solid #E6E4DC; background: #F4F3EE;">
+        <span style="font-size: 13px; font-weight: 700; padding: 10px 14px; border-radius: 10px; background: #F4F3EE;">All</span>
+        <span style="font-size: 13px; padding: 10px 14px; border-radius: 10px; border: 1px solid #E6E4DC;">Sold out this week</span>
+      </div>
+      <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+        <thead><tr style="text-align: left; color: #5B6560; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;"><th style="padding: 10px 0;">Product</th><th>Calories</th><th>Price / week</th><th>Weekly slots</th><th>Live</th></tr></thead>
+        <tbody>
+          <sc-for list="{{rows}}" as="r" hint-placeholder-count="6">
+            <tr style="border-top: 1px solid #EEECE5;">
+              <td style="padding: 12px 0;"><span style="display: flex; align-items: center; gap: 12px;"><img src="{{r.img}}" alt="" style="width: 44px; height: 44px; border-radius: 10px; object-fit: cover;"><span><b style="display: block;">{{r.n}}</b><span style="font-size: 12px; color: #5B6560;">{{r.sku}}</span></span></span></td>
+              <td>{{r.k}}</td><td style="font-weight: 700;">{{r.p}}</td><td style="color: #5B6560;">{{r.s}}</td>
+              <td><span style="display: inline-block; width: 40px; height: 22px; border-radius: 999px; background: {{r.tg}}; position: relative;"><span style="position: absolute; top: 3px; left: {{r.tx}}; width: 16px; height: 16px; border-radius: 999px; background: #FFFFFF;"></span></span></td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+    <form style="background: #FFFFFF; border: 1px solid #E6E4DC; border-radius: 18px; padding: 22px; display: flex; flex-direction: column; gap: 14px; align-self: start;">
+      <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 20px;">Edit: Naija Lean 1400</span>
+      <div style="display: flex; gap: 8px;"><img src="../public/images/ofada.jpg" alt="" style="width: 96px; height: 96px; border-radius: 12px; object-fit: cover;"><img src="../public/images/efo-riro.jpg" alt="" style="width: 96px; height: 96px; border-radius: 12px; object-fit: cover;"><span style="flex-grow: 1; height: 96px; border-radius: 12px; border: 2px dashed #D6D3C8; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #5B6560; text-align: center;">+ Add photo</span></div>
+      <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; font-weight: 700;">Name<input type="text" value="Naija Lean 1400" style="font: inherit; font-weight: 400; font-size: 14px; padding: 11px; border-radius: 10px; border: 1px solid #E6E4DC;"></label>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;">
+        <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; font-weight: 700;">Price / week (₦)<input type="text" value="52,500" style="font: inherit; font-weight: 400; font-size: 14px; padding: 11px; border-radius: 10px; border: 1px solid #E6E4DC;"></label>
+        <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; font-weight: 700;">Compare-at (₦)<input type="text" value="58,000" style="font: inherit; font-weight: 400; font-size: 14px; padding: 11px; border-radius: 10px; border: 1px solid #E6E4DC;"></label>
+        <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; font-weight: 700;">kcal / day<input type="text" value="1400" style="font: inherit; font-weight: 400; font-size: 14px; padding: 11px; border-radius: 10px; border: 1px solid #E6E4DC;"></label>
+        <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; font-weight: 700;">Weekly slots<input type="text" value="60" style="font: inherit; font-weight: 400; font-size: 14px; padding: 11px; border-radius: 10px; border: 1px solid #E6E4DC;"></label>
+      </div>
+      <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; font-weight: 700;">Tags<input type="text" value="weight-loss, balanced, no-pork-option" style="font: inherit; font-weight: 400; font-size: 14px; padding: 11px; border-radius: 10px; border: 1px solid #E6E4DC;"></label>
+      <button type="button" style="font: inherit; font-weight: 700; font-size: 14px; background: #15201A; color: #FFFFFF; border: 0; border-radius: 10px; padding: 13px; cursor: pointer;">Save changes</button>
+    </form>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1400}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const on = { tg: '#3D6B1F', tx: '21px' }, off = { tg: '#C9C5B8', tx: '3px' };
+    return {
+      rows: [
+        { img: '../public/images/ofada.jpg', n: 'Naija Lean 1400', sku: 'PLAN-NL1400', k: '1,400', p: '₦52,500', s: '44 / 60', bg: '#DCEFD2', ...on },
+        { img: '../public/images/white-soup.jpg', n: 'Swallow Smart 1500', sku: 'PLAN-SS1500', k: '1,500', p: '₦55,000', s: '27 / 40', bg: '#F9DCDC', ...on },
+        { img: '../public/images/chicken-salad.jpg', n: 'Low-Carb Owambe', sku: 'PLAN-LCO1300', k: '1,300', p: '₦60,000', s: '19 / 30', bg: '#FCEBC9', ...on },
+        { img: '../public/images/grilled-fish.jpg', n: 'Protein Cut 1800', sku: 'PLAN-PC1800', k: '1,800', p: '₦64,000', s: '15 / 30', bg: '#DDE0F6', ...on },
+        { img: '../public/images/beans-porridge.jpg', n: 'Steady Sugar 1500', sku: 'PLAN-SG1500', k: '1,500', p: '₦57,500', s: '0 / 20', bg: '#E4F1EE', ...off },
+        { img: '../public/images/meal-box.jpg', n: 'Office Lunch Lean', sku: 'PLAN-OLL', k: '≈ 450', p: '₦24,000', s: '12 / 50', bg: '#F2F1EC', ...on }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

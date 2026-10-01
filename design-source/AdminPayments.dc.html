@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chop Lean Admin — Payments</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&amp;family=DM+Serif+Display:ital@0;1&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&amp;display=swap">
+<style>body{margin:0;background:#F4F3EE}a{color:#3D6B1F}a:hover{color:#24421A}</style>
+</helmet>
+<div style="width: 100%; min-height: 1300px; background: #F4F3EE; font-family: 'DM Sans', sans-serif; color: #15201A; display: flex;">
+  <aside style="width: 260px; flex-shrink: 0; background: #FFFFFF; border-right: 1px solid #E6E4DC; padding: 24px 16px; display: flex; flex-direction: column; gap: 4px;">
+    <a href="Main.dc.html" style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 24px; color: #15201A; text-decoration: none; padding: 0 12px 20px;">Chop<span style="color: #3D6B1F;">Lean</span> <span style="font-size: 12px; font-weight: 500; color: #5B6560;">Admin</span></a>
+    <a href="Admin.dc.html" style="padding: 11px 12px; border-radius: 10px; text-decoration: none; font-size: 14px; color: #15201A;">Dashboard</a>
+    <a href="AdminProducts.dc.html" style="padding: 11px 12px; border-radius: 10px; text-decoration: none; font-size: 14px; color: #15201A;">Products and plans</a>
+    <a href="Admin.dc.html" style="padding: 11px 12px; border-radius: 10px; text-decoration: none; font-size: 14px; color: #15201A;">Orders and delivery</a>
+    <a href="AdminPayments.dc.html" style="padding: 11px 12px; border-radius: 10px; text-decoration: none; font-size: 14px; color: #FFFFFF; background: #3D6B1F; font-weight: 700;">Payments</a>
+    <a href="Admin.dc.html" style="padding: 11px 12px; border-radius: 10px; text-decoration: none; font-size: 14px; color: #15201A;">Subscriptions</a>
+    <a href="Admin.dc.html" style="padding: 11px 12px; border-radius: 10px; text-decoration: none; font-size: 14px; color: #15201A;">Customers</a>
+    <a href="Admin.dc.html" style="padding: 11px 12px; border-radius: 10px; text-decoration: none; font-size: 14px; color: #15201A;">Store settings</a>
+  </aside>
+  <main style="flex-grow: 1; padding: 32px 40px; display: flex; flex-direction: column; gap: 24px;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <h1 style="margin: 0; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 32px; flex-grow: 1;">Payments</h1>
+      <span style="font-size: 14px; color: #5B6560;">Sample data</span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px;">
+      <sc-for list="{{kpis}}" as="k" hint-placeholder-count="4">
+        <div style="background: #FFFFFF; border: 1px solid #E6E4DC; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 6px;">
+          <span style="font-size: 13px; color: #5B6560;">{{k.l}}</span>
+          <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 30px;">{{k.v}}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="background: #FFFFFF; border: 1px solid #E6E4DC; border-radius: 18px; padding: 24px;">
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+        <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 20px; flex-grow: 1;">Transfers to confirm</span>
+        <span style="font-size: 13px; color: #5B6560;">Confirming emails the customer and moves the order to Cooking</span>
+      </div>
+      <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+        <thead><tr style="text-align: left; color: #5B6560; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;"><th style="padding: 10px 0;">Reference</th><th>Customer</th><th>Expected</th><th>Reported</th><th>Receipt</th><th></th></tr></thead>
+        <tbody>
+          <sc-for list="{{pending}}" as="p" hint-placeholder-count="3">
+            <tr style="border-top: 1px solid #EEECE5;"><td style="padding: 14px 0; font-weight: 700;">{{p.ref}}</td><td>{{p.c}}</td><td style="font-weight: 700;">{{p.amt}}</td><td style="color: #5B6560;">{{p.when}}</td><td><a href="AdminPayments.dc.html" style="font-weight: 700;">{{p.rec}}</a></td>
+              <td style="text-align: right;"><span style="display: inline-flex; gap: 8px;"><button type="button" style="font: inherit; font-size: 13px; font-weight: 700; background: #3D6B1F; color: #FFFFFF; border: 0; border-radius: 8px; padding: 9px 14px; cursor: pointer;">Confirm paid</button><button type="button" style="font: inherit; font-size: 13px; font-weight: 700; background: #FFFFFF; color: #B4281C; border: 1px solid #E6E4DC; border-radius: 8px; padding: 9px 14px; cursor: pointer;">Not received</button></span></td></tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+    <div style="background: #FFFFFF; border: 1px solid #E6E4DC; border-radius: 18px; padding: 24px;">
+      <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 20px;">All payments</span>
+      <table style="width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 10px;">
+        <thead><tr style="text-align: left; color: #5B6560; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;"><th style="padding: 10px 0;">Date</th><th>Reference</th><th>Customer</th><th>Method</th><th>Amount</th><th>Status</th></tr></thead>
+        <tbody>
+          <sc-for list="{{all}}" as="a" hint-placeholder-count="6">
+            <tr style="border-top: 1px solid #EEECE5;"><td style="padding: 13px 0; color: #5B6560;">{{a.d}}</td><td style="font-weight: 700;">{{a.ref}}</td><td>{{a.c}}</td><td>{{a.m}}</td><td style="font-weight: 700;">{{a.amt}}</td><td><span style="font-size: 12px; font-weight: 700; padding: 5px 10px; border-radius: 999px; background: {{a.bg}}; color: {{a.fg}};">{{a.s}}</span></td></tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const ok = { s: 'Paid', bg: '#DCEFD2', fg: '#24421A' }, wait = { s: 'Awaiting', bg: '#FCEBC9', fg: '#6B4A00' }, bad = { s: 'Failed', bg: '#F9DCDC', fg: '#8E1F14' };
+    return {
+      kpis: [ { l: 'Collected this week', v: '₦1.84m' }, { l: 'Awaiting confirmation', v: '3' }, { l: 'Card renewals due Fri', v: '22' }, { l: 'Failed payments', v: '2' } ],
+      pending: [
+        { ref: 'CL-10482', c: 'Adaeze O.', amt: '₦52,700', when: '12 min ago', rec: 'View receipt' },
+        { ref: 'CL-10477', c: 'Chidi E.', amt: '₦56,000', when: '40 min ago', rec: 'No receipt' },
+        { ref: 'CL-10475', c: 'Funmi A.', amt: '₦27,500', when: '1 hr ago', rec: 'View receipt' }
+      ],
+      all: [
+        { d: '1 Oct, 11:02', ref: 'CL-10481', c: 'Tunde B.', m: 'Card', amt: '₦66,500', ...ok },
+        { d: '1 Oct, 10:47', ref: 'CL-10482', c: 'Adaeze O.', m: 'Transfer', amt: '₦52,700', ...wait },
+        { d: '1 Oct, 09:15', ref: 'CL-10480', c: 'Kemi A.', m: 'On delivery', amt: '₦59,000', ...wait },
+        { d: '30 Sep, 18:30', ref: 'CL-10474', c: 'Segun F.', m: 'Card', amt: '₦49,000', ...bad },
+        { d: '30 Sep, 16:02', ref: 'CL-10479', c: 'Ifeanyi N.', m: 'Transfer', amt: '₦27,500', ...ok },
+        { d: '30 Sep, 12:44', ref: 'CL-10478', c: 'Zainab M.', m: 'Card', amt: '₦60,000', ...ok }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,400 @@
+{
+  "note": "Seed data for the design. Calorie, macro and price figures are placeholders: have a dietitian verify nutrition before launch.",
+  "plans": [
+    {
+      "slug": "naija-lean-1400",
+      "name": "Naija Lean 1400",
+      "type": "plan",
+      "kcalPerDay": 1400,
+      "mealsPerDay": 3,
+      "daysPerWeek": 5,
+      "priceWeekly": 52500,
+      "compareAt": 58000,
+      "badge": "START HERE",
+      "goal": "lose",
+      "tags": [
+        "balanced",
+        "weight-loss"
+      ],
+      "protein": 105,
+      "carbs": 140,
+      "fat": 45,
+      "image": "ofada.jpg",
+      "description": "Balanced Nigerian classics, our most flexible plan.",
+      "calorieOptions": {
+        "1200": 49000,
+        "1400": 52500,
+        "1600": 56000,
+        "1800": 60000
+      }
+    },
+    {
+      "slug": "swallow-smart-1500",
+      "name": "Swallow Smart 1500",
+      "type": "plan",
+      "kcalPerDay": 1500,
+      "mealsPerDay": 3,
+      "daysPerWeek": 5,
+      "priceWeekly": 55000,
+      "compareAt": 61000,
+      "badge": "-10%",
+      "goal": "lose",
+      "tags": [
+        "swallow",
+        "soups"
+      ],
+      "protein": 110,
+      "carbs": 150,
+      "fat": 48,
+      "image": "white-soup.jpg",
+      "description": "Soup every day, with weighed oat and wheat swallows."
+    },
+    {
+      "slug": "low-carb-owambe",
+      "name": "Low-Carb Owambe",
+      "type": "plan",
+      "kcalPerDay": 1300,
+      "mealsPerDay": 3,
+      "daysPerWeek": 5,
+      "priceWeekly": 60000,
+      "compareAt": 66000,
+      "badge": "NEW",
+      "goal": "lose",
+      "tags": [
+        "low-carb",
+        "high-protein"
+      ],
+      "protein": 120,
+      "carbs": 80,
+      "fat": 55,
+      "image": "chicken-salad.jpg",
+      "description": "Party flavours with cauliflower rice and extra protein."
+    },
+    {
+      "slug": "protein-cut-1800",
+      "name": "Protein Cut 1800",
+      "type": "plan",
+      "kcalPerDay": 1800,
+      "mealsPerDay": 4,
+      "daysPerWeek": 5,
+      "priceWeekly": 64000,
+      "compareAt": 71000,
+      "badge": "-10%",
+      "goal": "gain",
+      "tags": [
+        "high-protein"
+      ],
+      "protein": 150,
+      "carbs": 170,
+      "fat": 55,
+      "image": "grilled-fish.jpg",
+      "description": "Higher protein for people who train 3 or more times a week."
+    },
+    {
+      "slug": "naija-lean-1200",
+      "name": "Naija Lean 1200",
+      "type": "plan",
+      "kcalPerDay": 1200,
+      "mealsPerDay": 3,
+      "daysPerWeek": 5,
+      "priceWeekly": 49000,
+      "compareAt": 54500,
+      "badge": "GENTLE",
+      "goal": "lose",
+      "tags": [
+        "balanced"
+      ],
+      "protein": 95,
+      "carbs": 120,
+      "fat": 38,
+      "image": "plantain-egg.jpg",
+      "description": "Our smallest portions, for shorter or less active bodies."
+    },
+    {
+      "slug": "steady-sugar-1500",
+      "name": "Steady Sugar 1500",
+      "type": "plan",
+      "kcalPerDay": 1500,
+      "mealsPerDay": 3,
+      "daysPerWeek": 5,
+      "priceWeekly": 57500,
+      "compareAt": null,
+      "badge": "LOW-GI",
+      "goal": "lose",
+      "tags": [
+        "low-gi"
+      ],
+      "protein": 105,
+      "carbs": 150,
+      "fat": 50,
+      "image": "beans-porridge.jpg",
+      "description": "Beans, unripe plantain and whole grains. Nothing sugary. (Not a medical treatment.)"
+    },
+    {
+      "slug": "office-lunch-lean",
+      "name": "Office Lunch Lean",
+      "type": "plan",
+      "kcalPerDay": 450,
+      "mealsPerDay": 1,
+      "daysPerWeek": 5,
+      "priceWeekly": 24000,
+      "compareAt": null,
+      "badge": "LUNCH",
+      "goal": "keep",
+      "tags": [
+        "lunch"
+      ],
+      "protein": 35,
+      "carbs": 45,
+      "fat": 14,
+      "image": "meal-box.jpg",
+      "description": "Five weekday lunches delivered to your office."
+    }
+  ],
+  "meals": [
+    {
+      "slug": "moi-moi-egg-fish",
+      "name": "Moi moi with egg and fish",
+      "slot": "breakfast",
+      "kcal": 330,
+      "protein": 22,
+      "image": "moi-moi.jpg",
+      "price": 3200
+    },
+    {
+      "slug": "akara-oat-pap",
+      "name": "Air-fried akara and oat pap",
+      "slot": "breakfast",
+      "kcal": 340,
+      "protein": 16,
+      "image": "akara.jpg",
+      "price": 2800
+    },
+    {
+      "slug": "plantain-egg-sauce",
+      "name": "Boiled plantain and egg sauce",
+      "slot": "breakfast",
+      "kcal": 350,
+      "protein": 18,
+      "image": "plantain-egg.jpg",
+      "price": 3000
+    },
+    {
+      "slug": "potatoes-egg-sauce",
+      "name": "Roast potatoes and egg sauce",
+      "slot": "breakfast",
+      "kcal": 360,
+      "protein": 17,
+      "image": "potato-egg.jpg",
+      "price": 3000
+    },
+    {
+      "slug": "moimoi-grilled-chicken",
+      "name": "Moi moi and grilled chicken",
+      "slot": "breakfast",
+      "kcal": 360,
+      "protein": 32,
+      "image": "moimoi-chicken.jpg",
+      "price": 4200
+    },
+    {
+      "slug": "efo-riro-prawns-swallow",
+      "name": "Efo riro with prawns and oat swallow",
+      "slot": "lunch",
+      "kcal": 410,
+      "protein": 34,
+      "image": "efo-riro.jpg",
+      "price": 4800
+    },
+    {
+      "slug": "cauli-jollof-chicken",
+      "name": "Cauli-blend jollof, chicken and plantain",
+      "slot": "lunch",
+      "kcal": 450,
+      "protein": 38,
+      "image": "jollof.jpg",
+      "price": 5000
+    },
+    {
+      "slug": "ofada-ayamase",
+      "name": "Ofada brown rice, light ayamase and egg",
+      "slot": "lunch",
+      "kcal": 480,
+      "protein": 30,
+      "image": "ofada.jpg",
+      "price": 5200
+    },
+    {
+      "slug": "beans-plantain-egg",
+      "name": "Beans, plantain and egg",
+      "slot": "lunch",
+      "kcal": 430,
+      "protein": 24,
+      "image": "beans-porridge.jpg",
+      "price": 3800
+    },
+    {
+      "slug": "plantain-porridge",
+      "name": "Unripe plantain porridge",
+      "slot": "lunch",
+      "kcal": 420,
+      "protein": 20,
+      "image": "plantain-porridge.jpg",
+      "price": 4200
+    },
+    {
+      "slug": "fried-rice-lite",
+      "name": "Fried rice (lite) and chicken",
+      "slot": "lunch",
+      "kcal": 470,
+      "protein": 35,
+      "image": "fried-rice.jpg",
+      "price": 5000
+    },
+    {
+      "slug": "egusi-swallow",
+      "name": "Egusi with oat swallow",
+      "slot": "lunch",
+      "kcal": 460,
+      "protein": 30,
+      "image": "egusi.jpg",
+      "price": 5000
+    },
+    {
+      "slug": "catfish-pepper-soup",
+      "name": "Catfish pepper soup",
+      "slot": "dinner",
+      "kcal": 380,
+      "protein": 36,
+      "image": "pepper-soup.jpg",
+      "price": 5500
+    },
+    {
+      "slug": "chicken-suya-salad",
+      "name": "Chicken suya salad",
+      "slot": "dinner",
+      "kcal": 360,
+      "protein": 35,
+      "image": "chicken-salad.jpg",
+      "price": 4500
+    },
+    {
+      "slug": "okra-prawns",
+      "name": "Okra soup with prawns",
+      "slot": "dinner",
+      "kcal": 400,
+      "protein": 32,
+      "image": "okra-soup.jpg",
+      "price": 5300
+    },
+    {
+      "slug": "grilled-croaker",
+      "name": "Grilled croaker",
+      "slot": "dinner",
+      "kcal": 380,
+      "protein": 40,
+      "image": "grilled-fish.jpg",
+      "price": 6000
+    },
+    {
+      "slug": "white-soup-swallow",
+      "name": "White soup (ofe nsala) and swallow",
+      "slot": "dinner",
+      "kcal": 410,
+      "protein": 33,
+      "image": "white-soup.jpg",
+      "price": 5200
+    }
+  ],
+  "drinks": [
+    {
+      "slug": "zobo-zero-6",
+      "name": "Zero-sugar zobo, 6 bottles",
+      "slot": "drink",
+      "kcal": 90,
+      "protein": 0,
+      "image": "zobo.jpg",
+      "price": 7200
+    },
+    {
+      "slug": "tiger-nut",
+      "name": "Unsweetened tiger nut drink",
+      "slot": "drink",
+      "kcal": 140,
+      "protein": 2,
+      "image": "tiger-nut.jpg",
+      "price": 1800
+    }
+  ],
+  "weeklyMenu": {
+    "weekOf": "2026-10-05",
+    "days": {
+      "Mon": [
+        "moi-moi-egg-fish",
+        "efo-riro-prawns-swallow",
+        "catfish-pepper-soup"
+      ],
+      "Tue": [
+        "akara-oat-pap",
+        "cauli-jollof-chicken",
+        "chicken-suya-salad"
+      ],
+      "Wed": [
+        "plantain-egg-sauce",
+        "ofada-ayamase",
+        "okra-prawns"
+      ],
+      "Thu": [
+        "potatoes-egg-sauce",
+        "beans-plantain-egg",
+        "grilled-croaker"
+      ],
+      "Fri": [
+        "moimoi-grilled-chicken",
+        "plantain-porridge",
+        "white-soup-swallow"
+      ]
+    }
+  },
+  "deliveryZones": [
+    {
+      "id": "mainland",
+      "name": "Lagos Mainland",
+      "areas": "Yaba, Surulere, Ikeja, Maryland, Gbagada",
+      "fee": 2500
+    },
+    {
+      "id": "island",
+      "name": "Lagos Island",
+      "areas": "VI, Ikoyi, Lekki Phase 1, Oniru",
+      "fee": 3500
+    },
+    {
+      "id": "lekki-ajah",
+      "name": "Lekki to Ajah",
+      "areas": "Chevron, Ikota, Sangotedo, Ajah",
+      "fee": 4000
+    },
+    {
+      "id": "pickup",
+      "name": "Pickup in Yaba",
+      "areas": "From 11am on delivery days",
+      "fee": 0
+    }
+  ],
+  "promoCodes": [
+    {
+      "code": "CHOPLEAN20",
+      "type": "percent",
+      "value": 20,
+      "appliesTo": "first_week_plan"
+    }
+  ],
+  "deliveryDays": [
+    "Mon",
+    "Wed",
+    "Fri"
+  ],
+  "orderCutoff": "18:00 the day before, Africa/Lagos",
+  "podFee": 500
+}

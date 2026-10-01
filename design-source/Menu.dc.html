@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chop Lean — Mobile menu</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&amp;family=DM+Serif+Display:ital@0;1&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<nav aria-label="Menu" style="width: 390px; height: 844px; box-sizing: border-box; background: #F7F6F1; font-family: 'DM Sans', sans-serif; color: #15201A; padding: 20px 24px; display: flex; flex-direction: column; position: relative; overflow: hidden;">
+  <div aria-hidden="true" style="position: absolute; right: -30px; bottom: 120px; writing-mode: vertical-rl; font-family: 'DM Serif Display', serif; font-size: 150px; line-height: 1; color: rgba(21,32,26,0.05);">LEAN</div>
+  <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 18px; border-bottom: 2px solid #15201A;">
+    <a href="Main.dc.html" aria-label="Close menu" style="width: 44px; height: 44px; border-radius: 999px; border: 1px solid #D6D3C8; display: flex; align-items: center; justify-content: center; color: #15201A; text-decoration: none;">✕</a>
+    <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 24px;">Chop<span style="color: #3D6B1F;">Lean</span></span>
+    <a href="Cart.dc.html" aria-label="Cart" style="width: 44px; height: 44px; border-radius: 999px; background: #F6B81A; display: flex; align-items: center; justify-content: center; color: #15201A; text-decoration: none; font-weight: 700;">2</a>
+  </div>
+  <sc-for list="{{links}}" as="l" hint-placeholder-count="5">
+    <a href="{{l.href}}" style="display: flex; align-items: center; justify-content: space-between; padding: 17px 0; border-bottom: 1px solid #E6E4DC; text-decoration: none; color: #15201A; position: relative;">
+      <span style="display: flex; flex-direction: column; gap: 4px;"><span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.01em;">{{l.t}}</span><span style="font-size: 13px; color: #5B6560;">{{l.s}}</span></span>
+      <span aria-hidden="true" style="font-size: 20px;">›</span>
+    </a>
+  </sc-for>
+  <a href="Quiz.dc.html" style="margin-top: 24px; background: #3D6B1F; color: #FFFFFF; border-radius: 20px; padding: 20px; text-decoration: none; display: flex; flex-direction: column; gap: 6px; position: relative;">
+    <span style="font-family: 'DM Serif Display', serif; font-size: 24px;">Not sure where to start?</span>
+    <span style="font-size: 14px; color: #DCEFD2;">Take the 2-minute plan quiz →</span>
+  </a>
+  <div style="margin-top: auto; display: flex; flex-direction: column; gap: 12px; font-size: 14px; position: relative;">
+    <a href="SignIn.dc.html" style="color: #15201A; font-weight: 700;">Sign in / My account</a>
+    <a href="Shop.dc.html" style="color: #15201A;">Gift a week of meals</a>
+    <a href="Main.dc.html" style="color: #15201A;">Chat on WhatsApp</a>
+    <span style="color: #5B6560;">Nigeria (NGN ₦)</span>
+  </div>
+</nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      links: [
+        { t: 'Meal Plans', s: 'Weekly, 1,200–1,800 kcal', href: 'Shop.dc.html' },
+        { t: 'Single Meals', s: 'Order one plate at a time', href: 'Shop.dc.html' },
+        { t: 'Snacks and Drinks', s: 'Zero-sugar zobo, tiger nut and more', href: 'Shop.dc.html' },
+        { t: 'Weight Tracker', s: 'Log your weekly weigh-in', href: 'Account.dc.html' },
+        { t: 'Results', s: 'Reviews from verified orders', href: 'Main.dc.html' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

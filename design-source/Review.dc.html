@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chop Lean — Write a review</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&amp;family=DM+Serif+Display:ital@0;1&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div style="width: 560px; height: 920px; box-sizing: border-box; background: rgba(21,32,26,0.55); padding: 20px; font-family: 'DM Sans', sans-serif; color: #15201A;">
+  <form role="dialog" aria-label="Write a review" style="background: #FFFFFF; border-radius: 22px; padding: 30px; display: flex; flex-direction: column; gap: 18px; height: 100%; box-sizing: border-box;">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: -0.01em;">WRITE A REVIEW</span>
+      <a href="Product.dc.html" aria-label="Close" style="width: 40px; height: 40px; border-radius: 999px; border: 1px solid #E6E4DC; display: flex; align-items: center; justify-content: center; color: #15201A; text-decoration: none; font-size: 18px;">✕</a>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.12em;">RATING</span>
+      <div style="display: flex; gap: 6px; font-size: 32px; color: #F6B81A;"><span>★</span><span>★</span><span>★</span><span>★</span><span style="color: #D6D3C8;">★</span></div>
+    </div>
+    <label style="display: flex; flex-direction: column; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.12em;">REVIEW
+      <textarea rows="4" placeholder="How did it taste? Did it keep you full?" style="font: inherit; font-size: 15px; letter-spacing: 0; font-weight: 400; padding: 14px; border-radius: 12px; border: 1px solid #E6E4DC; background: #F7F6F1; resize: none;"></textarea>
+    </label>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;">
+      <label style="display: flex; flex-direction: column; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.12em;">FULLNESS
+        <select style="font: inherit; font-size: 14px; letter-spacing: 0; font-weight: 400; padding: 12px; border-radius: 12px; border: 1px solid #E6E4DC; background: #F7F6F1;"><option>Just right</option><option>Still hungry</option><option>Very full</option></select>
+      </label>
+      <label style="display: flex; flex-direction: column; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.12em;">PEPPER LEVEL
+        <select style="font: inherit; font-size: 14px; letter-spacing: 0; font-weight: 400; padding: 12px; border-radius: 12px; border: 1px solid #E6E4DC; background: #F7F6F1;"><option>Just right</option><option>Too mild</option><option>Too hot</option></select>
+      </label>
+    </div>
+    <label style="display: flex; flex-direction: column; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.12em;">WEIGHT CHANGE SO FAR (OPTIONAL)
+      <input type="text" placeholder="e.g. −2.5 kg in 4 weeks" style="font: inherit; font-size: 15px; letter-spacing: 0; font-weight: 400; padding: 13px; border-radius: 12px; border: 1px solid #E6E4DC; background: #F7F6F1;">
+    </label>
+    <label style="display: flex; flex-direction: column; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.12em;">NAME
+      <input type="text" placeholder="Your name" style="font: inherit; font-size: 15px; letter-spacing: 0; font-weight: 400; padding: 13px; border-radius: 12px; border: 1px solid #E6E4DC; background: #F7F6F1;">
+    </label>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;">
+      <label style="display: flex; flex-direction: column; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.12em;">ORDER ID (OPTIONAL)
+        <input type="text" placeholder="e.g. CL-10482" style="font: inherit; font-size: 15px; letter-spacing: 0; font-weight: 400; padding: 13px; border-radius: 12px; border: 1px solid #E6E4DC; background: #F7F6F1;">
+      </label>
+      <label style="display: flex; flex-direction: column; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.12em;">EMAIL (OPTIONAL)
+        <input type="email" placeholder="Your email" style="font: inherit; font-size: 15px; letter-spacing: 0; font-weight: 400; padding: 13px; border-radius: 12px; border: 1px solid #E6E4DC; background: #F7F6F1;">
+      </label>
+    </div>
+    <span style="font-size: 12px; color: #5B6560;">Reviews with a matching order ID get a "Verified order" badge.</span>
+    <button type="button" style="margin-top: auto; font: inherit; font-weight: 700; font-size: 14px; letter-spacing: 0.12em; background: #15201A; color: #FFFFFF; border: 0; border-radius: 12px; padding: 17px; cursor: pointer;">POST REVIEW</button>
+  </form>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":560,"height":920}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
