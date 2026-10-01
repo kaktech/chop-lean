@@ -82,9 +82,9 @@ export default async function HomePage() {
           <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 hidden h-40 bg-gradient-to-t from-canvas to-transparent md:block" />
 
           <div className="container-x relative flex flex-col gap-8 pb-10 pt-10 md:min-h-[760px] md:justify-center md:pb-24 md:pt-24">
-            <div className="max-w-[680px]">
+            <div className="max-w-[640px]">
               <div className="eyebrow cl-up cl-d1">Dietitian-planned · Lagos meal delivery</div>
-              <h1 className="display-xl cl-up cl-d2 mt-4 text-[44px] md:text-[84px]">
+              <h1 className="display-xl cl-up cl-d2 mt-4 text-[40px] md:text-[54px] lg:text-[62px] xl:text-[72px]">
                 Lose weight eating the food you <span className="serif-accent">grew up on</span>
               </h1>
               <p className="cl-up cl-d3 mt-5 max-w-[520px] text-base leading-relaxed text-body md:text-lg">

@@ -14,10 +14,10 @@ import { formatNaira } from "@/lib/money";
 import { whatsappUrl } from "@/lib/site";
 
 const RIGHT = [
-  { href: "/about", label: "Our Kitchen" },
-  { href: "/delivery", label: "Delivery" },
-  { href: "/results", label: "Results", xl: true },
-  { href: "/contact", label: "Contact", xl: true },
+  { href: "/about", label: "Our Kitchen", xl: true },
+  { href: "/delivery", label: "Delivery", xl: true },
+  { href: "/results", label: "Results", wide: true },
+  { href: "/contact", label: "Contact", wide: true },
 ];
 
 export async function Header() {
@@ -43,19 +43,19 @@ export async function Header() {
         <div className="container-x grid grid-cols-[1fr_auto_1fr] items-center gap-6 py-2">
           <nav aria-label="Main"><PrimaryNav plans={navPlans} collections={navCollections} /></nav>
           <Logo />
-          <div className="flex items-center justify-end gap-5">
+          <div className="flex min-w-0 items-center justify-end gap-4 xl:gap-5">
             <nav aria-label="Company"><NavLinks links={RIGHT} /></nav>
             <div className="flex items-center gap-1.5">
               <SearchButton className="border border-line text-fg hover:border-yellow" />
               <FavLink />
-              <Link href="/account#weight" aria-label="Weight tracker" className="flex size-11 items-center justify-center rounded-full border border-line text-fg hover:border-yellow"><Scale size={19} strokeWidth={1.8} aria-hidden /></Link>
+              <Link href="/account#weight" aria-label="Weight tracker" className="hidden size-11 2xl:flex items-center justify-center rounded-full border border-line text-fg hover:border-yellow"><Scale size={19} strokeWidth={1.8} aria-hidden /></Link>
               <CartButton />
               {user ? (
                 <Link href="/account" aria-label="My account" title="My account" className="flex size-11 items-center justify-center rounded-full bg-yellow font-display text-sm font-bold text-canvas no-underline">{initial}</Link>
               ) : (
                 <>
-                  <Link href="/signin" className="cl-btn ml-1 flex min-h-11 items-center rounded-full border border-line px-4 text-sm font-bold text-fg no-underline hover:border-yellow">Sign in</Link>
-                  <Link href="/signin?mode=signup" className="cl-btn flex min-h-11 items-center rounded-full bg-yellow px-4 text-sm font-bold text-canvas no-underline">Sign up</Link>
+                  <Link href="/signin" className="cl-btn ml-1 flex min-h-11 items-center whitespace-nowrap rounded-full border border-line px-4 text-sm font-bold text-fg no-underline hover:border-yellow">Sign in</Link>
+                  <Link href="/signin?mode=signup" className="cl-btn flex min-h-11 items-center whitespace-nowrap rounded-full bg-yellow px-4 text-sm font-bold text-canvas no-underline">Sign up</Link>
                 </>
               )}
             </div>
