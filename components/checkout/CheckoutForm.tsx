@@ -146,7 +146,7 @@ export function CheckoutForm({ zones, dates, user, googleReady = false }: { goog
         <p className="mt-2 text-xs text-muted">Orders close at 6pm the day before. Deliveries are Mon, Wed and Fri.</p>
 
         <div className="mt-5 grid gap-4">
-          <Field label="Delivery window" id="window"><select id="window" className={`${input} appearance-auto`} {...register("deliveryWindow")}>{DELIVERY_WINDOWS.map((w) => <option key={w}>{w}</option>)}</select></Field>
+          <Field label="Delivery window" id="window"><select id="window" className={`${input}`} {...register("deliveryWindow")}>{DELIVERY_WINDOWS.map((w) => <option key={w}>{w}</option>)}</select></Field>
           {!pickup && (
             <Field label="Delivery address" id="address" error={errors.address?.message}>
               <textarea id="address" rows={3} aria-invalid={!!errors.address} aria-describedby={errors.address ? "address-err" : undefined} className={`${input} py-3 ${errors.address ? "!border-2 !border-red" : ""}`} {...register("address")} />
