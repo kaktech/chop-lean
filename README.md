@@ -1,37 +1,114 @@
-# Chop Lean — design handoff (HNG15 Lesson 2)
+# Chop Lean
 
-Everything Claude Code needs to build the Chop Lean store.
+Calorie-counted Nigerian meal plans for Lagos: a full-stack store with a real checkout, Postgres storage, Google sign-in, Mailgun order emails, Paystack card payments, bank transfer, pay on delivery and an admin dashboard.
 
-## What's inside
+**Stack:** Next.js 15 (App Router) · TypeScript · Tailwind v4 · Drizzle ORM · Neon (or Supabase) Postgres · Auth.js v5 (Google) · Mailgun · Paystack · Vercel Blob · motion · pnpm.
 
-| Folder / file | What it is |
+The design source and screenshots from the handoff are in `design-source/`, `screenshots/` and `DESIGN.md` (the original handoff README is `docs-design-handoff.md`).
+
+## HNG task checklist
+
+| Requirement | Where |
 |---|---|
-| `CLAUDE_CODE_PROMPT.md` | The prompt to paste into Claude Code |
-| `CLAUDE.md` | Project rules Claude Code reads automatically |
-| `DESIGN.md` | Colours, fonts, animations, responsive rules, page list, image map |
-| `screenshots/` | Full-page image of every screen (desktop and mobile) |
-| `preview/` | Every screen as HTML you can open in a browser (start with `preview/Main.html` or `preview/MHome.html`) |
-| `design-source/` | The original design files |
-| `public/images/` | All 28 photos, named |
-| `seed/menu.json` | Plans, meals, drinks, weekly menu, delivery zones, promo code |
+| Shop website with a checkout page | `/shop`, `/plans/[slug]`, `/cart`, `/checkout`, `/checkout/pay` |
+| Everything persisted in Neon/Supabase | `db/schema.ts` (users, products, orders, payments, reviews, carts, menus…) |
+| Confirmation emails with Mailgun | `lib/email.ts`, `lib/notify.ts`, `emails/*.tsx` |
+| Google auth via Google Cloud Console | `auth.ts`, `/signin` (steps below) |
 
-## How to use it
+## 1. Run it locally
 
-1. Unzip this folder somewhere, e.g. `~/Projects/chop-lean`.
-2. Open a terminal in that folder and run `claude`.
-3. Paste everything below the line in `CLAUDE_CODE_PROMPT.md`.
-4. Have these ready, because Claude Code will ask for them:
-   - Supabase project URL, service role key and database connection string (or a Neon connection string)
-   - Google OAuth client ID and secret (Google Cloud Console → APIs & Services → Credentials)
-   - Mailgun API key and domain
-   - Paystack test public and secret keys
-   - The email address(es) that should get admin access
+```bash
+pnpm install
+cp .env.example .env.local      # then fill it in (sections below)
+pnpm db:migrate                 # creates the tables
+pnpm db:seed                    # loads plans, meals, weekly menu, zones, CHOPLEAN20
+pnpm dev                        # http://localhost:3000
+```
 
-## HNG checklist (individual task)
+Other scripts: `pnpm test` (Vitest), `pnpm test:e2e` (Playwright), `pnpm db:generate` (new migration after editing `db/schema.ts`).
 
-- [ ] Shop website with a checkout page
-- [ ] Everything persisted in Supabase/Neon
-- [ ] Confirmation emails sent with Mailgun
-- [ ] Google auth set up through Google Cloud Console
+The app starts with only `DATABASE_URL` and `AUTH_SECRET` set. Anything not configured degrades gracefully: emails are logged and skipped, card payment shows "not switched on", Google sign-in shows a setup notice.
 
-The team task (Zedu org and the group PR to `zedu.chat/contributors/<teamname>`) is separate and not part of this build.
+## 2. Database: Neon (or Supabase)
+
+**Neon:** create a project at <https://console.neon.tech> (or Vercel → Storage → Create Database → Neon). Copy the **pooled** connection string into `DATABASE_URL`. Then run `pnpm db:migrate && pnpm db:seed`.
+
+**Supabase instead:** create a project, then Project Settings → Database → Connection string (use the *Transaction pooler*), and use it as `DATABASE_URL`. The Drizzle migrations are plain Postgres, so they run unchanged. If you use Supabase, swap `db/index.ts` to `drizzle-orm/postgres-js` with the `postgres` package (Neon's HTTP driver only talks to Neon).
+
+Generate `AUTH_SECRET` with `openssl rand -base64 32`.
+
+## 3. Google sign-in (Google Cloud Console)
+
+1. Go to <https://console.cloud.google.com> and create a project (e.g. "Chop Lean").
+2. **APIs & Services → OAuth consent screen**: choose *External*, set app name "Chop Lean", add your support email, and add your email as a test user while the app is in testing mode.
+3. **APIs & Services → Credentials → Create credentials → OAuth client ID** → application type **Web application**.
+4. **Authorised JavaScript origins:** `http://localhost:3000` and `https://<your-vercel-domain>`.
+5. **Authorised redirect URIs:**
+   - `http://localhost:3000/api/auth/callback/google`
+   - `https://<your-vercel-domain>/api/auth/callback/google`
+6. Copy the client ID and secret into `AUTH_GOOGLE_ID` and `AUTH_GOOGLE_SECRET`.
+
+Sessions are stored in the database (`sessions` table) through the Drizzle adapter.
+
+**Admin access:** put your Google email(s) in `ADMIN_EMAILS` (comma separated). Those accounts can open `/admin`; everyone else gets a 404. Admin is checked in `app/admin/layout.tsx` and in every admin server action. `middleware.ts` only checks that a session cookie exists, because database sessions cannot be read at the edge.
+
+## 4. Mailgun (confirmation emails)
+
+1. Create an account at <https://www.mailgun.com>.
+2. **Sending → Domains → Add new domain** (e.g. `mg.yourdomain.com`) and add the DNS records Mailgun shows (SPF, DKIM, and optionally tracking/MX). Wait until it shows *Verified*.
+   - *No domain yet?* Use the sandbox domain Mailgun gives you and add the recipients you want to test with under **Authorized recipients** (sandbox only delivers to these).
+3. **Settings → API keys**: create a key.
+4. Set `MAILGUN_API_KEY`, `MAILGUN_DOMAIN`, `MAILGUN_FROM` (e.g. `Chop Lean <orders@mg.yourdomain.com>`) and `MAILGUN_REGION` (`us` or `eu`, matching the region you chose).
+
+Emails sent (React Email templates in `emails/`):
+- order confirmation to the customer (with bank details for transfer orders)
+- new-order alert to `ADMIN_EMAILS`
+- payment-confirmed (when an admin confirms a transfer)
+- status update whenever an admin changes an order's status
+
+Email failures are logged and never block checkout.
+
+## 5. Paystack (card payments, test mode)
+
+1. Create an account at <https://paystack.com> and stay in **Test mode**.
+2. **Settings → API Keys & Webhooks**: copy the test public key (`NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY`) and secret key (`PAYSTACK_SECRET_KEY`).
+3. Set the webhook URL to `https://<your-vercel-domain>/api/webhooks/paystack` (for local testing use a tunnel such as ngrok). The route verifies the `x-paystack-signature` HMAC and checks the amount before marking an order paid.
+4. Test card: `4084 0840 8408 4081`, any future expiry, CVV `408`, PIN `0000`, OTP `123456`.
+
+The charge amount always comes from the database, and the browser result is re-verified against Paystack's API before an order is marked paid.
+
+## 6. File uploads (Vercel Blob)
+
+Admin product photos and bank-transfer receipts use [Vercel Blob](https://vercel.com/docs/storage/vercel-blob). In Vercel: Storage → Create → Blob, connect it to the project, and copy `BLOB_READ_WRITE_TOKEN` into `.env.local`. (The original brief mentions a Supabase Storage bucket; Neon has no file storage, so Blob is used instead.)
+
+## 7. Deploy to Vercel
+
+1. Push to GitHub and import the repo in Vercel.
+2. Add every variable from `.env.example` in Project → Settings → Environment Variables. Set `NEXT_PUBLIC_SITE_URL` to your production URL.
+3. Run `pnpm db:migrate && pnpm db:seed` once against the production database (locally with the production `DATABASE_URL`).
+4. Add the production URLs to Google (step 3) and the Paystack webhook (step 5).
+
+## How it works (things worth knowing)
+
+- **Money** is stored in kobo. Totals, discounts, delivery and the pay-on-delivery fee are always recomputed on the server (`lib/pricing.ts`, `lib/orders.ts`); the browser's numbers are display-only.
+- **Dates:** delivery days are Mon, Wed and Fri; orders close 6pm the day before; pause/skip closes Thursday 6pm; all in Africa/Lagos (`lib/lagos-time.ts`).
+- **Plan pricing rule:** the calorie option sets the weekly price; choosing fewer meals/day or fewer days/week scales it proportionally (rounded to ₦100); "Subscribe and save" is 10% off. This rule is not in the brief, so change `planUnitPrice` if your kitchen prices differently.
+- **Promo CHOPLEAN20:** 20% off the first week of each plan line, first orders only. Meals and drinks are not discounted.
+- **Kitchen prep list:** counts active plan orders against the weekly menu. A Monday delivery covers Mon+Tue menu days, Wednesday covers Wed+Thu, Friday covers Fri; 3 meals/day = breakfast+lunch+dinner, 2 = lunch+dinner, 1 = lunch. Adjust in `lib/admin-queries.ts`.
+- **Guest checkout:** the order id (a UUID) acts as the access link for guests.
+- **Cart:** guests use localStorage; signed-in carts are saved in the database and the guest cart is merged on sign-in.
+- **Reviews:** only real customer reviews are shown. The home page shows placeholder cards until some exist. A review gets a "Verified order" badge when the order number and email match an order containing that product.
+
+## Deviations from the design (on purpose)
+
+- The Payment screen shows card number/expiry/CVV fields. We use Paystack's secure popup instead, so card data never touches this app.
+- The Success screen's "confirmation email preview" panel is a design annotation and is not rebuilt.
+- Shop tab counts and facet counts are computed from the database, so they differ from the sample numbers in the screenshots.
+- Nutrition numbers in the seed data are placeholders: have a dietitian verify them before launch.
+- Several photos are watermarked or show other brands (see `DESIGN.md`). Replace them before a real launch.
+- Admin shows the "Storefront theme" cards, but only Editorial Green exists; Night Market is marked "Soon".
+
+## Tests
+
+- `pnpm test`: Vitest for pricing, promos, the calorie formula, shop filters, delivery cutoffs and money formatting.
+- `pnpm test:e2e`: Playwright happy path (browse → add to cart → guest checkout → pay on delivery → confirmation). Run `pnpm exec playwright install chromium` once first. It creates a real order in whichever database `DATABASE_URL` points to.

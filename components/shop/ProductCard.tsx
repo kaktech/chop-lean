@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Heart, Plus } from "lucide-react";
 import type { Product } from "@/lib/queries";
 import { formatNaira } from "@/lib/money";
-import { badgeStyle, kcalLabel, planMeta, productHref } from "@/lib/product-ui";
+import { badgeStyle, planMeta, productHref } from "@/lib/product-ui";
 import { useAddToCart } from "@/lib/use-add-to-cart";
 import { Reveal } from "@/components/ui/Reveal";
 import { imgSrc } from "@/lib/img";
