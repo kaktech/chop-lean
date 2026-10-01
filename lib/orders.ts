@@ -4,6 +4,7 @@ import * as s from "@/db/schema";
 import { canOrderFor } from "@/lib/lagos-time";
 import { computeTotals, planUnitPrice, validatePromo, type PromoRule, type Totals } from "@/lib/pricing";
 import type { CheckoutLine } from "@/lib/checkout-schema";
+import { isInventoryLocked } from "@/lib/admin";
 
 export type QuoteLine = {
   productId: string; slug: string; type: "plan" | "meal" | "drink"; name: string; image: string | null;
@@ -33,6 +34,7 @@ export async function buildQuote(args: {
   lines: CheckoutLine[]; zoneId?: string; promoCode?: string; email?: string; userId?: string | null;
   payment?: "card" | "transfer" | "pod"; deliveryDate?: string;
 }): Promise<Quote> {
+  const locked = await isInventoryLocked();
   const ids = [...new Set(args.lines.map((l) => l.productId))];
   const prods = await db.select().from(s.products).where(inArray(s.products.id, ids));
   const opts = await db.select().from(s.planCalorieOptions).where(inArray(s.planCalorieOptions.productId, ids));
@@ -40,7 +42,7 @@ export async function buildQuote(args: {
   const lines: QuoteLine[] = args.lines.map((l) => {
     const p = prods.find((x) => x.id === l.productId);
     if (!p || !p.isLive) throw new QuoteError("An item in your cart is no longer available.");
-    if (p.weeklySlots != null && p.slotsTaken >= p.weeklySlots) throw new QuoteError(`${p.name} is sold out for this week.`);
+    if (locked && p.weeklySlots != null && p.slotsTaken >= p.weeklySlots) throw new QuoteError(`${p.name} is sold out for this week.`);
     const unitKobo =
       p.type === "plan"
         ? planUnitPrice(

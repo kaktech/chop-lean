@@ -8,6 +8,7 @@ import { planUnitPrice, type PlanPricingInput } from "@/lib/pricing";
 import { badgeStyle } from "@/lib/product-ui";
 import { useAddToCart } from "@/lib/use-add-to-cart";
 import { usePlan } from "./PlanContext";
+import { imgSrc } from "@/lib/img";
 
 export type Shot = { src: string; title: string; day: string };
 type Props = {
@@ -65,7 +66,7 @@ export function PlanPurchase({ product: p, pricing, shots, dates, soldOut, ratin
           {p.badge && <span className={`absolute right-4 top-4 z-10 rounded-md px-3 py-1.5 text-[11px] font-bold md:right-8 md:top-8 ${p.badge.startsWith("-") ? "bg-red text-white" : badgeStyle(p.badge)}`}>{p.badge.startsWith("-") ? `SAVE ${p.badge.slice(1)}` : p.badge}</span>}
           <div className="relative aspect-[4/4.2] overflow-hidden md:rounded-[24px] md:border-[10px] md:border-white md:shadow-chip">
             {shots.map((s, i) => (
-              <Image key={s.src} src={`/images/${s.src}`} alt={s.title} fill priority={i === 0} sizes="(min-width:768px) 45vw, 100vw"
+              <Image key={s.src} src={imgSrc(s.src)} alt={s.title} fill priority={i === 0} sizes="(min-width:768px) 45vw, 100vw"
                 className={`object-cover transition-opacity duration-300 ${i === shot ? "opacity-100" : "opacity-0"}`} />
             ))}
           </div>
@@ -84,7 +85,7 @@ export function PlanPurchase({ product: p, pricing, shots, dates, soldOut, ratin
               <li key={s.src}>
                 <button type="button" onClick={() => setShot(i)} aria-label={`Show ${s.title}`} aria-pressed={i === shot}
                   className={`relative block aspect-[4/3] w-full overflow-hidden rounded-2xl border-2 ${i === shot ? "border-green" : "border-line"}`}>
-                  <Image src={`/images/${s.src}`} alt="" fill sizes="12vw" className="object-cover" />
+                  <Image src={imgSrc(s.src)} alt="" fill sizes="12vw" className="object-cover" />
                 </button>
               </li>
             ))}

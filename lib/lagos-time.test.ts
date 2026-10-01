@@ -38,3 +38,12 @@ describe("cutoffs", () => {
     expect(isPastPauseCutoff(at("2026-09-30T12:00:00Z"))).toBe(false);
   });
 });
+
+import { nextWeekMonday } from "./lagos-time";
+describe("nextWeekMonday", () => {
+  it("returns the following Monday", () => {
+    expect(nextWeekMonday(at("2026-10-01T10:00:00Z"))).toBe("2026-10-05"); // Thu
+    expect(nextWeekMonday(at("2026-10-04T10:00:00Z"))).toBe("2026-10-05"); // Sun
+    expect(nextWeekMonday(at("2026-10-05T10:00:00Z"))).toBe("2026-10-12"); // Mon
+  });
+});

@@ -6,6 +6,8 @@ import { MealPurchase } from "@/components/product/MealPurchase";
 import { ProductInfo } from "@/components/product/ProductInfo";
 import { ReviewsSection } from "@/components/product/ReviewsSection";
 import { JsonLd, productJsonLd } from "@/components/product/JsonLd";
+import { imgSrc } from "@/lib/img";
+import { isInventoryLocked } from "@/lib/admin";
 
 export const dynamic = "force-dynamic";
 type P = { params: Promise<{ slug: string }> };
@@ -13,14 +15,14 @@ type P = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: P): Promise<Metadata> {
   const p = await getProductBySlug((await params).slug);
   if (!p || p.type === "plan") return {};
-  return { title: p.name, description: `${p.name}, ${p.kcal} kcal. Calorie-counted and cooked fresh in Lagos.`, openGraph: { images: [`/images/${p.image}`] } };
+  return { title: p.name, description: `${p.name}, ${p.kcal} kcal. Calorie-counted and cooked fresh in Lagos.`, openGraph: { images: [imgSrc(p.image)] } };
 }
 
 export default async function MealPage({ params }: P) {
   const p = await getProductBySlug((await params).slug);
   if (!p || p.type === "plan" || !p.isLive) notFound();
   const [reviews, stats] = await Promise.all([getProductReviews(p.id), getReviewStats(p.id)]);
-  const soldOut = p.weeklySlots != null && p.slotsTaken >= p.weeklySlots;
+  const soldOut = (await isInventoryLocked()) && p.weeklySlots != null && p.slotsTaken >= p.weeklySlots;
   return (
     <>
       <JsonLd data={productJsonLd(p, stats)} />

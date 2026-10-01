@@ -9,6 +9,8 @@ import { WeeklyMenu } from "@/components/product/WeeklyMenu";
 import { ProductInfo } from "@/components/product/ProductInfo";
 import { ReviewsSection } from "@/components/product/ReviewsSection";
 import { JsonLd, productJsonLd } from "@/components/product/JsonLd";
+import { imgSrc } from "@/lib/img";
+import { isInventoryLocked } from "@/lib/admin";
 
 export const dynamic = "force-dynamic";
 type P = { params: Promise<{ slug: string }> };
@@ -16,7 +18,7 @@ type P = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: P): Promise<Metadata> {
   const p = await getProductBySlug((await params).slug);
   if (!p || p.type !== "plan") return {};
-  return { title: p.name, description: p.description ?? undefined, openGraph: { title: p.name, description: p.description ?? undefined, images: [`/images/${p.image}`] } };
+  return { title: p.name, description: p.description ?? undefined, openGraph: { title: p.name, description: p.description ?? undefined, images: [imgSrc(p.image)] } };
 }
 
 export default async function PlanPage({ params }: P) {
@@ -35,7 +37,7 @@ export default async function PlanPage({ params }: P) {
   if (!shots.length && p.image) shots.push({ src: p.image, title: p.name, day: "Sample plate" });
 
   const dates = nextDeliveryDates(new Date(), 3).map((d) => ({ iso: toISODate(d), label: describeDate(d).short }));
-  const soldOut = p.weeklySlots != null && p.slotsTaken >= p.weeklySlots;
+  const soldOut = (await isInventoryLocked()) && p.weeklySlots != null && p.slotsTaken >= p.weeklySlots;
 
   return (
     <>

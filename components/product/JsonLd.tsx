@@ -7,7 +7,7 @@ export function productJsonLd(p: Product, stats: { count: number; avg: number })
     "@type": "Product",
     name: p.name,
     description: p.description ?? `${p.name} from Chop Lean`,
-    image: `${site}/images/${p.image}`,
+    image: p.image?.startsWith("http") ? p.image : `${site}/images/${p.image}`,
     brand: { "@type": "Brand", name: "Chop Lean" },
     offers: {
       "@type": "Offer",

@@ -13,6 +13,7 @@ import { formatNaira, formatNairaFull } from "@/lib/money";
 import { describeOptions } from "@/components/layout/CartDrawer";
 import { GoogleButton } from "./GoogleButton";
 import Link from "next/link";
+import { imgSrc } from "@/lib/img";
 
 type Zone = { id: string; name: string; areas: string; feeKobo: number };
 type DateOpt = { iso: string; dow: string; day: number; month: string };
@@ -160,7 +161,7 @@ export function CheckoutForm({ zones, dates, user }: { zones: Zone[]; dates: Dat
         <ul className="mt-4 flex flex-col gap-4">
           {items.map((l) => (
             <li key={l.id} className="flex items-center gap-4">
-              <Image src={`/images/${l.image}`} alt="" width={64} height={64} className="size-16 rounded-xl object-cover" />
+              <Image src={imgSrc(l.image)} alt="" width={64} height={64} className="size-16 rounded-xl object-cover" />
               <div className="min-w-0 flex-1"><b className="block font-display leading-snug">{l.name}{l.type !== "plan" && l.qty > 1 ? ` ×${l.qty}` : ""}</b><span className="text-[13px] text-muted">{l.type === "plan" ? `${describeOptions(l.options, "plan").split(" · ").slice(1).join(" · ")} · ×${l.qty} week${l.qty > 1 ? "s" : ""}` : "Single item"}</span></div>
               <b className="font-display">{formatNaira(l.unitKobo * l.qty)}</b>
             </li>

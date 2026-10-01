@@ -332,3 +332,16 @@ export const weeklyMenuItemsRelations = relations(weeklyMenuItems, ({ one }) => 
 export const weeklyMenusRelations = relations(weeklyMenus, ({ many }) => ({
   items: many(weeklyMenuItems),
 }));
+
+/* ---------- Subscriptions: paused weeks ---------- */
+
+export const pausedWeeks = pgTable(
+  "paused_weeks",
+  {
+    id: serial("id").primaryKey(),
+    userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    weekOf: date("week_of").notNull(), // Monday of the paused week
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (t) => [uniqueIndex("paused_weeks_user_week").on(t.userId, t.weekOf)],
+);

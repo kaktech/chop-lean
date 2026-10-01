@@ -10,6 +10,7 @@ import { formatNaira, formatNairaFull } from "@/lib/money";
 import { describeOptions } from "@/components/layout/CartDrawer";
 import { useAddToCart, type AddableProduct } from "@/lib/use-add-to-cart";
 import { describeDate, nextDeliveryDates } from "@/lib/lagos-time";
+import { imgSrc } from "@/lib/img";
 
 type Upsell = (AddableProduct & { kcal: number | null }) | null;
 
@@ -62,7 +63,7 @@ export function CartView({ upsell }: { upsell: Upsell }) {
           <div className="flex flex-col gap-4">
             {items.map((l) => (
               <article key={l.id} className="flex flex-wrap items-center gap-4 rounded-[24px] border border-line bg-white p-4 md:flex-nowrap md:gap-6 md:p-5">
-                <Image src={`/images/${l.image}`} alt="" width={130} height={130} className="size-[88px] rounded-2xl object-cover md:size-[130px]" />
+                <Image src={imgSrc(l.image)} alt="" width={130} height={130} className="size-[88px] rounded-2xl object-cover md:size-[130px]" />
                 <div className="min-w-0 flex-1">
                   <h2 className="font-display text-lg md:text-[22px]">{l.name}</h2>
                   <p className="mt-1 text-sm text-muted">{describeOptions(l.options, l.type) || (l.type === "drink" ? "Drink" : "Single meal")}{l.options.subscribe ? " · Subscribe & save 10%" : ""}{l.options.exclusions ? ` · ${l.options.exclusions}` : ""}</p>
@@ -84,7 +85,7 @@ export function CartView({ upsell }: { upsell: Upsell }) {
 
             {hasUpsell && upsell && (
               <div className="flex flex-wrap items-center gap-4 rounded-[24px] bg-butter p-4 md:flex-nowrap">
-                <Image src={`/images/${upsell.image}`} alt="" width={96} height={96} className="size-24 rounded-2xl object-cover" />
+                <Image src={imgSrc(upsell.image)} alt="" width={96} height={96} className="size-24 rounded-2xl object-cover" />
                 <div className="min-w-0 flex-1"><h2 className="font-serif text-2xl">Add a drink for the 4pm hunger?</h2><p className="text-sm text-body">Unsweetened tiger nut, date and coconut · 35cl · {upsell.kcal} kcal</p></div>
                 <b className="font-display text-xl">{formatNaira(upsell.priceKobo)}</b>
                 <button type="button" onClick={() => addToCart(upsell)} className="cl-btn tap rounded-full bg-ink px-5 text-sm font-bold text-white">+ Add</button>

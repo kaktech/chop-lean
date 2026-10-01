@@ -6,6 +6,7 @@ import { Minus, Plus, X } from "lucide-react";
 import { cartSubtotal, useCart, useUI } from "@/lib/store";
 import { useHydrated } from "@/lib/use-hydrated";
 import { formatNaira } from "@/lib/money";
+import { imgSrc } from "@/lib/img";
 
 export function describeOptions(o: { kcal?: number; mealsPerDay?: number; daysPerWeek?: number }, type: string) {
   if (type !== "plan") return "";
@@ -57,7 +58,7 @@ export function CartDrawer() {
             <ul className="flex-1 divide-y divide-line overflow-y-auto px-6">
               {items.map((l) => (
                 <li key={l.id} className="flex gap-4 py-5">
-                  <Image src={`/images/${l.image}`} alt="" width={72} height={72} className="size-[72px] rounded-2xl object-cover" />
+                  <Image src={imgSrc(l.image)} alt="" width={72} height={72} className="size-[72px] rounded-2xl object-cover" />
                   <div className="min-w-0 flex-1">
                     <div className="flex justify-between gap-3">
                       <Link href={`/${l.type === "plan" ? "plans" : "meals"}/${l.slug}`} onClick={close} className="font-display font-bold leading-snug text-ink no-underline">{l.name}</Link>

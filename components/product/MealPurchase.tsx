@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
 import { formatNaira } from "@/lib/money";
 import { useAddToCart, type AddableProduct } from "@/lib/use-add-to-cart";
+import { imgSrc } from "@/lib/img";
 
 export function MealPurchase({ product, kcal, protein, carbs, fat, description, soldOut }: { product: AddableProduct; kcal: number | null; protein: number | null; carbs: number | null; fat: number | null; description: string | null; soldOut: boolean }) {
   const addToCart = useAddToCart();
@@ -12,7 +13,7 @@ export function MealPurchase({ product, kcal, protein, carbs, fat, description, 
   return (
     <section className="container-x grid gap-8 pb-28 pt-5 md:grid-cols-2 md:gap-12 md:pb-20 md:pt-8">
       <div className="relative aspect-square overflow-hidden rounded-[28px] border border-line bg-white">
-        <Image src={`/images/${product.image}`} alt={product.name} fill priority sizes="(min-width:768px) 45vw, 100vw" className="object-cover" />
+        <Image src={imgSrc(product.image)} alt={product.name} fill priority sizes="(min-width:768px) 45vw, 100vw" className="object-cover" />
       </div>
       <div>
         <div className="label-sm text-red">{product.type === "drink" ? "Snack or drink" : "Single meal"}</div>

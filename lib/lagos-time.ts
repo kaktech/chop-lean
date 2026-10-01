@@ -67,3 +67,11 @@ export function describeDate({ y, m, d }: LagosDate) {
   const dow = DOWS[new Date(Date.UTC(y, m - 1, d)).getUTCDay()];
   return { dow, day: d, month: MONTHS[m - 1], short: `${dow}, ${d} ${MONTHS[m - 1].slice(0, 3)}` };
 }
+
+/** Monday (as ISO date) of the next delivery week, i.e. the week a "pause next week" action affects. */
+export function nextWeekMonday(now: Date = new Date()): string {
+  const w = toLagosWall(now);
+  const dow = w.getUTCDay() || 7; // Mon=1..Sun=7
+  const monday = new Date(Date.UTC(w.getUTCFullYear(), w.getUTCMonth(), w.getUTCDate()) + (8 - dow) * DAY_MS);
+  return toISODate(fromWall(monday));
+}

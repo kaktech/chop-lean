@@ -5,6 +5,7 @@ import { getCategories, getPlans, getProductsBySlugs, getRecentReviews } from "@
 import { PlanCard, MealCard } from "@/components/shop/ProductCard";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionTitle } from "@/components/ui/SectionTitle";
+import { imgSrc } from "@/lib/img";
 
 export const dynamic = "force-dynamic";
 
@@ -83,7 +84,7 @@ export default async function HomePage() {
             <div className="cl-up cl-d5 mt-[22px] hidden items-center gap-4 self-start rounded-full bg-white py-2.5 pl-2.5 pr-[22px] shadow-soft md:flex">
               <div className="flex">
                 {["efo-riro.jpg", "ofada.jpg", "pepper-soup.jpg"].map((f, i) => (
-                  <Image key={f} src={`/images/${f}`} alt="" width={42} height={42} className={`size-[42px] rounded-full border-2 border-white object-cover ${i ? "-ml-3" : ""}`} />
+                  <Image key={f} src={imgSrc(f)} alt="" width={42} height={42} className={`size-[42px] rounded-full border-2 border-white object-cover ${i ? "-ml-3" : ""}`} />
                 ))}
               </div>
               <div className="text-sm leading-snug">24 dishes a week, portions <b className="text-green">weighed</b>,<br />calories <b className="text-green">counted</b>, pepper left in</div>
@@ -120,7 +121,7 @@ export default async function HomePage() {
         <div className="cl-marquee flex w-max py-3 md:py-4">
           {ticker.map(([name, slug, img], i) => (
             <span key={i} className="flex items-center gap-2.5 whitespace-nowrap px-[18px] font-display text-base font-semibold md:gap-3.5 md:px-7 md:text-xl" aria-hidden={i >= TICKER.length}>
-              <Image src={`/images/${img}`} alt="" width={40} height={40} className="size-8 rounded-full object-cover md:size-10" />
+              <Image src={imgSrc(img)} alt="" width={40} height={40} className="size-8 rounded-full object-cover md:size-10" />
               {name}
               {kcalOf(slug) && <span className="text-xs font-bold text-yellow md:text-sm">{kcalOf(slug)} kcal</span>}
               <span className="hidden text-[22px] text-green md:inline">✱</span>
@@ -156,7 +157,7 @@ export default async function HomePage() {
                 <Reveal key={c.id} className="shrink-0 md:shrink">
                   <Link href={st.href} className="cl-lift flex flex-col items-center gap-3 text-ink no-underline md:gap-[18px] md:rounded-[22px] md:bg-white md:px-[22px] md:pb-7 md:pt-6 md:shadow-[0_12px_30px_rgba(21,32,26,0.06)]">
                     <span className="order-2 flex size-[84px] items-center justify-center rounded-full p-1.5 md:order-none md:size-[140px] md:p-2" style={{ background: st.bg }}>
-                      <Image src={`/images/${c.image}`} alt="" width={140} height={140} className="size-full rounded-full object-cover" />
+                      <Image src={imgSrc(c.image)} alt="" width={140} height={140} className="size-full rounded-full object-cover" />
                     </span>
                     <span className="order-3 text-xs font-medium md:order-none md:hidden">{c.name.split(" ")[0]} {c.name.split(" ")[1]}</span>
                     <span className="hidden min-h-[46px] font-display text-[19px] font-bold leading-tight md:order-first md:block">{c.name}</span>
@@ -259,7 +260,7 @@ export default async function HomePage() {
           ].map((f) => (
             <Reveal key={f.src} className={f.span}>
               <figure className="cl-zoom relative h-[300px] overflow-hidden rounded-[26px] md:h-[480px]">
-                <Image src={`/images/${f.src}`} alt={f.alt} fill sizes="(min-width:768px) 40vw, 100vw" className="object-cover" />
+                <Image src={imgSrc(f.src)} alt={f.alt} fill sizes="(min-width:768px) 40vw, 100vw" className="object-cover" />
                 <figcaption className={`absolute inset-x-4 bottom-4 rounded-2xl px-4 py-3.5 ${f.bg}`}>
                   <b className="block font-display text-[17px]">{f.t}</b>
                   <span className={`text-[13px] ${f.dc}`}>{f.d}</span>

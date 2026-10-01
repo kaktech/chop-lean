@@ -7,6 +7,7 @@ import { formatNaira } from "@/lib/money";
 import { badgeStyle, kcalLabel, planMeta, productHref } from "@/lib/product-ui";
 import { useAddToCart } from "@/lib/use-add-to-cart";
 import { Reveal } from "@/components/ui/Reveal";
+import { imgSrc } from "@/lib/img";
 
 type Rating = { count: number; avg: number } | undefined;
 
@@ -20,7 +21,7 @@ export function PlanCard({ p, rating, showHeart = false, sizes }: { p: Product; 
         {p.badge && <span className={`absolute left-4 top-4 z-10 rounded-md px-2.5 py-1 text-[11px] font-bold tracking-wide md:left-[26px] md:top-[26px] ${badgeStyle(p.badge)}`}>{p.badge}</span>}
         {showHeart && <span className="absolute right-4 top-4 z-10 flex size-8 items-center justify-center rounded-full bg-white shadow-soft md:right-[26px] md:top-[26px]"><Heart size={15} aria-hidden /></span>}
         <div className="cl-zoom relative h-[170px] overflow-hidden rounded-2xl md:h-[220px]">
-          <Image src={`/images/${p.image}`} alt={p.name} fill sizes={sizes ?? "(min-width:1024px) 25vw, 50vw"} className="object-cover" />
+          <Image src={imgSrc(p.image)} alt={p.name} fill sizes={sizes ?? "(min-width:1024px) 25vw, 50vw"} className="object-cover" />
         </div>
         <span className="flex flex-wrap gap-1.5">
           <span className="rounded-full bg-mint px-2.5 py-1 text-xs font-bold text-green-dark">{p.mealsPerDay === 1 ? `≈ ${p.kcal} kcal` : `${p.kcal?.toLocaleString("en-NG")} kcal${showHeart ? "" : "/day"}`}</span>
@@ -63,7 +64,7 @@ export function MealCard({ p, layout = "row" }: { p: Product; layout?: "row" | "
       >
         {p.badge && <span className="absolute left-[30px] top-[30px] z-10 rounded-md bg-red px-2 py-1 text-[11px] font-bold text-white">{p.badge}</span>}
         <div className={`cl-zoom relative overflow-hidden rounded-[14px] ${stack ? "h-[200px]" : "h-[150px] md:h-[180px]"}`}>
-          <Image src={`/images/${p.image}`} alt={p.name} fill sizes="(min-width:1024px) 20vw, 45vw" className="object-cover" />
+          <Image src={imgSrc(p.image)} alt={p.name} fill sizes="(min-width:1024px) 20vw, 45vw" className="object-cover" />
         </div>
         <span className="flex flex-col gap-2">
           <span className="text-base font-bold leading-snug">{p.name}</span>

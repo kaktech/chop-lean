@@ -15,6 +15,13 @@
       "when": 1790856125798,
       "tag": "0001_order_number_seq",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1790857491986,
+      "tag": "0002_careless_moon_knight",
+      "breakpoints": true
     }
   ]
 }

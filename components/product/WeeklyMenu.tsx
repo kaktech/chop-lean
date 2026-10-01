@@ -5,6 +5,7 @@ import { X } from "lucide-react";
 import type { MenuMeal, WeeklyMenuData } from "@/lib/queries";
 import { usePlan } from "./PlanContext";
 import { Reveal } from "@/components/ui/Reveal";
+import { imgSrc } from "@/lib/img";
 
 const SLOT_LABEL: Record<string, string> = { breakfast: "Breakfast", lunch: "Lunch", dinner: "Dinner" };
 const fmtWeek = (iso: string) => new Date(iso + "T12:00:00Z").toLocaleDateString("en-NG", { day: "numeric", month: "long", timeZone: "UTC" });
@@ -68,7 +69,7 @@ export function WeeklyMenu({ menu }: { menu: WeeklyMenuData }) {
                   return (
                     <li key={key} className="flex items-center gap-3 rounded-2xl border border-line bg-white p-2.5 md:block md:p-2">
                       <div className="relative size-[76px] shrink-0 overflow-hidden rounded-xl md:h-[84px] md:w-full">
-                        <Image src={`/images/${m.image}`} alt="" fill sizes="(min-width:768px) 20vw, 80px" className="object-cover" />
+                        <Image src={imgSrc(m.image)} alt="" fill sizes="(min-width:768px) 20vw, 80px" className="object-cover" />
                       </div>
                       <div className="min-w-0 flex-1 md:mt-2 md:px-1 md:pb-1">
                         <div className="label-sm text-[10px] text-green">{SLOT_LABEL[orig.menuSlot]}{swapped && " · swapped"}</div>
@@ -101,7 +102,7 @@ export function WeeklyMenu({ menu }: { menu: WeeklyMenuData }) {
               {options.map((o) => (
                 <li key={o.id}>
                   <button type="button" onClick={() => { setSwap(swapFor.key, o.id); setSwapFor(null); }} className="flex w-full items-center gap-3 rounded-2xl border border-line p-2.5 text-left hover:border-green">
-                    <Image src={`/images/${o.image}`} alt="" width={56} height={56} className="size-14 rounded-xl object-cover" />
+                    <Image src={imgSrc(o.image)} alt="" width={56} height={56} className="size-14 rounded-xl object-cover" />
                     <span className="flex-1"><b className="block text-sm">{o.name}</b><span className="text-xs text-muted">{o.kcal} kcal</span></span>
                     <span className="text-sm font-bold text-green">Choose</span>
                   </button>
