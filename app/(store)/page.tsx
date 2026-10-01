@@ -7,7 +7,6 @@ import { db } from "@/db";
 import { products } from "@/db/schema";
 import { getPlans, getProductsBySlugs, getRecentReviews } from "@/lib/queries";
 import { getCollectionCounts } from "@/lib/collections";
-import { RotatingDishChip } from "@/components/home/RotatingDishChip";
 import { PlanCard } from "@/components/shop/ProductCard";
 import { MenuList, type MenuItem } from "@/components/home/MenuList";
 import { Reveal } from "@/components/ui/Reveal";
@@ -106,13 +105,8 @@ export default async function HomePage() {
             <div className="cl-up cl-d5 relative h-[440px] overflow-hidden rounded-[28px] border border-line shadow-chip md:hidden">
               <Image src="/images/hero-tall.jpg" alt="A smiling woman holding a Chop Lean jollof meal box" fill priority sizes="100vw" className="object-cover [object-position:center_30%]" />
               <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-canvas/70 via-transparent to-transparent" />
-              <RotatingDishChip meals={tickerMeals.map((m) => ({ slug: m.slug, name: m.name, image: m.image, kcal: m.kcal, proteinG: m.proteinG }))} />
             </div>
 
-            <div className="cl-float glass absolute bottom-28 right-6 hidden items-center gap-3.5 rounded-[20px] py-3 pl-3 pr-[18px] lg:flex xl:right-[8%]">
-              <Image src="/images/jollof.jpg" alt="" width={56} height={56} className="size-14 rounded-[14px] object-cover" />
-              <div className="leading-snug"><div className="text-[15px] font-bold text-fg">Jollof, chicken and plantain</div><div className="text-[13px] text-muted">450 kcal · 38g protein</div></div>
-            </div>
             <div aria-hidden className="absolute right-6 top-28 hidden size-[132px] items-center justify-center rounded-full border border-white/15 bg-canvas/70 backdrop-blur md:flex xl:right-[10%]">
               <svg className="cl-spin" viewBox="0 0 120 120" width={120} height={120}>
                 <defs><path id="clCirc" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0" /></defs>
