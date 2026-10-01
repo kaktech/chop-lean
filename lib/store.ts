@@ -10,6 +10,8 @@ export type CartOptions = {
   exclusions?: string;
   subscribe?: boolean;
   size?: string;
+  /** "Mon-lunch" -> meal id the customer swapped in */
+  swaps?: Record<string, string>;
 };
 
 export type CartLine = {
@@ -37,7 +39,7 @@ type CartState = {
 };
 
 const lineId = (productId: string, options: CartOptions) =>
-  `${productId}:${options.kcal ?? ""}:${options.mealsPerDay ?? ""}:${options.daysPerWeek ?? ""}:${options.firstDelivery ?? ""}:${options.exclusions ?? ""}:${options.subscribe ? "s" : ""}`;
+  `${productId}:${options.kcal ?? ""}:${options.mealsPerDay ?? ""}:${options.daysPerWeek ?? ""}:${options.firstDelivery ?? ""}:${options.exclusions ?? ""}:${options.subscribe ? "s" : ""}:${options.swaps ? JSON.stringify(options.swaps) : ""}`;
 
 export const useCart = create<CartState>()(
   persist(

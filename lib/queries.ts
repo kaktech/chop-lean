@@ -55,3 +55,48 @@ export async function getReviewStatsForProducts(ids: string[]) {
     .groupBy(s.reviews.productId);
   return Object.fromEntries(rows.map((r) => [r.id, { count: r.count, avg: r.avg }]));
 }
+
+export type MenuMeal = { id: string; slug: string; name: string; kcal: number | null; image: string | null; slot: string | null; priceKobo: number };
+export type WeeklyMenuData = {
+  weekOf: string;
+  days: { day: string; total: number; meals: (MenuMeal & { menuSlot: string })[] }[];
+  alternatives: MenuMeal[];
+};
+
+const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+
+/** The current or next weekly menu (latest week that has not ended), with swap alternatives. */
+export async function getWeeklyMenu(): Promise<WeeklyMenuData | null> {
+  const today = new Date().toISOString().slice(0, 10);
+  const menus = await db.select().from(s.weeklyMenus).orderBy(desc(s.weeklyMenus.weekOf));
+  const menu = [...menus].reverse().find((m) => m.weekOf >= new Date(Date.now() - 6 * 86400000).toISOString().slice(0, 10)) ?? menus[0] ?? (void today, undefined);
+  if (!menu) return null;
+  const rows = await db
+    .select({ day: s.weeklyMenuItems.day, menuSlot: s.weeklyMenuItems.slot, m: s.products })
+    .from(s.weeklyMenuItems)
+    .innerJoin(s.products, eq(s.products.id, s.weeklyMenuItems.mealId))
+    .where(eq(s.weeklyMenuItems.menuId, menu.id));
+  const order = ["breakfast", "lunch", "dinner"];
+  const pick = (m: Product): MenuMeal => ({ id: m.id, slug: m.slug, name: m.name, kcal: m.kcal, image: m.image, slot: m.slot, priceKobo: m.priceKobo });
+  const days = DAYS.map((day) => {
+    const meals = rows
+      .filter((r) => r.day === day)
+      .sort((a, b) => order.indexOf(a.menuSlot) - order.indexOf(b.menuSlot))
+      .map((r) => ({ ...pick(r.m), menuSlot: r.menuSlot }));
+    return { day, total: meals.reduce((n, m) => n + (m.kcal ?? 0), 0), meals };
+  });
+  const alts = await db.select().from(s.products).where(and(eq(s.products.type, "meal"), eq(s.products.isLive, true)));
+  return { weekOf: menu.weekOf, days, alternatives: alts.map(pick) };
+}
+
+export async function getProductReviews(productId: string) {
+  return db
+    .select({
+      id: s.reviews.id, rating: s.reviews.rating, body: s.reviews.body, name: s.reviews.name, verified: s.reviews.verified,
+      fullness: s.reviews.fullness, pepper: s.reviews.pepper, weightChange: s.reviews.weightChange, createdAt: s.reviews.createdAt,
+    })
+    .from(s.reviews)
+    .where(and(eq(s.reviews.productId, productId), eq(s.reviews.isVisible, true)))
+    .orderBy(desc(s.reviews.createdAt))
+    .limit(100);
+}
