@@ -41,7 +41,7 @@ export default async function SignInPage({ searchParams }: { searchParams: Promi
           <div className="flex items-center gap-3 text-[13px] text-muted"><span className="h-px flex-1 bg-line" />or<span className="h-px flex-1 bg-line" /></div></>}
           <AuthPanel callbackUrl={dest} emailReady={emailReady()} initialMode={sp.mode === "signup" ? "signup" : "signin"} />
           <span className="text-[13px] leading-relaxed text-muted">By continuing you agree to our <Link href="/" className="text-leaf underline">Terms</Link> and <Link href="/" className="text-leaf underline">Privacy Policy</Link>. We only use your name and email (and your Google profile photo if you use Google).</span>
-          <Link href="/checkout" className="text-sm font-bold text-leaf">Continue as guest →</Link>
+          <Link href="/shop" className="text-sm font-bold text-leaf">Continue as guest →</Link>
         </div>
       </div>
     </div>
