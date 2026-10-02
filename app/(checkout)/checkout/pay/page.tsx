@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { CheckoutHeader } from "@/components/checkout/CheckoutShell";
 import { PayClient } from "@/components/checkout/PayClient";
-import { getOrderFull, isFirstOrder } from "@/lib/orders";
+import { getOrderFull } from "@/lib/orders";
 import { paystackConfigured } from "@/lib/paystack";
 
 export const metadata: Metadata = { title: "Review and pay", robots: { index: false } };
@@ -16,7 +16,6 @@ export default async function PayPage({ searchParams }: { searchParams: Promise<
   if (!f) redirect("/checkout");
   if (f.order.paymentStatus === "paid") redirect(`/order/${f.order.id}`);
 
-  const podAllowed = await isFirstOrder(f.order.email, f.order.userId);
   const planWeekly = f.items.filter((i) => (i.options as { kcal?: number })?.kcal != null || /plan|lean|smart|cut|owambe/i.test(i.name)).reduce((n, i) => n + i.unitPriceKobo, 0);
 
   return (
@@ -25,7 +24,6 @@ export default async function PayPage({ searchParams }: { searchParams: Promise<
       <PayClient
         order={{ id: f.order.id, number: f.order.number, firstName: f.order.firstName, lastName: f.order.lastName, phone: f.order.phone, address: f.order.address, deliveryDate: f.order.deliveryDate, deliveryWindow: f.order.deliveryWindow, zoneName: f.zone?.name ?? "", subtotalKobo: f.order.subtotalKobo, discountKobo: f.order.discountKobo, deliveryKobo: f.order.deliveryKobo, totalKobo: f.order.totalKobo, promoCode: f.order.promoCode }}
         items={f.items.map((i) => ({ name: i.name, qty: i.qty, unitPriceKobo: i.unitPriceKobo, isPlan: (i.options as { kcal?: number })?.kcal != null }))}
-        podAllowed={podAllowed}
         cardEnabled={paystackConfigured()}
         weeklyKobo={planWeekly ? planWeekly + f.order.deliveryKobo : 0}
         returnedReference={sp.reference ?? sp.trxref ?? null}

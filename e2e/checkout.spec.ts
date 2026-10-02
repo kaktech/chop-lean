@@ -21,18 +21,15 @@ test("guest buys a plan with pay on delivery", async ({ page }) => {
   await page.getByLabel("Last name").fill("Customer");
   await page.getByLabel("Phone number (WhatsApp)").fill("08030000000");
   await page.getByLabel("Delivery address").fill("12 Admiralty");
-  await page.getByRole("button", { name: "Review order" }).first().click();
+  await page.getByRole("button", { name: "Continue to payment" }).first().click();
   await expect(page.getByText("Please provide a more detailed address")).toBeVisible();
 
   await page.getByLabel("Delivery address").fill("12 Admiralty Way, Lekki Phase 1, opposite Circle Mall");
   await page.getByRole("checkbox", { name: /Terms of Service/ }).check();
-  await page.getByRole("button", { name: "Review order" }).first().click();
+  await page.getByRole("button", { name: "Continue to payment" }).first().click();
 
   await expect(page).toHaveURL(/\/checkout\/pay\?o=/);
-  await page.getByText("Pay on delivery", { exact: true }).click();
-  await page.getByRole("button", { name: "Place order" }).first().click();
-
-  await expect(page).toHaveURL(/\/order\//);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Order confirmed");
+  // Paystack is the only payment method; the test stops at the pay page (real card payments need Paystack keys).
+  await expect(page.getByRole("heading", { name: /Pay securely with Paystack/ })).toBeVisible();
   await expect(page.getByText(/CL-\d+/).first()).toBeVisible();
 });

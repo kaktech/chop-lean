@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { Minus, Plus } from "lucide-react";
 import { applyPromo, getQuote } from "@/app/actions/checkout";
 import { cartSubtotal, useCart } from "@/lib/store";
@@ -61,8 +62,9 @@ export function CartView({ upsell }: { upsell: Upsell }) {
       ) : (
         <div className="relative mt-8 grid gap-8 lg:grid-cols-[1fr_440px]">
           <div className="flex flex-col gap-4">
+            <AnimatePresence initial={false}>
             {items.map((l) => (
-              <article key={l.id} className="flex flex-wrap items-center gap-4 rounded-[24px] border border-line bg-surface p-4 md:flex-nowrap md:gap-6 md:p-5">
+              <motion.article layout="position" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, x: -24 }} transition={{ duration: 0.25, ease: [0.2, 0.7, 0.2, 1] }} key={l.id} className="flex flex-wrap items-center gap-4 rounded-[24px] border border-line bg-surface p-4 md:flex-nowrap md:gap-6 md:p-5">
                 <Image src={imgSrc(l.image)} alt="" width={130} height={130} className="size-[88px] rounded-2xl object-cover md:size-[130px]" />
                 <div className="min-w-0 flex-1">
                   <h2 className="font-display text-lg md:text-[22px]">{l.name}</h2>
@@ -80,8 +82,9 @@ export function CartView({ upsell }: { upsell: Upsell }) {
                   </div>
                   <span className="min-w-[96px] text-right font-display text-xl font-bold">{formatNaira(l.unitKobo * l.qty)}</span>
                 </div>
-              </article>
+              </motion.article>
             ))}
+            </AnimatePresence>
 
             {hasUpsell && upsell && (
               <div className="flex flex-wrap items-center gap-4 rounded-[24px] bg-tint-amber p-4 md:flex-nowrap">

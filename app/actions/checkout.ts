@@ -98,6 +98,7 @@ async function applyMethod(orderId: string, method: "card" | "transfer" | "pod")
 }
 
 export async function chooseTransfer(orderId: string): Promise<ActionResult<{ redirect: string }>> {
+  if (process.env.ALLOW_OFFLINE_PAYMENTS !== "true") return { ok: false, message: "Please pay online with Paystack." };
   const order = await applyMethod(orderId, "transfer");
   if (!order) return { ok: false, message: "Order not found." };
   if (order.paymentStatus === "paid") return { ok: true, redirect: `/order/${orderId}` };
@@ -109,6 +110,7 @@ export async function chooseTransfer(orderId: string): Promise<ActionResult<{ re
 }
 
 export async function choosePayOnDelivery(orderId: string): Promise<ActionResult<{ redirect: string }>> {
+  if (process.env.ALLOW_OFFLINE_PAYMENTS !== "true") return { ok: false, message: "Please pay online with Paystack." };
   const order = await loadOrder(orderId);
   if (!order) return { ok: false, message: "Order not found." };
   if (!(await isFirstOrder(order.email, order.userId))) return { ok: false, message: "Pay on delivery is only available on your first order." };

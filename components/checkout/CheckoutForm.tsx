@@ -109,8 +109,8 @@ export function CheckoutForm({ zones, dates, user, googleReady = false }: { goog
           </>
         )}
 
-        <h2 className="mb-4 text-[26px]">Contact</h2>
-        <div className="grid gap-4">
+        <StepTitle n={1} t="Contact" />
+        <div className="cl-up cl-d1 grid gap-4">
           <Field label="Email" id="email" error={errors.email?.message}><input id="email" type="email" autoComplete="email" placeholder="you@email.com" aria-invalid={!!errors.email} className={`${input} ${errors.email ? bad : ""}`} {...register("email")} /></Field>
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="First name" id="firstName" error={errors.firstName?.message}><input id="firstName" autoComplete="given-name" className={`${input} ${errors.firstName ? bad : ""}`} {...register("firstName")} /></Field>
@@ -119,11 +119,11 @@ export function CheckoutForm({ zones, dates, user, googleReady = false }: { goog
           <Field label="Phone number (WhatsApp)" id="phone" error={errors.phone?.message}><input id="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="0803 000 0000" className={`${input} ${errors.phone ? bad : ""}`} {...register("phone")} /></Field>
         </div>
 
-        <h2 className="mb-4 mt-10 text-[26px]">Delivery zone</h2>
-        <fieldset className="flex flex-col gap-2.5">
+        <StepTitle n={2} t="Delivery area" className="mt-10" />
+        <fieldset className="cl-up cl-d2 flex flex-col gap-2.5">
           <legend className="sr-only">Delivery zone</legend>
           {zones.map((z) => (
-            <label key={z.id} className={`flex min-h-[76px] cursor-pointer items-center gap-4 rounded-[18px] border bg-surface px-5 py-4 has-[:focus-visible]:outline has-[:focus-visible]:outline-[3px] has-[:focus-visible]:outline-green ${zoneId === z.id ? "border-2 border-green bg-tint-green" : "border-line"}`}>
+            <label key={z.id} className={`flex min-h-[76px] cursor-pointer transition-all duration-200 hover:border-green/70 active:scale-[0.99] items-center gap-4 rounded-[18px] border bg-surface px-5 py-4 has-[:focus-visible]:outline has-[:focus-visible]:outline-[3px] has-[:focus-visible]:outline-green ${zoneId === z.id ? "border-2 border-green bg-tint-green" : "border-line"}`}>
               <input type="radio" value={z.id} className="sr-only" {...register("zoneId")} />
               <span aria-hidden className={`size-6 shrink-0 rounded-full border-2 ${zoneId === z.id ? "border-[7px] border-green" : "border-input-line"}`} />
               <span className="flex-1"><b className="block font-display text-[17px]">{z.name}</b><span className="text-[13px] text-muted">{z.areas}</span></span>
@@ -132,12 +132,12 @@ export function CheckoutForm({ zones, dates, user, googleReady = false }: { goog
           ))}
         </fieldset>
 
-        <h2 className="mb-4 mt-10 text-[26px]">First delivery</h2>
+        <StepTitle n={3} t="First delivery" className="mt-10" />
         {dates.length === 0 ? <p className="text-muted">No delivery days are open right now.</p> : (
-          <fieldset className="grid grid-cols-3 gap-2.5">
+          <fieldset className="cl-up cl-d3 grid grid-cols-3 gap-2.5">
             <legend className="sr-only">Delivery date</legend>
             {dates.map((d) => (
-              <label key={d.iso} className={`flex min-h-[76px] cursor-pointer flex-col items-center justify-center rounded-[18px] border has-[:focus-visible]:outline has-[:focus-visible]:outline-[3px] has-[:focus-visible]:outline-green ${deliveryDate === d.iso ? "border-fg bg-ink text-white" : "border-line bg-surface"}`}>
+              <label key={d.iso} className={`flex min-h-[76px] cursor-pointer transition-all duration-200 hover:border-green/70 active:scale-[0.99] flex-col items-center justify-center rounded-[18px] border has-[:focus-visible]:outline has-[:focus-visible]:outline-[3px] has-[:focus-visible]:outline-green ${deliveryDate === d.iso ? "border-fg bg-ink text-white" : "border-line bg-surface"}`}>
                 <input type="radio" value={d.iso} className="sr-only" {...register("deliveryDate")} />
                 <b className="font-display text-lg">{d.dow} {d.day}</b><span className="text-xs">{d.month}</span>
               </label>
@@ -190,17 +190,17 @@ export function CheckoutForm({ zones, dates, user, googleReady = false }: { goog
         </dl>
         <div className="mt-5 border-t border-line pt-5">
           <div className="label-sm text-[11px] text-muted">Total to pay</div>
-          <div className="font-display text-[40px] font-bold leading-tight tracking-tight">{t ? formatNairaFull(t.totalKobo) : "–"}</div>
+          <div key={t?.totalKobo} className="cl-fade font-display text-[40px] font-bold leading-tight tracking-tight">{t ? formatNairaFull(t.totalKobo) : "–"}</div>
         </div>
         {serverError && <p role="alert" className="mt-3 rounded-xl bg-tint-red px-4 py-3 text-sm text-price-red">{serverError}</p>}
-        <button disabled={pending || !items.length || !dates.length} className="cl-btn mt-5 hidden w-full rounded-xl bg-ink py-[18px] text-sm font-bold uppercase tracking-[0.16em] text-white disabled:opacity-60 lg:block">{pending ? "Checking…" : "Review order"}</button>
-        <p className="mt-4 hidden text-center text-xs text-muted lg:block">Next: choose card, bank transfer or pay on delivery.</p>
+        <button disabled={pending || !items.length || !dates.length} className="cl-btn mt-5 hidden w-full rounded-xl bg-ink py-[18px] text-sm font-bold uppercase tracking-[0.16em] text-white disabled:opacity-60 lg:block">{pending ? "Checking…" : "Continue to payment"}</button>
+        <p className="mt-4 hidden text-center text-xs text-muted lg:block">Next: pay securely with Paystack.</p>
       </aside>
 
       {/* Mobile sticky bar */}
       <div className="fixed inset-x-0 bottom-0 z-30 flex items-center gap-4 border-t border-line bg-surface px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] lg:hidden">
         <div><div className="label-sm text-[10px] text-muted">Total</div><div className="font-display text-xl font-bold">{t ? formatNairaFull(t.totalKobo) : "–"}</div></div>
-        <button disabled={pending || !items.length} className="cl-btn min-h-12 flex-1 rounded-xl bg-ink text-sm font-bold uppercase tracking-[0.14em] text-white disabled:opacity-60">{pending ? "Checking…" : "Review order"}</button>
+        <button disabled={pending || !items.length} className="cl-btn min-h-12 flex-1 rounded-xl bg-ink text-sm font-bold uppercase tracking-[0.14em] text-white disabled:opacity-60">{pending ? "Checking…" : "Continue to payment"}</button>
       </div>
       <span className="sr-only" aria-live="polite">{dateLabel ? `Delivery ${dateLabel.dow} ${dateLabel.day} ${dateLabel.month}` : ""}</span>
     </form>
@@ -214,5 +214,13 @@ function Field({ label, id, error, children }: { label: string; id: string; erro
       {children}
       {error && <p id={`${id}-err`} role="alert" className="text-[13px] text-price-red">{error}</p>}
     </div>
+  );
+}
+
+function StepTitle({ n, t, className = "" }: { n: number; t: string; className?: string }) {
+  return (
+    <h2 className={`mb-4 flex items-center gap-3 text-[24px] ${className}`}>
+      <span aria-hidden className="flex size-8 items-center justify-center rounded-full bg-yellow font-display text-sm font-bold text-canvas">{n}</span>{t}
+    </h2>
   );
 }

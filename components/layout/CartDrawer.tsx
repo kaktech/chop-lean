@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { Minus, Plus, X } from "lucide-react";
 import { cartSubtotal, useCart, useUI } from "@/lib/store";
 import { useHydrated } from "@/lib/use-hydrated";
@@ -56,8 +57,9 @@ export function CartDrawer() {
         ) : (
           <>
             <ul className="flex-1 divide-y divide-line overflow-y-auto px-6">
+              <AnimatePresence initial={false}>
               {items.map((l) => (
-                <li key={l.id} className="flex gap-4 py-5">
+                <motion.li layout="position" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, x: 24 }} transition={{ duration: 0.22, ease: [0.2, 0.7, 0.2, 1] }} key={l.id} className="flex gap-4 py-5">
                   <Image src={imgSrc(l.image)} alt="" width={72} height={72} className="size-[72px] rounded-2xl object-cover" />
                   <div className="min-w-0 flex-1">
                     <div className="flex justify-between gap-3">
@@ -74,8 +76,9 @@ export function CartDrawer() {
                       <button type="button" onClick={() => remove(l.id)} className="min-h-11 px-2 text-[13px] text-muted underline">Remove</button>
                     </div>
                   </div>
-                </li>
+                </motion.li>
               ))}
+              </AnimatePresence>
             </ul>
             <div className="border-t border-line bg-surface px-6 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-5">
               <div className="mb-1 flex justify-between text-[15px]"><span>Subtotal</span><b className="font-display text-xl">{formatNaira(cartSubtotal(items))}</b></div>
