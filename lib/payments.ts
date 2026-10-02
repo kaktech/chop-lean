@@ -18,8 +18,9 @@ export async function markOrderPaid(orderId: string, opts: { providerRef?: strin
     await db.update(s.payments).set(set).where(and(eq(s.payments.orderId, orderId), sql`${s.payments.status} <> 'failed'`));
   }
   await takePlanSlots(orderId);
+  // Card payments: the order confirmation and a separate payment receipt. Transfers confirmed by an admin: the receipt.
   if (opts.notify === "placed") await notifyOrderPlaced(orderId);
-  else await notifyPaymentConfirmed(orderId);
+  await notifyPaymentConfirmed(orderId);
   return { ok: true as const, already: false };
 }
 

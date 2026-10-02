@@ -7,7 +7,7 @@ import { db } from "@/db";
 import * as s from "@/db/schema";
 import { requireAdmin } from "@/lib/admin";
 import { markOrderPaid } from "@/lib/payments";
-import { notifyStatusChange } from "@/lib/notify";
+import { notifyPaymentConfirmed, notifyStatusChange } from "@/lib/notify";
 import { loadMenuEmailData, sendMenuTo } from "@/lib/menu-email";
 
 type R = { ok: boolean; message: string };
@@ -24,6 +24,7 @@ export async function updateOrderStatus(orderId: string, status: string): Promis
   if (st.data === "delivered" && order.paymentMethod === "pod" && order.paymentStatus !== "paid") {
     await db.update(s.orders).set({ paymentStatus: "paid" }).where(eq(s.orders.id, orderId));
     await db.update(s.payments).set({ status: "paid" }).where(and(eq(s.payments.orderId, orderId), eq(s.payments.method, "pod")));
+    await notifyPaymentConfirmed(orderId);
   }
   await notifyStatusChange(orderId, st.data);
   revalidatePath("/admin", "layout");
