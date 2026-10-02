@@ -17,7 +17,7 @@ export type Purpose = "login" | "signup" | "reset";
 export type OtpState = { step: "email" | "code"; purpose?: Purpose; email?: string; message?: string; error?: string; sentAt?: number };
 
 const emailSchema = z.string().trim().toLowerCase().email("Enter a valid email address").max(120);
-const safePath = (p: string | null) => (p && p.startsWith("/") && !p.startsWith("//") ? p : "/account");
+const safePath = (p: string | null) => (p && p.startsWith("/") && !p.startsWith("//") ? p : "/");
 const clientIp = async () => (await headers()).get("x-forwarded-for")?.split(",")[0] ?? "unknown";
 
 const SUBJECT: Record<Purpose, (c: string) => string> = {

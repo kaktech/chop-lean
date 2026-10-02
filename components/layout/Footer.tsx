@@ -14,7 +14,7 @@ const COLS = [
 
 export function Footer() {
   return (
-    <footer className="relative mt-10 overflow-hidden border-t border-line bg-surface pb-24 text-body lg:pb-0">
+    <footer className="relative mt-10 overflow-hidden border-t border-line bg-surface pb-[calc(8.5rem+env(safe-area-inset-bottom))] text-body lg:pb-0">
       <div aria-hidden className="pointer-events-none absolute -bottom-[70px] -right-5 hidden select-none whitespace-nowrap font-serif text-[260px] leading-none text-white/[0.03] md:block">Chop Lean</div>
 
       <div className="container-x relative pt-12 md:pt-16">

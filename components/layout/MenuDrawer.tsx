@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect } from "react";
-import { ChevronRight, Menu, X } from "lucide-react";
+import { ChevronRight, Menu, ShoppingBag, X } from "lucide-react";
 import { useUI } from "@/lib/store";
 import { CartBadge } from "./CartButton";
 import { LogoMark, Wordmark } from "./Logo";
@@ -59,8 +59,9 @@ export function MenuDrawer() {
           <X size={20} aria-hidden />
         </button>
         <Link href="/" onClick={close} className="flex flex-1 items-center justify-center gap-2 text-fg no-underline"><LogoMark size={28} /><Wordmark className="text-[22px]" /></Link>
-        <Link href="/cart" onClick={close} aria-label="Cart" className="relative flex size-11 items-center justify-center rounded-full bg-yellow font-display font-bold">
-          <CartBadge className="static !m-0 size-auto bg-transparent text-[15px] text-fg" />
+        <Link href="/cart" onClick={close} aria-label="Cart" className="relative flex size-11 items-center justify-center rounded-full bg-yellow text-canvas">
+          <ShoppingBag size={20} strokeWidth={1.8} aria-hidden />
+          <CartBadge />
         </Link>
       </div>
       <nav aria-label="Menu" className="relative px-6">

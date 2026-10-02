@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
 export default async function SignInPage({ searchParams }: { searchParams: Promise<{ callbackUrl?: string; error?: string; mode?: string }> }) {
   const sp = await searchParams;
   const session = await auth().catch(() => null);
-  const dest = sp.callbackUrl?.startsWith("/") && !sp.callbackUrl.startsWith("//") ? sp.callbackUrl : "/account";
+  const dest = sp.callbackUrl?.startsWith("/") && !sp.callbackUrl.startsWith("//") ? sp.callbackUrl : "/";
   if (session?.user) redirect(dest);
   const googleReady = !!process.env.AUTH_GOOGLE_ID && !!process.env.AUTH_GOOGLE_SECRET;
 
