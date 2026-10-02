@@ -28,7 +28,16 @@ async function sendViaBrevo(opts: { to: string | string[]; subject: string; reac
 }
 
 /** Sends one email through Mailgun (or Brevo if only that is configured). Never throws: failures are logged so checkout is never blocked. */
-export async function sendEmail(opts: { to: string | string[]; subject: string; react: ReactElement }): Promise<boolean> {
+/** Which Chop Lean "team" an email comes from. Any name works on a verified Mailgun domain. */
+export type Sender = "orders" | "accounts" | "menu" | "support";
+const SENDERS: Record<Sender, { name: string; local: string }> = {
+  orders: { name: "Chop Lean Orders", local: "orders" },
+  accounts: { name: "Chop Lean", local: "hello" },
+  menu: { name: "Chop Lean Menu", local: "menu" },
+  support: { name: "Chop Lean Support", local: "support" },
+};
+
+export async function sendEmail(opts: { to: string | string[]; subject: string; react: ReactElement; as?: Sender }): Promise<boolean> {
   const { MAILGUN_API_KEY, MAILGUN_DOMAIN, MAILGUN_FROM, MAILGUN_REGION } = process.env;
   if ((!MAILGUN_API_KEY || !MAILGUN_DOMAIN) && process.env.BREVO_API_KEY && process.env.BREVO_SENDER_EMAIL) return sendViaBrevo(opts);
   if (!MAILGUN_API_KEY || !MAILGUN_DOMAIN) {
@@ -41,10 +50,12 @@ export async function sendEmail(opts: { to: string | string[]; subject: string; 
       key: MAILGUN_API_KEY,
       url: MAILGUN_REGION === "eu" ? "https://api.eu.mailgun.net" : "https://api.mailgun.net",
     });
+    const replyTo = (process.env.ADMIN_EMAILS ?? "").split(",")[0]?.trim();
     const html = await render(opts.react);
     const text = await render(opts.react, { plainText: true });
     await mg.messages.create(MAILGUN_DOMAIN, {
-      from: MAILGUN_FROM || `Chop Lean <orders@${MAILGUN_DOMAIN}>`,
+      from: `${SENDERS[opts.as ?? "orders"].name} <${SENDERS[opts.as ?? "orders"].local}@${MAILGUN_DOMAIN}>`,
+      ...(replyTo ? { "h:Reply-To": replyTo } : {}),
       to: [opts.to].flat(),
       subject: opts.subject,
       html,

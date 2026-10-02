@@ -42,7 +42,7 @@ async function issueCode(email: string, purpose: Purpose, payload?: string): Pro
   const code = generateCode();
   await db.update(s.loginCodes).set({ usedAt: new Date() }).where(and(eq(s.loginCodes.email, email), eq(s.loginCodes.purpose, purpose), isNull(s.loginCodes.usedAt)));
   await db.insert(s.loginCodes).values({ email, purpose, payload: payload ?? null, codeHash: hashCode(code, email), expiresAt: new Date(Date.now() + CODE_TTL_MS) });
-  const sent = await sendEmail({ to: email, subject: SUBJECT[purpose](code), react: createElement(LoginCode, { code, purpose }) });
+  const sent = await sendEmail({ to: email, subject: SUBJECT[purpose](code), react: createElement(LoginCode, { code, purpose }), as: "accounts" });
   if (!sent) {
     if (process.env.NODE_ENV === "production") return "We couldn't send the email just now. Please try again in a minute.";
     console.info(`\n[${purpose} code] ${email}: ${code}   (Mailgun isn't configured or failed, so the code is shown here in development only)\n`);

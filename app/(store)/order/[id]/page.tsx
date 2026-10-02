@@ -6,6 +6,8 @@ import { getOrderFull } from "@/lib/orders";
 import { formatNaira, formatNairaFull } from "@/lib/money";
 import { describeDate } from "@/lib/lagos-time";
 import { ClearCart } from "@/components/checkout/ClearCart";
+import { auth } from "@/auth";
+import { clearSavedCart } from "@/lib/cart-server";
 
 export const metadata: Metadata = { title: "Order confirmed", robots: { index: false } };
 export const dynamic = "force-dynamic";
@@ -18,6 +20,8 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
   const f = await getOrderFull(id);
   if (!f) notFound();
   const { order, items } = f;
+  const session = await auth().catch(() => null);
+  if (session?.user?.id && order.userId === session.user.id) await clearSavedCart(session.user.id);
   const [y, m, d] = order.deliveryDate.split("-").map(Number);
   const dd = describeDate({ y, m, d });
   const transfer = order.paymentMethod === "transfer";

@@ -23,5 +23,6 @@ export async function sendMenuTo(email: string, token: string, welcome = false, 
     to: email,
     subject: welcome ? "Welcome to Chop Lean: this week's menu inside" : "This week's Chop Lean menu",
     react: createElement(WeeklyMenu, { menu, welcome, unsubscribeUrl: `${site()}/unsubscribe?token=${token}` }),
+    as: "menu",
   });
 }

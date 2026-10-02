@@ -38,7 +38,7 @@ type CartState = {
   replace: (lines: CartLine[]) => void;
 };
 
-const lineId = (productId: string, options: CartOptions) =>
+export const lineId = (productId: string, options: CartOptions) =>
   `${productId}:${options.kcal ?? ""}:${options.mealsPerDay ?? ""}:${options.daysPerWeek ?? ""}:${options.firstDelivery ?? ""}:${options.exclusions ?? ""}:${options.subscribe ? "s" : ""}:${options.swaps ? JSON.stringify(options.swaps) : ""}`;
 
 export const useCart = create<CartState>()(
@@ -63,7 +63,7 @@ export const useCart = create<CartState>()(
       remove: (id) => set((s) => ({ lines: s.lines.filter((l) => l.id !== id) })),
       clear: () => set({ lines: [], promo: null }),
       setPromo: (promo) => set({ promo }),
-      replace: (lines) => set({ lines }),
+      replace: (lines) => set({ lines: lines.map((l) => ({ ...l, id: lineId(l.productId, l.options) })) }),
     }),
     { name: "chop-lean-cart", partialize: (s) => ({ lines: s.lines, promo: s.promo }) },
   ),

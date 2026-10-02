@@ -22,8 +22,8 @@ const base = z.object({
 async function save(kind: "contact" | "gift", input: z.infer<typeof base>) {
   await db.insert(contactMessages).values({ kind, name: input.name, email: input.email, phone: input.phone ?? null, message: input.message });
   const admins = adminEmails();
-  if (admins.length) await sendEmail({ to: admins, subject: `New ${kind === "gift" ? "gift card request" : "message"} from ${input.name}`, react: createElement(ContactMessage, { kind, toAdmin: true, ...input }) });
-  await sendEmail({ to: input.email, subject: "We got your message", react: createElement(ContactMessage, { kind, toAdmin: false, ...input }) });
+  if (admins.length) await sendEmail({ to: admins, subject: `New ${kind === "gift" ? "gift card request" : "message"} from ${input.name}`, react: createElement(ContactMessage, { kind, toAdmin: true, ...input }) , as: "support" });
+  await sendEmail({ to: input.email, subject: "We got your message", react: createElement(ContactMessage, { kind, toAdmin: false, ...input }) , as: "support" });
 }
 
 const errorsOf = (e: z.ZodError) => { const o: Record<string, string> = {}; for (const i of e.issues) o[String(i.path[0])] ??= i.message; return o; };

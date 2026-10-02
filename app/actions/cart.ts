@@ -23,8 +23,17 @@ async function load(userId: string): Promise<ServerCartLine[]> {
 
 async function save(userId: string, lines: { productId: string; qty: number; options: Record<string, unknown> }[]) {
   const [cart] = await db.insert(s.carts).values({ userId }).onConflictDoUpdate({ target: s.carts.userId, set: { updatedAt: new Date() } }).returning({ id: s.carts.id });
-  await db.delete(s.cartItems).where(eq(s.cartItems.cartId, cart.id));
-  if (lines.length) await db.insert(s.cartItems).values(lines.map((l) => ({ cartId: cart.id, productId: l.productId, qty: l.qty, options: l.options })));
+  // One batch = one transaction, so a failed insert can never leave the saved cart empty.
+  const wipe = db.delete(s.cartItems).where(eq(s.cartItems.cartId, cart.id));
+  if (lines.length) await db.batch([wipe, db.insert(s.cartItems).values(lines.map((l) => ({ cartId: cart.id, productId: l.productId, qty: l.qty, options: l.options })))]);
+  else await db.batch([wipe]);
+}
+
+/** Server copy of the signed-in user's cart: the single source of truth every device syncs to. */
+export async function getSavedCart(): Promise<ServerCartLine[] | null> {
+  const session = await auth().catch(() => null);
+  if (!session?.user?.id) return null;
+  return load(session.user.id);
 }
 
 const incoming = z.array(lineSchema.extend({ unitKobo: z.number().int().optional() })).max(30);

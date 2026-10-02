@@ -11,7 +11,7 @@ export async function SiteChrome({ children }: { children: React.ReactNode }) {
   const session = await auth().catch(() => null);
   return (
     <>
-      <CartSync signedIn={!!session?.user} />
+      <CartSync userId={session?.user?.id ?? null} />
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-yellow focus:px-4 focus:py-2 focus:font-bold">Skip to content</a>
       <Header />
       <main id="main">{children}</main>
