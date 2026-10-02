@@ -7,17 +7,28 @@ import { CartBadge } from "./CartButton";
 import { LogoMark, Wordmark } from "./Logo";
 import { whatsappUrl } from "@/lib/site";
 
-const ITEMS = [
-  { href: "/menu", t: "Full Menu", d: "Every dish, with calories and prices" },
-  { href: "/shop?tab=plans", t: "Meal Plans", d: "Weekly, 1,200–1,800 kcal" },
-  { href: "/collections/drinks", t: "Snacks and Drinks", d: "Zero-sugar zobo, tiger nut and more" },
-  { href: "/about", t: "Our Kitchen", d: "How we cook, pack and deliver" },
-  { href: "/delivery", t: "Delivery", d: "Zones, days and cut-off times" },
-  { href: "/results", t: "Results", d: "Reviews from verified orders" },
-  { href: "/account#weight", t: "Weight Tracker", d: "Log your weekly weigh-in" },
+type Row = { t: string; href: string; ext?: boolean };
+const SECTIONS: { title: string; rows: Row[] }[] = [
+  { title: "Shop", rows: [
+    { t: "Full menu", href: "/menu" },
+    { t: "Meal plans", href: "/shop?tab=plans" },
+    { t: "Snacks and drinks", href: "/collections/drinks" },
+    { t: "Plan finder", href: "/quiz" },
+    { t: "Saved dishes", href: "/favourites" },
+    { t: "Gift cards", href: "/gift-cards" },
+  ] },
+  { title: "Help", rows: [
+    { t: "Track an order", href: "/track" },
+    { t: "Delivery zones and times", href: "/delivery" },
+    { t: "FAQs", href: "/faq" },
+    { t: "Contact us", href: "/contact" },
+  ] },
+  { title: "About", rows: [
+    { t: "Our kitchen", href: "/about" },
+    { t: "Meet the dietitian", href: "/dietitian" },
+    { t: "Results", href: "/results" },
+  ] },
 ];
-
-const MORE = [["Track an order", "/track"], ["Saved dishes", "/favourites"], ["Meet the dietitian", "/dietitian"], ["FAQs", "/faq"], ["Contact", "/contact"], ["Gift cards", "/gift-cards"]];
 
 export function MenuButton() {
   const setMenuOpen = useUI((s) => s.setMenuOpen);
@@ -53,7 +64,6 @@ export function MenuDrawer() {
 
   return (
     <div role="dialog" aria-modal="true" aria-label="Menu" className="cl-fade fixed inset-0 z-50 overflow-y-auto bg-canvas lg:hidden">
-      <div aria-hidden className="pointer-events-none absolute -right-6 bottom-10 w-24 select-none font-serif text-[150px] leading-[0.8] text-white/5 [writing-mode:vertical-rl]">LEAN</div>
       <div className="relative flex items-center gap-2.5 border-b-2 border-fg px-4 py-2.5">
         <button type="button" onClick={close} aria-label="Close menu" className="flex size-11 items-center justify-center rounded-full border border-line bg-surface">
           <X size={20} aria-hidden />
@@ -64,32 +74,40 @@ export function MenuDrawer() {
           <CartBadge />
         </Link>
       </div>
-      <nav aria-label="Menu" className="relative px-6">
-        {ITEMS.map((i) => (
-          <Link key={i.t} href={i.href} onClick={close} className="flex items-center border-b border-line py-5 text-fg no-underline">
-            <span className="flex-1">
-              <span className="block font-display text-[23px] font-bold leading-tight">{i.t}</span>
-              <span className="text-[13px] text-muted">{i.d}</span>
-            </span>
-            <ChevronRight size={18} aria-hidden />
-          </Link>
+      <nav aria-label="Menu" className="relative px-5 pb-12 pt-5">
+        <div className="grid grid-cols-2 gap-3">
+          <Link href="/signin" onClick={close} className="cl-btn flex min-h-12 items-center justify-center rounded-full border border-line font-bold text-fg no-underline">Sign in</Link>
+          <Link href="/signin?mode=signup" onClick={close} className="cl-btn flex min-h-12 items-center justify-center rounded-full bg-yellow font-bold text-canvas no-underline">Sign up</Link>
+        </div>
+
+        {SECTIONS.map((s) => (
+          <section key={s.title} className="mt-7" aria-label={s.title}>
+            <h2 className="mb-1 px-1 text-[11px] font-bold uppercase tracking-[0.16em] text-yellow">{s.title}</h2>
+            <ul className="divide-y divide-line border-y border-line">
+              {s.rows.map((r) => (
+                <li key={r.t}>
+                  <Link href={r.href} onClick={close} className="flex min-h-[52px] items-center justify-between gap-3 px-1 text-[16px] text-fg no-underline active:bg-surface">
+                    {r.t}<ChevronRight size={18} aria-hidden className="shrink-0 text-muted" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
         ))}
-        <Link href="/quiz" onClick={close} className="mt-6 block rounded-3xl bg-green px-5 py-6 text-white no-underline">
-          <span className="block font-serif text-2xl">Not sure where to start?</span>
-          <span className="mt-1.5 block text-sm">Take the 2-minute plan quiz →</span>
-        </Link>
-        <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-1 pb-4 text-[15px]">
-          {MORE.map(([l, h]) => <Link key={l} href={h} onClick={close} className="flex min-h-11 items-center text-fg underline-offset-4 hover:underline">{l}</Link>)}
-        </div>
-        <div className="flex flex-col gap-1 pb-10 text-[15px]">
-          <div className="mb-2 grid grid-cols-2 gap-3">
-            <Link href="/signin" onClick={close} className="cl-btn flex min-h-12 items-center justify-center rounded-full border border-line font-bold text-fg no-underline">Sign in</Link>
-            <Link href="/signin?mode=signup" onClick={close} className="cl-btn flex min-h-12 items-center justify-center rounded-full bg-yellow font-bold text-canvas no-underline">Sign up</Link>
-          </div>
-          <Link href="/account" onClick={close} className="flex min-h-11 items-center text-fg underline">My account</Link>
-          <a href={whatsappUrl()} className="flex min-h-11 items-center text-fg underline">Chat on WhatsApp</a>
-          <span className="text-muted">Nigeria (NGN ₦)</span>
-        </div>
+
+        <section className="mt-7" aria-label="Account">
+          <h2 className="mb-1 px-1 text-[11px] font-bold uppercase tracking-[0.16em] text-yellow">Account</h2>
+          <ul className="divide-y divide-line border-y border-line">
+            <li><Link href="/account" onClick={close} className="flex min-h-[52px] items-center justify-between gap-3 px-1 text-[16px] text-fg no-underline active:bg-surface">My account<ChevronRight size={18} aria-hidden className="shrink-0 text-muted" /></Link></li>
+            <li><Link href="/account#weight" onClick={close} className="flex min-h-[52px] items-center justify-between gap-3 px-1 text-[16px] text-fg no-underline active:bg-surface">Weight tracker<ChevronRight size={18} aria-hidden className="shrink-0 text-muted" /></Link></li>
+            <li><a href={whatsappUrl()} className="flex min-h-[52px] items-center justify-between gap-3 px-1 text-[16px] text-fg no-underline active:bg-surface">Chat on WhatsApp<ChevronRight size={18} aria-hidden className="shrink-0 text-muted" /></a></li>
+          </ul>
+        </section>
+
+        <p className="mt-8 flex flex-wrap items-center justify-between gap-2 px-1 text-[13px] text-muted">
+          <span><Link href="/terms" onClick={close} className="text-muted underline">Terms</Link> · <Link href="/privacy" onClick={close} className="text-muted underline">Privacy</Link></span>
+          <span>Nigeria (NGN ₦)</span>
+        </p>
       </nav>
     </div>
   );
