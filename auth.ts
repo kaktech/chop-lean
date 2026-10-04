@@ -16,9 +16,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [Google({ allowDangerousEmailAccountLinking: true })],
   pages: { signIn: "/signin" },
   callbacks: {
+    // Return only what the app needs. The default hands the browser the whole user row (including the password hash)
+    // and the session token, which must never reach client-side JavaScript.
     session({ session, user }) {
-      session.user.id = user.id;
-      return session;
+      return {
+        expires: session.expires,
+        user: { id: user.id, name: user.name ?? null, email: user.email, image: user.image ?? null },
+      } as typeof session;
     },
   },
 });

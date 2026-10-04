@@ -7,8 +7,6 @@ import { auth } from "@/auth";
 import { lineSchema } from "@/lib/checkout-schema";
 import { loadCart, saveCartLines, type ServerCartLine } from "@/lib/cart-server";
 
-export type { ServerCartLine };
-
 const load = loadCart;
 const save = saveCartLines;
 

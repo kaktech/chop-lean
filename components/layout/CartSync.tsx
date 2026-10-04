@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { getSavedCart, mergeCart, saveCart, type ServerCartLine } from "@/app/actions/cart";
+import { getSavedCart, mergeCart, saveCart } from "@/app/actions/cart";
+import type { ServerCartLine } from "@/lib/cart-server";
 import { useCart, type CartLine } from "@/lib/store";
 
 const OWNER_KEY = "chop-lean-cart-owner";
@@ -24,7 +25,11 @@ export function CartSync({ userId }: { userId: string | null }) {
   useEffect(() => {
     if (!userId) {
       ready.current = false;
-      try { localStorage.removeItem(OWNER_KEY); } catch { /* private mode */ }
+      try {
+        // Signed out: empty the on-device cart so the next person on this browser never inherits it.
+        if (localStorage.getItem(OWNER_KEY)) useCart.getState().replace([]);
+        localStorage.removeItem(OWNER_KEY);
+      } catch { /* private mode */ }
       return;
     }
     let cancelled = false;
@@ -46,7 +51,8 @@ export function CartSync({ userId }: { userId: string | null }) {
     const start = async () => {
       let owner: string | null = null;
       try { owner = localStorage.getItem(OWNER_KEY); } catch { /* ignore */ }
-      const rows = owner === userId ? await getSavedCart().catch(() => null) : await mergeCart(toWire(useCart.getState().lines)).catch(() => null);
+      // A cart left on this browser by another account is never merged. Only a true guest cart (no owner) is.
+      const rows = owner ? await getSavedCart().catch(() => null) : await mergeCart(toWire(useCart.getState().lines)).catch(() => null);
       if (cancelled || !rows) return;
       apply(rows);
       try { localStorage.setItem(OWNER_KEY, userId); } catch { /* ignore */ }
