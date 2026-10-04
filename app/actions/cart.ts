@@ -5,29 +5,12 @@ import { db } from "@/db";
 import * as s from "@/db/schema";
 import { auth } from "@/auth";
 import { lineSchema } from "@/lib/checkout-schema";
+import { loadCart, saveCartLines, type ServerCartLine } from "@/lib/cart-server";
 
-export type ServerCartLine = {
-  productId: string; slug: string; type: "plan" | "meal" | "drink"; name: string; image: string; unitKobo: number; qty: number;
-  options: Record<string, unknown>;
-};
+export type { ServerCartLine };
 
-async function load(userId: string): Promise<ServerCartLine[]> {
-  const [cart] = await db.select().from(s.carts).where(eq(s.carts.userId, userId)).limit(1);
-  if (!cart) return [];
-  const rows = await db.select({ i: s.cartItems, p: s.products }).from(s.cartItems).innerJoin(s.products, eq(s.products.id, s.cartItems.productId)).where(eq(s.cartItems.cartId, cart.id));
-  return rows.filter((r) => r.p.isLive).map((r) => ({
-    productId: r.p.id, slug: r.p.slug, type: r.p.type, name: r.p.name, image: r.p.image ?? "meal-box.jpg",
-    unitKobo: (r.i.options as { unitKobo?: number }).unitKobo ?? r.p.priceKobo, qty: r.i.qty, options: r.i.options,
-  }));
-}
-
-async function save(userId: string, lines: { productId: string; qty: number; options: Record<string, unknown> }[]) {
-  const [cart] = await db.insert(s.carts).values({ userId }).onConflictDoUpdate({ target: s.carts.userId, set: { updatedAt: new Date() } }).returning({ id: s.carts.id });
-  // One batch = one transaction, so a failed insert can never leave the saved cart empty.
-  const wipe = db.delete(s.cartItems).where(eq(s.cartItems.cartId, cart.id));
-  if (lines.length) await db.batch([wipe, db.insert(s.cartItems).values(lines.map((l) => ({ cartId: cart.id, productId: l.productId, qty: l.qty, options: l.options })))]);
-  else await db.batch([wipe]);
-}
+const load = loadCart;
+const save = saveCartLines;
 
 /** Server copy of the signed-in user's cart: the single source of truth every device syncs to. */
 export async function getSavedCart(): Promise<ServerCartLine[] | null> {

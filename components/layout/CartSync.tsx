@@ -4,7 +4,7 @@ import { getSavedCart, mergeCart, saveCart, type ServerCartLine } from "@/app/ac
 import { useCart, type CartLine } from "@/lib/store";
 
 const OWNER_KEY = "chop-lean-cart-owner";
-const POLL_MS = 10_000;
+const POLL_MS = 5_000;
 
 const toWire = (lines: CartLine[]) => lines.map((l) => ({ productId: l.productId, qty: l.qty, options: l.options, unitKobo: l.unitKobo }));
 const toLines = (rows: ServerCartLine[]) => rows.map((m) => ({ id: "", ...m, options: m.options as CartLine["options"] })) as CartLine[];
