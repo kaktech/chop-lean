@@ -6,7 +6,7 @@ import { useAuth } from "./auth";
 const POLL_MS = 3000;
 type Ctx = {
   lines: CartLine[]; count: number; totalKobo: number; syncing: boolean; error: string | null;
-  add: (productId: string) => Promise<void>;
+  add: (productId: string, qty?: number) => Promise<void>;
   setQty: (l: CartLine, qty: number) => Promise<void>;
   remove: (l: CartLine) => Promise<void>;
   refresh: () => Promise<void>;
@@ -50,7 +50,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     lines, syncing, error,
     count: lines.reduce((n, l) => n + l.qty, 0),
     totalKobo: lines.reduce((n, l) => n + l.qty * l.unitKobo, 0),
-    add: (productId) => run({ op: "add", productId }),
+    add: (productId, qty = 1) => run({ op: "add", productId, qty }),
     setQty: (l, qty) => run({ op: "setQty", productId: l.productId, options: l.options, qty }),
     remove: (l) => run({ op: "remove", productId: l.productId, options: l.options }),
     refresh,

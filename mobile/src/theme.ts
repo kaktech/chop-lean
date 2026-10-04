@@ -3,3 +3,7 @@ export const C = {
   yellow: "#F6B81A", green: "#92CF5C", red: "#E5483B", greenDeep: "#17785F",
 };
 export const naira = (kobo: number) => `₦${Math.round(kobo / 100).toLocaleString("en-NG")}`;
+import { Platform } from "react-native";
+export const serifItalic = Platform.select({ ios: "Georgia-Italic", android: "serif", default: "serif" }) as string;
+export const serif = Platform.select({ ios: "Georgia", android: "serif", default: "serif" }) as string;
+export const SITE_IMG = "https://chop-lean.vercel.app/images/";

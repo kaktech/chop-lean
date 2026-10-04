@@ -6,6 +6,25 @@ import { useAuth } from "../auth";
 import { C, naira } from "../theme";
 import { Button, Card, ErrorText, Field } from "../ui";
 
+const PEPPER = ["Mild", "Medium-mild", "Medium", "Hot", "Naija hot"];
+
+/** Small bar chart of the last weigh-ins, scaled to their own range. */
+function WeightBars({ logs }: { logs: WeightLog[] }) {
+  const pts = logs.slice(-8);
+  if (pts.length < 2) return null;
+  const lo = Math.min(...pts.map((l) => l.kg)) - 1, hi = Math.max(...pts.map((l) => l.kg)) + 1;
+  return (
+    <View style={{ flexDirection: "row", alignItems: "flex-end", gap: 6, height: 90, marginTop: 4 }}>
+      {pts.map((l, i) => (
+        <View key={l.loggedOn} style={{ flex: 1, alignItems: "center", gap: 4 }}>
+          <View style={{ width: "100%", height: Math.max(8, ((l.kg - lo) / (hi - lo)) * 72), borderRadius: 6, backgroundColor: i === pts.length - 1 ? C.yellow : C.green }} />
+          <Text style={{ color: C.muted, fontSize: 9 }}>{l.kg}</Text>
+        </View>
+      ))}
+    </View>
+  );
+}
+
 type Me = Awaited<ReturnType<typeof api.me>>;
 const STATUS: Record<string, string> = { pending_payment: "Awaiting payment", cooking: "Cooking", out_for_delivery: "Out for delivery", delivered: "Delivered", cancelled: "Cancelled" };
 
@@ -67,6 +86,7 @@ export default function AccountScreen() {
           <Field label="Weight (kg)" value={kg} onChangeText={setKg} keyboardType="decimal-pad" placeholder="e.g. 83.6" />
           {msg && (msg.ok ? <Text style={{ color: C.green }}>{msg.text}</Text> : <ErrorText>{msg.text}</ErrorText>)}
           <Button title="Save weigh-in" onPress={save} loading={saving} disabled={!kg} />
+          <WeightBars logs={logs} />
           {logs.length > 0 && (
             <View style={{ gap: 6, marginTop: 4 }}>
               {logs.slice(-6).reverse().map((l) => (
@@ -74,6 +94,17 @@ export default function AccountScreen() {
               ))}
             </View>
           )}
+        </Card>
+
+        <Card style={{ gap: 10 }}>
+          <Text style={s.h2}>Dietary preferences</Text>
+          {me?.profile?.dailyKcalTarget ? (
+            <>
+              <Text style={{ color: C.muted }}>Leave out</Text>
+              <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>{(me.profile.exclusions?.length ? me.profile.exclusions : ["Nothing"]).map((x) => <Text key={x} style={s.chip}>{x}</Text>)}</View>
+              <Text style={{ color: C.muted, marginTop: 4 }}>Pepper level: <Text style={{ color: C.text, fontWeight: "700" }}>{PEPPER[(me.profile.pepperLevel ?? 3) - 1]}</Text></Text>
+            </>
+          ) : <Text style={{ color: C.muted }}>You haven&apos;t taken the plan finder yet. Open the Plan finder tab to set your daily target.</Text>}
         </Card>
 
         <Card style={{ gap: 10 }}>
@@ -109,6 +140,7 @@ const s = StyleSheet.create({
   logRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
   logDate: { color: C.muted, fontSize: 14 },
   logKg: { color: C.text, fontSize: 14, fontWeight: "700" },
+  chip: { color: C.text, backgroundColor: C.surface2, paddingHorizontal: 12, paddingVertical: 6, borderRadius: 999, overflow: "hidden", fontSize: 13 },
   order: { borderTopWidth: 1, borderTopColor: C.line, paddingTop: 10, gap: 4 },
   orderNo: { color: C.text, fontWeight: "800" },
   pill: { color: C.bg, backgroundColor: C.green, fontSize: 12, fontWeight: "800", paddingHorizontal: 10, paddingVertical: 3, borderRadius: 999, overflow: "hidden" },

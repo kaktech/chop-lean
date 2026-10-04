@@ -10,7 +10,7 @@ export async function GET(req: Request) {
   const [latest] = await db.select().from(s.weightLogs).where(eq(s.weightLogs.userId, user.id)).orderBy(desc(s.weightLogs.loggedOn)).limit(1);
   return ok({
     user: publicUser(user),
-    profile: profile ? { dailyKcalTarget: profile.dailyKcalTarget, goalWeightKg: profile.goalWeightKg, startWeightKg: profile.startWeightKg, exclusions: profile.exclusions } : null,
+    profile: profile ? { dailyKcalTarget: profile.dailyKcalTarget, goalWeightKg: profile.goalWeightKg, startWeightKg: profile.startWeightKg, exclusions: profile.exclusions, pepperLevel: profile.pepperLevel } : null,
     latestWeightKg: latest?.kg ?? null,
   });
 }
