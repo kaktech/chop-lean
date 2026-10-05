@@ -197,6 +197,10 @@ export default async function AccountPage() {
           <p className="mt-1 text-sm text-muted">{hasPassword ? "Change the password you use with your email." : "Add a password so you can also sign in with your email and password."}</p>
           <PasswordForm hasPassword={hasPassword} />
         </section>
+
+        <form action={async () => { "use server"; await signOut({ redirectTo: "/" }); }} className="mt-5">
+          <button type="submit" className="cl-btn flex min-h-12 w-full items-center justify-center rounded-full border border-line font-bold text-fg">Log out</button>
+        </form>
       </div>
     </div>
   );

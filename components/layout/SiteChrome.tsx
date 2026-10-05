@@ -18,7 +18,7 @@ export async function SiteChrome({ children }: { children: React.ReactNode }) {
       <Footer />
       <MobileTabBar />
       <CartDrawer />
-      <MenuDrawer />
+      <MenuDrawer user={session?.user ? { name: session.user.name ?? null, email: session.user.email ?? null } : null} />
       <Toaster position="bottom-left" offset={{ bottom: 88, left: 16 }} mobileOffset={{ bottom: 80, left: 16 }} />
     </>
   );

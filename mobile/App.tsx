@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, ScrollView, Text, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { AuthProvider, useAuth } from "./src/auth";
 import { CartProvider, useCart } from "./src/cart";
@@ -16,6 +16,22 @@ import MenuScreen from "./src/screens/MenuScreen";
 import ProductScreen from "./src/screens/ProductScreen";
 import QuizScreen from "./src/screens/QuizScreen";
 import { C } from "./src/theme";
+
+/** If anything throws while the app is running, show the message instead of a blank screen. */
+class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { error: Error | null }> {
+  state = { error: null as Error | null };
+  static getDerivedStateFromError(error: Error) { return { error }; }
+  render() {
+    if (!this.state.error) return this.props.children;
+    return (
+      <View style={{ flex: 1, backgroundColor: C.bg, padding: 24, paddingTop: 80 }}>
+        <Text style={{ color: C.text, fontSize: 22, fontWeight: "800" }}>Something went wrong</Text>
+        <Text style={{ color: C.muted, marginTop: 8 }}>Take a screenshot of this screen and send it to your developer.</Text>
+        <ScrollView style={{ marginTop: 16 }}><Text style={{ color: "#FF8E83", fontSize: 13 }} selectable>{String(this.state.error?.stack ?? this.state.error?.message ?? this.state.error)}</Text></ScrollView>
+      </View>
+    );
+  }
+}
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -55,13 +71,15 @@ function Root() {
 
 export default function App() {
   return (
-    <SafeAreaProvider>
-      <AuthProvider>
-        <NavigationContainer theme={theme}>
-          <StatusBar style="light" />
-          <Root />
-        </NavigationContainer>
-      </AuthProvider>
-    </SafeAreaProvider>
+    <ErrorBoundary>
+      <SafeAreaProvider>
+        <AuthProvider>
+          <NavigationContainer theme={theme}>
+            <StatusBar style="light" />
+            <Root />
+          </NavigationContainer>
+        </AuthProvider>
+      </SafeAreaProvider>
+    </ErrorBoundary>
   );
 }

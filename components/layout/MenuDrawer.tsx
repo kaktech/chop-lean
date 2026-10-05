@@ -6,6 +6,7 @@ import { useUI } from "@/lib/store";
 import { CartBadge } from "./CartButton";
 import { LogoMark, Wordmark } from "./Logo";
 import { whatsappUrl } from "@/lib/site";
+import { signOutAction } from "@/app/actions/auth";
 
 type Row = { t: string; href: string; ext?: boolean };
 const SECTIONS: { title: string; rows: Row[] }[] = [
@@ -44,7 +45,7 @@ export function MenuButton() {
   );
 }
 
-export function MenuDrawer() {
+export function MenuDrawer({ user = null }: { user?: { name: string | null; email: string | null } | null }) {
   const open = useUI((s) => s.menuOpen);
   const setOpen = useUI((s) => s.setMenuOpen);
 
@@ -75,10 +76,22 @@ export function MenuDrawer() {
         </Link>
       </div>
       <nav aria-label="Menu" className="relative px-5 pb-12 pt-5">
-        <div className="grid grid-cols-2 gap-3">
-          <Link href="/signin" onClick={close} className="cl-btn flex min-h-12 items-center justify-center rounded-full border border-line font-bold text-fg no-underline">Sign in</Link>
-          <Link href="/signin?mode=signup" onClick={close} className="cl-btn flex min-h-12 items-center justify-center rounded-full bg-yellow font-bold text-canvas no-underline">Sign up</Link>
-        </div>
+        {user ? (
+          <div className="rounded-2xl border border-line bg-surface p-4">
+            <div className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted">Signed in as</div>
+            <div className="mt-1 truncate font-display text-lg font-bold">{user.name ?? user.email}</div>
+            {user.name && user.email && <div className="truncate text-sm text-muted">{user.email}</div>}
+            <div className="mt-3 grid grid-cols-2 gap-3">
+              <Link href="/account" onClick={close} className="cl-btn flex min-h-12 items-center justify-center rounded-full border border-line font-bold text-fg no-underline">My account</Link>
+              <form action={signOutAction}><button type="submit" className="cl-btn flex min-h-12 w-full items-center justify-center rounded-full bg-yellow font-bold text-canvas">Log out</button></form>
+            </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-3">
+            <Link href="/signin" onClick={close} className="cl-btn flex min-h-12 items-center justify-center rounded-full border border-line font-bold text-fg no-underline">Sign in</Link>
+            <Link href="/signin?mode=signup" onClick={close} className="cl-btn flex min-h-12 items-center justify-center rounded-full bg-yellow font-bold text-canvas no-underline">Sign up</Link>
+          </div>
+        )}
 
         {SECTIONS.map((s) => (
           <section key={s.title} className="mt-7" aria-label={s.title}>

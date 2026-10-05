@@ -12,6 +12,7 @@ import { getPlans } from "@/lib/queries";
 import { COLLECTIONS, getCollectionCounts } from "@/lib/collections";
 import { formatNaira } from "@/lib/money";
 import { whatsappUrl } from "@/lib/site";
+import { signOutAction } from "@/app/actions/auth";
 
 const RIGHT = [
   { href: "/about", label: "Our Kitchen", wide: true },
@@ -49,7 +50,10 @@ export async function Header() {
               <Link href="/account#weight" aria-label="Weight tracker" className="hidden size-11 2xl:flex items-center justify-center rounded-full border border-line text-fg hover:border-yellow"><Scale size={19} strokeWidth={1.8} aria-hidden /></Link>
               <CartButton />
               {user ? (
-                <Link href="/account" aria-label="My account" title="My account" className="flex size-11 items-center justify-center rounded-full bg-yellow font-display text-sm font-bold text-canvas no-underline">{initial}</Link>
+                <>
+                  <Link href="/account" aria-label="My account" title="My account" className="flex size-11 items-center justify-center rounded-full bg-yellow font-display text-sm font-bold text-canvas no-underline">{initial}</Link>
+                  <form action={signOutAction}><button type="submit" className="cl-btn ml-1 flex min-h-11 items-center whitespace-nowrap rounded-full border border-line px-4 text-sm font-bold text-fg hover:border-yellow">Log out</button></form>
+                </>
               ) : (
                 <>
                   <Link href="/signin" className="cl-btn ml-1 flex min-h-11 items-center whitespace-nowrap rounded-full border border-line px-4 text-sm font-bold text-fg no-underline hover:border-yellow">Sign in</Link>
